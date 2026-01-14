@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حياك | أسئلة</title>
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Afeesh family (local) */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('afeesh/Afeesh-NosMesalwa.woff2') format('woff2'),
+           url('afeesh/Afeesh-NosMesalwa.woff') format('woff'),
+           url('afeesh/Afeesh-NosMesalwa.ttf') format('truetype');
+      font-weight: 300; font-style: normal; font-display: swap;
+    }
+
+    :root {
+      --bg: #f5f5f7; --card: #ffffff; --ink: #0f0f10; --muted: #6b7280; --line: #0f0f10; --radius: 14px;
+      --primary: #16243d; --accent: #d4af37;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; background:var(--bg)}
+    body{margin:0; font-family:'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); display: flex; flex-direction: column;}
+
+    .shell{width:100%; max-width:480px; margin:0 auto; padding:16px; flex: 1;}
+    .card{background:var(--card); border:2px solid var(--line); border-radius:var(--radius); box-shadow:0 2px 0 #0f0f10}
+
+    header.brand{text-align:center; background:#16243d; color:#ffffff; padding:20px; position:relative}
+   
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #d4af37;
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    .home-btn {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 15px;
+      background-color: #0f0f10;
+      padding: 9px 12px;
+      border-radius: 999px;
+    }
+
+     footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    /* Form Styles */
+    .form-section { margin-bottom: 24px; }
+    .form-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 16px; color: var(--primary); }
+    .form-input { 
+      width: 100%; padding: 12px 16px; border: 2px solid var(--line); 
+      border-radius: 12px; font-family: inherit; font-size: 14px; 
+      background: var(--card); outline: none; transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: var(--accent); }
+    
+    .autocomplete-container { position: relative; }
+    .suggestions {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--card); border: 2px solid var(--line);
+      border-top: none; border-radius: 0 0 12px 12px;
+      max-height: 200px; overflow-y: auto; z-index: 50;
+      display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .suggestions.active { display: block; }
+    .suggestion-item { padding: 10px 16px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 13px; }
+    .suggestion-item:hover { background: #f5f5f7; }
+    .suggestion-item .sub { font-size: 11px; color: var(--muted); display: block; }
+    
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .tag {
+      background: var(--primary); color: #fff; padding: 6px 12px; 
+      border-radius: 20px; font-size: 13px; display: flex; 
+      align-items: center; gap: 8px; animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .tag span { cursor: pointer; color: var(--accent); font-weight: bold; font-size: 16px; line-height: 1; }
+    
+    .checkbox-wrapper { display: flex; gap: 16px; margin-top: 12px; }
+    .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; font-size: 14px; }
+    .checkbox-input { width: 20px; height: 20px; accent-color: var(--primary); }
+
+    .submit-btn {
+      width: 100%; background: var(--primary); color: var(--accent); 
+      padding: 16px; border: none; border-radius: 12px; 
+      font-size: 18px; font-weight: 700; cursor: pointer; 
+      margin-top: 10px; box-shadow: 0 4px 0 #0f0f10;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .submit-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #0f0f10; }
+
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* Scrollable List & Search Styles */
+    .scrollable-list {
+      max-height: 250px;
+      overflow-y: auto;
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 4px;
+    }
+    .list-item {
+      padding: 12px 16px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      cursor: pointer;
+      background: var(--card);
+      transition: all 0.2s;
+      text-align: right;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .list-item.selected {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .list-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f5f5f7;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 16px;
+      margin-bottom: 8px;
+    }
+    .search-input {
+      border: none;
+      background: transparent;
+      width: 100%;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+    
+    /* Step Styles */
+    .step { display: none; animation: fadeIn 0.4s ease-out; }
+    .step.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Creative Card for last questions */
+    .creative-card {
+      background: #ffffff;
+      border: 2px solid var(--accent);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+    .creative-card .form-label { font-size: 20px; margin-bottom: 12px; color: var(--primary); }
+    .creative-card .form-input { text-align: center; font-size: 16px; border-radius: 30px; }
+
+    /* Info Panel Styles */
+    .info-panel{display:none; margin-top:16px; padding:14px; background:var(--bg); border-radius:12px; animation:fade 0.4s; border: 1px solid var(--line);}
+    .info-panel.active{display:block;}
+    .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    .info-box{background:var(--card); padding:12px; border-radius:12px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px; border: 1px solid #eee;}
+    .ib-icon{font-size:24px; margin-bottom:4px;}
+    .ib-label{font-size:12px; color:var(--muted); font-weight:600;}
+    .ib-val{font-size:14px; font-weight:700; color:var(--ink);}
+    @keyframes fade{from{opacity:0; transform:translateY(-10px)}to{opacity:1; transform:translateY(0)}}
+
+    /* Scrollbar for suggestions */
+    .suggestions::-webkit-scrollbar { width: 6px; }
+    .suggestions::-webkit-scrollbar-track { background: #f1f1f1; }
+    .suggestions::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+    .location-btn {
+      margin-top: 10px;
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      width: 100%;
+      transition: all 0.2s;
+    }
+    .location-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .location-status {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="brand">
+    <div class="logo-text">حــــــيــــاك</div>
+    <div class="logo-sub">HAYYAK</div>
+  </header>
+  
+  <main class="shell">
+    <div class="card" style="padding: 24px; min-height: 450px; display: flex; flex-direction: column; justify-content: center;">
+      
+      <!-- Step 1: Names -->
+      <div id="step-1" class="step active">
+        <h1 style="text-align: center; margin-bottom: 24px; color: var(--primary);">مرحباً بك! 👋<br><span style="font-size: 16px; color: var(--muted); font-weight: 400;">لنتعرف عليك أكثر</span></h1>
+        
+        <div class="form-section">
+          <label class="form-label">الاسم بالعربي</label>
+          <input type="text" id="nameAr" class="form-input" placeholder="مثال: عبدالله">
+        </div>
+        
+        <div class="form-section">
+          <label class="form-label">الاسم بالإنجليزية</label>
+          <input type="text" id="nameEn" class="form-input" placeholder="Ex: Abdullah" style="direction: ltr;">
+        </div>
+
+        <button class="submit-btn" onclick="nextStep(1)">التالي ⬅️</button>
+      </div>
+
+      <!-- Step 2: Emirate -->
+      <div id="step-2" class="step">
+        <h1 style="text-align: center; margin-bottom: 24px; color: var(--primary);">من وين؟ 🇦🇪</h1>
+        <div class="form-section">
+          <label class="form-label">اختر الإمارة</label>
+          <select id="emirate" class="form-input">
+            <option value="" disabled selected>اختر الإمارة</option>
+            <option value="Abu Dhabi">أبوظبي</option>
+            <option value="Dubai">دبي</option>
+            <option value="Sharjah">الشارقة</option>
+            <option value="Ajman">عجمان</option>
+            <option value="Umm Al Quwain">أم القيوين</option>
+            <option value="Ras Al Khaimah">رأس الخيمة</option>
+            <option value="Fujairah">الفجيرة</option>
+          </select>
+          <button type="button" class="location-btn" onclick="detectLocation()">📍 تحديد موقعي تلقائياً</button>
+          <div id="location-status" class="location-status"></div>
+        </div>
+        <button class="submit-btn" onclick="nextStep(2)">التالي ⬅️</button>
+        <button class="submit-btn" style="background: transparent; color: var(--muted); box-shadow: none; margin-top: 0;" onclick="prevStep(2)">رجوع</button>
+      </div>
+
+      <!-- Step 3: Phobias -->
+      <div id="step-3" class="step">
+        <div class="creative-card">
+          <div style="font-size: 48px; margin-bottom: 10px;">😨</div>
+          <label class="form-label">هل عندك أي مخاوف (فوبيا)؟</label>
+          <p style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">عشان نتجنب الأماكن اللي ما تريحك</p>
+          
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" class="search-input" placeholder="ابحث عن الفوبيا..." oninput="filterList('phobia', this.value)">
+          </div>
+          <div id="phobia-list-container" class="scrollable-list"></div>
+        </div>
+        <button class="submit-btn" onclick="nextStep(3)">التالي ⬅️</button>
+        <button class="submit-btn" style="background: transparent; color: var(--muted); box-shadow: none; margin-top: 0;" onclick="prevStep(3)">رجوع</button>
+      </div>
+
+      <!-- Step 4: Allergies -->
+      <div id="step-4" class="step">
+        <div class="creative-card">
+          <div style="font-size: 48px; margin-bottom: 10px;">🥜</div>
+          <label class="form-label">عندك حساسية من أكل معين؟</label>
+          <p style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">صحتك تهمنا!</p>
+
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" class="search-input" placeholder="ابحث عن الحساسية..." oninput="filterList('allergy', this.value)">
+          </div>
+          <div id="allergy-list-container" class="scrollable-list"></div>
+        </div>
+        <button class="submit-btn" onclick="nextStep(4)">التالي ⬅️</button>
+        <button class="submit-btn" style="background: transparent; color: var(--muted); box-shadow: none; margin-top: 0;" onclick="prevStep(4)">رجوع</button>
+      </div>
+
+      <!-- Step 5: Food -->
+      <div id="step-5" class="step">
+        <div class="creative-card">
+          <div style="font-size: 48px; margin-bottom: 10px;">🍔</div>
+          <label class="form-label">وش تحب تاكل؟</label>
+          
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" class="search-input" placeholder="ابحث عن الأكل..." oninput="filterList('food', this.value)">
+          </div>
+          <div id="food-list-container" class="scrollable-list"></div>
+          
+          <div id="food-info-panel" class="info-panel">
+            <h3 id="f-title" style="margin:0 0 12px; text-align:center; font-size: 18px;"></h3>
+            <div class="info-grid">
+              <div class="info-box">
+                <div class="ib-icon">🥩</div>
+                <div class="ib-label">حلال؟</div>
+                <div class="ib-val" id="f-halal"></div>
+              </div>
+              <div class="info-box">
+                <div class="ib-icon">🥗</div>
+                <div class="ib-label">صحي؟</div>
+                <div class="ib-val" id="f-healthy"></div>
+              </div>
+              <div class="info-box" style="grid-column: span 2;">
+                <div class="ib-icon">⚠️</div>
+                <div class="ib-label">مسببات الحساسية</div>
+                <div class="ib-val" id="f-allergies"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="checkbox-wrapper" style="justify-content: center; margin-top: 20px;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="halal" class="checkbox-input" checked>
+              حلال ✅
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="healthy" class="checkbox-input">
+              صحي / دايت 🥗
+            </label>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="saveProfile()">حفظ وانطلاق 🚀</button>
+        <button class="submit-btn" style="background: transparent; color: var(--muted); box-shadow: none; margin-top: 0;" onclick="prevStep(5)">رجوع</button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer aria-hidden="true">© عبدالله بن ناصر-حياك</footer>
+
+  <script>
+    // Data Arrays
+    const phobiasData = [
+
+      "💪 لا يوجد ", "🕷️ فوبيا العناكب", "🧗 فوبيا المرتفعات", "📦 فوبيا الأماكن المغلقة", "🏙️ فوبيا الأماكن المفتوحة/المزدحمة", "🌑 فوبيا الظلام", "🐍 فوبيا الثعابين", "🐕 فوبيا الكلاب", "✈️ فوبيا الطيران", "🌊 فوبيا الماء", "⚡ فوبيا الرعد/البرق", "🕳️ فوبيا الثقوب", "🩸 فوبيا الدم", "🦠 فوبيا الجراثيم", "💀 فوبيا الموت", "🧼 فوبيا القذارة", "🔥 فوبيا النار", "🦷 فوبيا أطباء الأسنان", "🎤 فوبيا التحدث أمام الجمهور", "👥 الفوبيا الاجتماعية", "⏳ فوبيا الزمن",
+      "🦗 فوبيا الحشرات", "🐀 فوبيا الفئران", "🐾 فوبيا الحيوانات", "🐝 فوبيا النحل", "🐟 فوبيا الأسماك", "🐦 فوبيا الطيور", "🦎 فوبيا الزواحف", "🦋 فوبيا الفراشات", "🐕 فوبيا الكلاب", "🐈 فوبيا القطط",
+      "🌊 فوبيا أعماق البحار", "🧗 فوبيا المرتفعات", "🕳️ فوبيا العمق", "✨ فوبيا النجوم/الفضاء", "👀 فوبيا المراقبة", "🏝️ فوبيا الوحدة", "🚶 فوبيا عبور الطرق", "💧 فوبيا الماء", "🦇 فوبيا الكهوف", "🚗 فوبيا القيادة",
+      "🧑 فوبيا الناس", "🙍 فوبيا الوحدة", "😂 فوبيا السخرية", "👩 فوبيا النساء", "👨 فوبيا الرجال", "🎎 فوبيا الدمى", "🎭 فوبيا الأقنعة", "👻 فوبيا الأشباح", "🤡 فوبيا المهرجين", "👽 فوبيا الغرباء",
+      "🤒 فوبيا المرض", "👨‍⚕️ فوبيا الأطباء", "💉 فوبيا الحقن", "🌡️ وسواس المرض", "🤮 فوبيا القيء", "🤰 فوبيا الولادة", "⚰️ فوبيا الجثث", "😴 فوبيا النوم", "📉 فوبيا النقص", "🪞 فوبيا تشوه الجسد",
+      "🧔 فوبيا اللحى", "👚 فوبيا الأزرار", "🌧️ فوبيا المطر", "✋ فوبيا الأيدي", "🥜 فوبيا التصاق زبدة الفول السوداني", "📖 فوبيا الكلمات الطويلة", "📱 فوبيا فقدان الهاتف", "😨 فوبيا الخوف", "🕰️ فوبيا الساعات",
+      "🔪 فوبيا الأدوات الحادة", "🎈 فوبيا البالونات", "🌙 فوبيا القمر", "🤖 فوبيا الآلات", "💻 فوبيا التكنولوجيا", "🔌 فوبيا الكهرباء", "☢️ فوبيا الإشعاع", "💡 فوبيا الضوء", "🔊 فوبيا الأصوات العالية", "💰 فوبيا المال",
+      "👴 فوبيا الشيخوخة", "♾️ فوبيا اللانهاية", "❓ فوبيا الوجود", "🈳 فوبيا الأماكن الفارغة", "🙄 فوبيا النظر للأعلى", "🤷 فوبيا اتخاذ القرارات", "🌋 فوبيا الكوارث", "🔄 فوبيا التغيير", "🔮 فوبيا المستقبل",
+      "❄️ فوبيا البرد", "🌡️ فوبيا الحرارة", "🌩️ فوبيا الرعد", "🏞️ فوبيا البحيرات", "🧊 فوبيا الجليد", "1️⃣3️⃣ فوبيا الرقم 13", "6️⃣6️⃣6️⃣ فوبيا الرقم 666", "📚 فوبيا الكتب", "🪞 فوبيا المرايا"
+    ];
+
+    const allergiesData = [
+      "💪 لا يوجد", "🥜 فول سوداني", "🌰 لوز", "🌰 كاجو", "🌰 جوز", "🌰 فستق", "🌰 بندق", "🌰 بيكان", "🌰 مكسرات المكاديميا", "🌰 جوز برازيلي", "🌲 صنوبر", "🌰 كستناء", "🥥 جوز الهند", "🥯 سمسم", "🥣 طحينة", "🌻 بذور عباد الشمس", "🎃 بذور اليقطين", "🌱 بذور الشيا", "🌾 بذور الكتان", "🥯 بذور الخشخاش", "🌭 بذور الخردل",
+      "🥛 حليب", "🐄 حليب بقر", "🐐 حليب ماعز", "🐑 حليب غنم", "🧀 جبن", "🧈 زبدة", "🍦 قشطة", "🍦 زبادي", "🥤 مصل اللبن", "🧪 كازين", "🥚 بيض", "🥚 بياض البيض", "🍳 صفار البيض",
+      "🌾 قمح", "🍞 غلوتين", "🌾 شعير", "🍞 جاودار", "🥣 شوفان", "🌽 ذرة", "🍚 أرز", "🌾 دخن", "🌾 سورغم", "🥗 كينوا", "🍞 حنطة",
+      "🫘 صويا", "🫘 فول الصويا", "🧊 توفو", "🍲 عدس", "🥙 حمص", "🟢 بازلاء", "🟢 بازلاء خضراء", "🫘 فاصوليا حمراء", "🫘 فاصوليا سوداء", "🫘 فاصوليا بينتو", "🌸 ترمس",
+      "🐟 سمك (عام)", "🍣 سلمون", "🐟 تونة", "🐟 قد", "🐟 سردين", "🐟 أنشوجة", "🐚 محار (عام)", "🍤 روبيان", "🍤 قريدس", "🦀 سلطعون", "🦞 جراد البحر", "🦪 بلح البحر", "🐚 جندوفلي", "🦪 محار", "🦑 حبار", "🐙 أخطبوط", "🐚 اسكالوب",
+      "🥩 لحم بقر", "🍗 دجاج", "🍖 لحم ضأن", "🐐 ماعز", "🦃 ديك رومي", "🥓 لحم خنزير", "🦆 بط", "🍮 جيلاتين",
+      "🍎 تفاح", "🍌 موز", "🍊 برتقال", "🍋 ليمون", "🍓 فراولة", "🥭 مانجو", "🍍 أناناس", "🥝 كيوي", "🍑 خوخ", "🍐 كمثرى", "🍒 كرز", "🍇 عنب", "🍉 بطيخ", "🍈 شمام", "🥭 بابايا", "🥑 أفوكادو", "🟣 تين", "🔴 رمان", "🌴 تمر",
+      "🍅 طماطم", "🥔 بطاطس", "🥕 جزر", "🥬 كرفس", "🧅 بصل", "🧄 ثوم", "🍃 سبانخ", "🥬 خس", "🥒 خيار", "🍆 باذنجان", "🫑 فلفل حلو", "🌶️ فلفل حار", "🥦 بروكلي", "🥦 قرنبيط", "🍄 فطر",
+      "🪵 قرفة", "🧂 فلفل أسود", "🌶️ مسحوق الفلفل الحار", "🌶️ بابريكا", "🍛 كاري", "🫚 زنجبيل", "🧡 كركم", "🍶 خل", "🍞 خميرة", "🧂 غلوتامات أحادية الصوديوم", "🎨 ملونات طعام", "🧪 مواد حافظة",
+      "🍫 شوكولاتة", "☕ كاكاو", "🍯 عسل", "🍬 سكر", "🍬 محليات صناعية", "☕ قهوة", "🍵 شاي"
+    ];
+
+    const foodTypesData = [
+      "️ حار", "🍬 حلو", "🧂 مالح", "🍋 حامض", "☕ مر", "🥩 أومامي (لذيذ)", "🍊 لاذع", "💨 مدخن", "🍦 كريمي", "🧀 بالجبن",
+      "🍟 مقلي", "🔥 مشوي", "🥯 مخبوز", "🍗 محمر", "🥟 مطهو بالبخار", "🥚 مسلوق", "🥓 مدخن", "🥗 نيء", "🥡 مقلي سريع", "🥘 مطهو ببطء",
+      "🦞 مأكولات بحرية", "🍗 أطباق دجاج", "🥩 أطباق لحم بقر", "🍖 أطباق لحم ضأن", "🥗 نباتي", "🌿 نباتي صرف", "🍃 نباتي المصدر", "🥩 حيواني المصدر", "🥛 يعتمد على الألبان", "🍳 يعتمد على البيض",
+      "🇨🇳 أكل صيني", "🇮🇳 أكل هندي", "🇮🇹 أكل إيطالي", "🇸🇦 أكل عربي", "🇯🇵 أكل ياباني", "🇰🇷 أكل كوري", "🇲🇽 أكل مكسيكي", "🇺🇸 أكل أمريكي", "🇹🇭 أكل تايلاندي", "🇫🇷 أكل فرنسي",
+      "🍔 وجبات سريعة", "🌮 أكل شوارع", "🏠 أكل منزلي", "🍽️ أكل مطاعم", "🍕 وجبات خفيفة غير صحية", "🥗 أكل صحي", "📉 أكل حمية", "🍲 أكل مريح", "🎉 أكل حفلات", "👶 أكل أطفال",
+      "💪 عالي البروتين", "🍞 قليل الكربوهيدرات", "🥛 قليل الدسم", "🥑 كيتو", "🏋️ أكل جيم", "🍏 عضوي", "🌾 خالي من الغلوتين", "🍬 خالي من السكر", "⚡ أكل طاقة", "🥗 أكل خفيف",
+      "🍲 أكل ساخن", "🍦 أكل بارد", "❄️ أكل مجمد", "🥫 أكل معلب", "🍜 أكل فوري", "🥘 أكل تقليدي", "🍽️ أكل حديث", "🌮 أكل مدمج", "💎 أكل فاخر", "🍢 وجبات خفيفة"
+    ];
+
+    // State
+    const selectedPhobias = new Set();
+    const selectedAllergies = new Set();
+    const selectedFoodTypes = new Set();
+    
+    let detectedLat = null;
+    let detectedLon = null;
+
+    // Render Lists
+    function renderList(type, data, selectedSet, filterText = '') {
+      const container = document.getElementById(`${type}-list-container`);
+      container.innerHTML = '';
+      
+      const filteredData = data.filter(item => item.toLowerCase().includes(filterText.toLowerCase()));
+      
+      filteredData.forEach(item => {
+        const div = document.createElement('div');
+        div.className = `list-item ${selectedSet.has(item) ? 'selected' : ''}`;
+        div.innerText = item;
+        if (selectedSet.has(item)) {
+            div.innerHTML += ' <span>✓</span>';
+        }
+        div.onclick = () => {
+            toggleSelection(type, item, selectedSet);
+            if (type === 'food') {
+                showFoodInfo(item);
+            }
+        };
+        container.appendChild(div);
+      });
+    }
+
+    function toggleSelection(type, item, set) {
+        if (set.has(item)) {
+            set.delete(item);
+        } else {
+            set.add(item);
+        }
+        // Re-render current list to update UI
+        const searchInput = document.querySelector(`#step-${type === 'phobia' ? 3 : type === 'allergy' ? 4 : 5} .search-input`);
+        const filterText = searchInput ? searchInput.value : '';
+        
+        if (type === 'phobia') renderList('phobia', phobiasData, selectedPhobias, filterText);
+        if (type === 'allergy') renderList('allergy', allergiesData, selectedAllergies, filterText);
+        if (type === 'food') renderList('food', foodTypesData, selectedFoodTypes, filterText);
+    }
+
+    function filterList(type, text) {
+        if (type === 'phobia') renderList('phobia', phobiasData, selectedPhobias, text);
+        if (type === 'allergy') renderList('allergy', allergiesData, selectedAllergies, text);
+        if (type === 'food') renderList('food', foodTypesData, selectedFoodTypes, text);
+    }
+
+    function showFoodInfo(item) {
+        const panel = document.getElementById('food-info-panel');
+        const title = document.getElementById('f-title');
+        const halal = document.getElementById('f-halal');
+        const healthy = document.getElementById('f-healthy');
+        const allergies = document.getElementById('f-allergies');
+
+        // Determine properties based on item name (Mock logic for demonstration)
+        let isHalal = "نعم ✅";
+        let isHealthy = "متوسط ⚖️";
+        let allergyList = "لا يوجد";
+
+        const lowerItem = item.toLowerCase();
+
+        if (lowerItem.includes("خنزير") || lowerItem.includes("كحول") || lowerItem.includes("نبيذ")) isHalal = "لا ❌";
+        
+        if (lowerItem.includes("صحي") || lowerItem.includes("سلطة") || lowerItem.includes("نباتي") || lowerItem.includes("فاكهة") || lowerItem.includes("خضار")) isHealthy = "نعم 🥗";
+        else if (lowerItem.includes("مقلي") || lowerItem.includes("وجبات سريعة") || lowerItem.includes("غير صحية") || lowerItem.includes("سكر") || lowerItem.includes("حلو")) isHealthy = "لا 🍔";
+
+        if (lowerItem.includes("مكسرات") || lowerItem.includes("فول سوداني") || lowerItem.includes("لوز") || lowerItem.includes("جوز")) allergyList = "مكسرات 🥜";
+        else if (lowerItem.includes("بحري") || lowerItem.includes("سمك") || lowerItem.includes("روبيان") || lowerItem.includes("سلطعون") || lowerItem.includes("جراد البحر")) allergyList = "مأكولات بحرية 🐟";
+        else if (lowerItem.includes("حليب") || lowerItem.includes("جبن") || lowerItem.includes("ألبان") || lowerItem.includes("قشطة") || lowerItem.includes("زبادي")) allergyList = "منتجات الألبان 🥛";
+        else if (lowerItem.includes("بيض")) allergyList = "بيض 🥚";
+        else if (lowerItem.includes("غلوتين") || lowerItem.includes("خبز") || lowerItem.includes("قمح") || lowerItem.includes("معكرونة")) allergyList = "غلوتين 🍞";
+
+        title.innerText = item;
+        halal.innerText = isHalal;
+        healthy.innerText = isHealthy;
+        allergies.innerText = allergyList;
+
+        panel.classList.add('active');
+    }
+
+    // Initialize Lists
+    renderList('phobia', phobiasData, selectedPhobias);
+    renderList('allergy', allergiesData, selectedAllergies);
+    renderList('food', foodTypesData, selectedFoodTypes);
+
+    // Navigation
+    function showStep(step) {
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      document.getElementById(`step-${step}`).classList.add('active');
+    }
+
+    function nextStep(step) {
+      if (step === 1) {
+        const nameAr = document.getElementById('nameAr').value.trim();
+        const nameEn = document.getElementById('nameEn').value.trim();
+        if (!nameAr && !nameEn) {
+          alert('الرجاء إدخال الاسم');
+          return;
+        }
+      }
+      if (step === 2) {
+        const emirate = document.getElementById('emirate').value;
+        if (!emirate) {
+          alert('الرجاء اختيار الإمارة');
+          return;
+        }
+      }
+      showStep(step + 1);
+    }
+
+    function prevStep(step) {
+      showStep(step - 1);
+    }
+
+    function detectLocation() {
+        const status = document.getElementById('location-status');
+        status.innerText = 'جاري تحديد الموقع...';
+        
+        if (!navigator.geolocation) {
+            status.innerText = 'المتصفح لا يدعم تحديد الموقع.';
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            detectedLat = position.coords.latitude;
+            detectedLon = position.coords.longitude;
+            
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${detectedLat}&lon=${detectedLon}&accept-language=en`);
+                const data = await response.json();
+                const address = data.address;
+                
+                let emirate = address.state || address.city || '';
+                const select = document.getElementById('emirate');
+                const options = Array.from(select.options).map(o => o.value);
+                let match = options.find(opt => emirate.toLowerCase().includes(opt.toLowerCase()));
+                
+                if (match) {
+                    select.value = match;
+                    status.innerText = 'تم تحديد الموقع: ' + match;
+                } else {
+                    status.innerText = 'تم تحديد الإحداثيات. الرجاء اختيار الإمارة يدوياً.';
+                }
+            } catch (e) {
+                status.innerText = 'تم تحديد الإحداثيات. تعذر تحديد اسم الإمارة.';
+            }
+        }, (error) => {
+            status.innerText = 'تعذر تحديد الموقع. تأكد من تفعيل الـ GPS.';
+        });
+    }
+
+    // Save Profile
+    function saveProfile() {
+      const nameAr = document.getElementById('nameAr').value.trim();
+      const nameEn = document.getElementById('nameEn').value.trim();
+      const emirate = document.getElementById('emirate').value;
+      const halal = document.getElementById('halal').checked;
+      const healthy = document.getElementById('healthy').checked;
+
+      // Use Arabic name as primary if available, otherwise English
+      const displayName = nameAr || nameEn;
+
+      const profile = {
+        name: displayName,
+        nameAr: nameAr,
+        nameEn: nameEn,
+        emirate,
+        phobias: Array.from(selectedPhobias),
+        allergies: Array.from(selectedAllergies),
+        foodPreferences: Array.from(selectedFoodTypes),
+        isHalal: halal,
+        isHealthy: healthy,
+        createdAt: new Date().toISOString(),
+        latitude: detectedLat,
+        longitude: detectedLon
+      };
+
+      localStorage.setItem('hayyak_user_profile', JSON.stringify(profile));
+      
+      // Redirect to main page
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

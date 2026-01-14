@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بطاقة التعريف الرقمية | حياك</title>
+  
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/lucide-static/font/lucide.css" rel="stylesheet">
+  
+  <style>
+    /* Afeesh Font Faces */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* Design Tokens */
+    :root {
+      --bg-primary: #f5f5f7;
+      --bg-card: #ffffff;
+      --text-primary: #0f0f10;
+      --text-secondary: #6b7280;
+      --border-dark: #0f0f10;
+      --border-light: #e5e7eb;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+      --shadow-card: 0 2px 0 #0f0f10;
+      --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.1);
+      
+      /* Additional variables for search bar */
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --ink: #0f0f10;
+      --muted: #6b7280;
+      --line: #0f0f10;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg-primary);
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      flex: 1;
+      background: var(--bg-primary);
+      position: relative;
+      padding: 0;
+    }
+
+    /* Header with Logo */
+    .header {
+      background: var(--bg-card);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 2px solid var(--border-dark);
+      position: relative;
+    }
+
+    .back-btn {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-btn i {
+      font-size: 24px;
+      color: var(--text-primary);
+    }
+
+    .logo {
+      font-family: 'Afeesh', 'Cairo', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .logo-ar {
+      display: block;
+      color: var(--text-primary);
+    }
+
+    .logo-en {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      color: var(--text-secondary);
+      margin-top: -4px;
+    }
+
+    /* Map Section */
+    .map-section {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      border-bottom: 2px solid var(--border-dark);
+    }
+
+    .map-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ID Card Section */
+    .id-card-wrapper {
+      padding: 30px 30px;
+      background: var(--bg-primary);
+     
+    }
+
+    .card-label {
+      font-family: 'Afeesh', 'Cairo', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .id-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 24px;
+    }
+
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .profile-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border-dark);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .profile-info {
+      flex: 1;
+      padding-top: 8px;
+    }
+
+    .name-ar {
+      font-family: 'Afeesh', 'Cairo', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+    }
+
+    .name-en {
+      font-family: 'Cairo', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* QR Code Section */
+    .qr-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      background: var(--bg-card);
+    }
+
+    .qr-code img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .bottom-search{padding:12px 0 18px}
+    .search{display:grid; grid-template-columns:28px 1fr; align-items:center; gap:8px; border:2px solid var(--line); border-radius:999px; padding:10px 12px; background:var(--card)}
+    .glass{text-align:center}
+    .search input{appearance:none; border:0; outline:0; background:transparent; width:100%; font:inherit; color:var(--ink)}
+    .search input::placeholder{color:var(--muted)}
+
+    /* Responsive adjustments */
+    @media (max-width: 420px) {
+      .container {
+        max-width: 100%;
+      }
+      
+      .search-bar {
+        max-width: 100%;
+      }
+    }
+        header.brand{text-align:center; background:#16243d; color:#ffffff; padding:20px; position:relative}
+   
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #d4af37;
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    .home-btn {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 15px;
+      background-color: #0f0f10;
+      padding: 9px 12px;
+      border-radius: 999px;
+    }
+       footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+
+    /* Content spacer for fixed search bar */
+    .content-spacer {
+      height: 90px;
+    }
+  </style>
+</head>
+<body>
+  <header class="brand">
+    <a href="index.html" class="home-btn" aria-label="الرئيسية">الرجوع   </a>
+    <div class="logo-text">حــــــيــــاك</div>
+    <div class="logo-sub">HAYYAK</div>
+  </header>
+  <div class="container">
+
+
+    <!-- ID Card Section -->
+    <div class="id-card-wrapper">
+      <div class="card-label">بطاقة التعريف الرقمية</div>
+      
+      <div class="id-card">
+        <!-- Profile Section -->
+        <div class="profile-section">
+          <img src="Screenshot 2026-01-04 205021.jpg" alt="صورة شخصية" class="profile-photo" style="width: 80px; height: 80px; background-color: #0c2640;"/>
+          <div class="profile-info">
+            <div class="name-ar">راشد سيف الكبوري النقبي</div>
+            <div class="name-en">Rashid Saif AlKaboori Alnaqbi</div>
+          </div>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="qr-section">
+          <div class="qr-code">
+            <img 
+              src="Screenshot 2026-01-04 21023w4.jpg"
+              alt="رمز QR - QR code by OpenClipart-Vectors on Pixabay"
+              style="width: 100%; height: 100%;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-search">
+      <div class="search">
+        <div class="glass">🔍</div>
+        <input type="search" id="search-input" placeholder="ابحث عن معلومات" aria-label="ابحث عن معلومات" />
+      </div>
+    </div>
+  </div>
+  <footer aria-hidden="true">© عبدالله بن ناصر-حياك</footer>
+</body>
+</html>

@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>المشاكل الصحية/النفسية | حياك</title>
+  <meta name="description" content="إدارة المشاكل الصحية والنفسية وإعدادات الخصوصية في تطبيق حياك" />
+
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Afeesh local fonts (single family name, multiple weights) -->
+  <style>
+    /* Map several available Afeesh font files to one family name for easy usage */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMesalwa.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMesalwa.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMesalwa.ttf') format('truetype');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --ink: #0f0f10;
+      --muted: #6b7280;
+      --line: #0f0f10;
+      --accent: #0f0f10;
+      --radius: 14px;
+      --primary: #16243d;
+      --gold: #d4af37;
+      --health-green: #10b981;
+      --health-red: #ef4444;
+      --health-blue: #3b82f6;
+      --health-yellow: #f59e0b;
+      --emergency-red: #dc2626;
+      --emergency-glow: rgba(220, 38, 38, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .page {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    /* Phone-width centered container to resemble the mockup, but responsive */
+    .shell {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 0 #0f0f10;
+    }
+
+    header.brand {
+      text-align: center;
+      margin: 0;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 20px;
+      position: relative;
+    }
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    .home-btn {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 15px;
+      background-color: #0f0f10;
+      padding: 9px 12px;
+      border-radius: 999px;
+    }
+
+    h1, h2, h3, h4 { margin: 0; }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 14px 6px 8px;
+      color: var(--primary);
+    }
+
+    .page-description {
+      font-size: 15px;
+      color: var(--muted);
+      margin: 0 6px 20px;
+      line-height: 1.5;
+    }
+
+    /* Current Health Status */
+    .health-status-section {
+      margin: 20px 0;
+    }
+    .status-card {
+      padding: 16px;
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      border: 2px solid var(--health-blue);
+      border-radius: var(--radius);
+    }
+    .status-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .status-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--health-blue);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+    .status-title {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary);
+    }
+    .status-list {
+      display: grid;
+      gap: 8px;
+    }
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+    }
+    .status-item-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+    }
+
+    /* Health categories */
+    .health-categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 8px 4px 16px;
+    }
+    .health-cat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 8px;
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .health-cat:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 0 var(--line);
+    }
+    .health-cat.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .health-cat.active .health-emoji {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .health-emoji {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+    .health-cat .label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* Health conditions list */
+    .conditions-section {
+      margin: 20px 0;
+    }
+    .section-title {
+      font-weight: 700;
+      font-size: 20px;
+      margin: 6px 6px 14px;
+      color: var(--primary);
+    }
+
+    .conditions-list {
+      display: grid;
+      gap: 12px;
+      padding: 0 6px;
+    }
+    .condition-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .condition-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .condition-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+    .condition-text h4 {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .condition-text p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 34px;
+      transition: .4s;
+    }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      border-radius: 50%;
+      transition: .4s;
+    }
+    input:checked + .toggle-slider {
+      background-color: var(--health-green);
+    }
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    /* Emergency section - Creative Design */
+    .emergency-section {
+      margin: 24px 0;
+      position: relative;
+    }
+    .emergency-card {
+      padding: 20px;
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      border: 3px solid var(--emergency-red);
+      border-radius: var(--radius);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 var(--emergency-glow); }
+      70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+    .emergency-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--emergency-red);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      color: white;
+      margin: 0 auto 12px;
+      animation: shake 0.5s infinite alternate;
+    }
+    @keyframes shake {
+      from { transform: rotate(-5deg); }
+      to { transform: rotate(5deg); }
+    }
+    .emergency-title {
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--emergency-red);
+      margin-bottom: 8px;
+    }
+    .emergency-text {
+      font-size: 14px;
+      margin-bottom: 20px;
+      color: #7f1d1d;
+    }
+    .emergency-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .emergency-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--emergency-red);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid var(--line);
+      transition: all 0.2s;
+    }
+    .emergency-btn:hover {
+      background: #b91c1c;
+      transform: scale(1.05);
+    }
+    .emergency-btn.secondary {
+      background: #f59e0b;
+    }
+    .emergency-btn.secondary:hover {
+      background: #d97706;
+    }
+
+    /* Privacy settings */
+    .privacy-section {
+      margin: 20px 0;
+    }
+    .privacy-options {
+      display: grid;
+      gap: 12px;
+      padding: 0 6px;
+    }
+    .privacy-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .privacy-text h4 {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .privacy-text p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* Quick links */
+    .quick {
+      padding: 6px;
+      display: grid;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .quick .item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      background: var(--card);
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .quick .item .label {
+      flex: 1 1 auto;
+    }
+
+    /* Bottom search */
+    .bottom-search {
+      padding: 10px 6px 18px;
+    }
+    .search {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: var(--card);
+    }
+    .search .glass {
+      text-align: center;
+      font-size: 16px;
+    }
+    .search input {
+      appearance: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      width: 100%;
+      font: inherit;
+      color: var(--ink);
+    }
+    .search input::placeholder {
+      color: var(--muted);
+    }
+
+    footer {
+      background: var(--primary);
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    /* Notification styles */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.3s ease;
+      max-width: 320px;
+    }
+    .notification-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+    .notification-content {
+      flex: 1;
+    }
+    .notification-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .notification-message {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    .notification-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+
+    /* Larger screens */
+    @media (min-width: 768px) {
+      .shell { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="brand">
+      <a href="index.html" class="home-btn" aria-label="الرئيسية">رجوع</a>
+      <div class="logo-text">حــــــيــــاك</div>
+      <div class="logo-sub">HAYYAK</div>
+    </header>
+    
+    <main class="shell">
+      <h1 class="page-title">المشاكل الصحية/النفسية</h1>
+      <p class="page-description">إدارة المشاكل الصحية والنفسية لتحسين تجربتك وتقديم التوصيات المناسبة لك</p>
+
+      <!-- Current Health Status Section -->
+      <div class="health-status-section">
+        <h2 class="section-title">حالتي الصحية الحالية</h2>
+        <div class="status-card" id="health-summary">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="health-categories" id="health-categories">
+        <div class="health-cat active" data-category="all">
+          <div class="health-emoji" style="background: #e0f2fe;">👤</div>
+          <div class="label">الكل</div>
+        </div>
+        <div class="health-cat" data-category="physical">
+          <div class="health-emoji" style="background: #dcfce7;">❤️</div>
+          <div class="label">صحية</div>
+        </div>
+        <div class="health-cat" data-category="psychological">
+          <div class="health-emoji" style="background: #fef3c7;">🧠</div>
+          <div class="label">نفسية</div>
+        </div>
+      </div>
+
+      <div class="conditions-section">
+        <h2 class="section-title">حالاتي الصحية</h2>
+        <div class="conditions-list" id="conditions-list">
+          <!-- Conditions will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Emergency Section with Creative Design -->
+      <div class="emergency-section">
+        <h2 class="section-title">🚨 اتصال الطوارئ</h2>
+        <div class="emergency-card">
+          <div class="emergency-icon">🚨</div>
+          <div class="emergency-title">حالة طارئة؟ لا تتردد!</div>
+          <p class="emergency-text">خدمات الطوارئ متاحة على مدار 24 ساعة. اضغط على الزر الأحمر للاتصال المباشر</p>
+          <div class="emergency-buttons">
+            <a href="tel:998" class="emergency-btn">
+              <span>📞</span> طوارئ (998)
+            </a>
+            <a href="tel:999" class="emergency-btn secondary">
+              <span>🚓</span> شرطة (999)
+            </a>
+          </div>
+          <div style="margin-top: 12px; font-size: 12px; color: #7f1d1d;">
+            متاح أيضاً: ٩٩٧ (الإسعاف) - ٩٩٦ (الدفاع المدني)
+          </div>
+        </div>
+      </div>
+
+      <!-- Privacy Settings Section -->
+      <div class="privacy-section">
+        <h2 class="section-title">إعدادات الخصوصية</h2>
+        <div class="privacy-options">
+          <div class="privacy-item">
+            <div class="privacy-text">
+              <h4>مشاركة معلوماتي الصحية</h4>
+              <p>السماح للمطاعم والمتاجر بمعرفة متطلباتك الصحية</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="share-health-info">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          
+          <div class="privacy-item">
+            <div class="privacy-text">
+              <h4>توصيات مخصصة</h4>
+              <p>استخدام معلوماتك الصحية لتقديم توصيات مناسبة لك</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="personalized-recommendations">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          
+          <div class="privacy-item">
+            <div class="privacy-text">
+              <h4>إشعارات الرعاية الصحية</h4>
+              <p>تلقي تذكيرات ونصائح صحية بناءً على حالتك</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="health-notifications">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+        <!-- Quick Links -->
+      <div class="bottom-search">
+        <div class="search">
+          <div class="glass">🔍</div>
+          <input type="search" placeholder="ابحث عن حالة صحية أو دواء" aria-label="ابحث عن حالة صحية أو دواء" id="health-search" />
+        </div>
+      </div>
+    </main>
+
+    <footer aria-hidden="true">© عبدالله بن ناصر-حياك</footer>
+  </div>
+
+  <script>
+    // بيانات الحالات الصحية
+    const healthConditions = [
+      {
+        id: 1,
+        name: "حساسية الطعام",
+        description: "حساسية من المكسرات والأسماك",
+        category: "physical",
+        icon: "🤧",
+        color: "#fef3c7",
+        enabled: true,
+        medication: "مضادات الهيستامين",
+        medicationTime: "قبل الأكل بـ 30 دقيقة"
+      },
+      {
+        id: 2,
+        name: "السكري",
+        description: "النوع الثاني - يحتاج مراقبة السكر",
+        category: "physical",
+        icon: "💉",
+        color: "#dcfce7",
+        enabled: true,
+        medication: "ميتفورمين",
+        medicationTime: "صباحاً ومساءً"
+      },
+      {
+        id: 3,
+        name: "ضغط الدم",
+        description: "ضغط دم مرتفع - يحتاج مراقبة",
+        category: "physical",
+        icon: "🫀",
+        color: "#fee2e2",
+        enabled: false,
+        medication: "أملوديبين",
+        medicationTime: "صباحاً"
+      },
+      {
+        id: 4,
+        name: "القلق",
+        description: "قلق عام - يحتاج أماكن هادئة",
+        category: "psychological",
+        icon: "😰",
+        color: "#e0e7ff",
+        enabled: true,
+        medication: "سيرترالين",
+        medicationTime: "مساءً"
+      },
+      {
+        id: 5,
+        name: "الاكتئاب",
+        description: "اكتئاب خفيف - يحتاج دعم",
+        category: "psychological",
+        icon: "😔",
+        color: "#f3e8ff",
+        enabled: false,
+        medication: "فلوكستين",
+        medicationTime: "صباحاً"
+      },
+      {
+        id: 6,
+        name: "حساسية اللحوم",
+        description: "حساسية من اللحوم الحمراء",
+        category: "physical",
+        icon: "🥩",
+        color: "#fef3c7",
+        enabled: true,
+        medication: "دواء الحساسية",
+        medicationTime: "عند الحاجة"
+      },
+      {
+        id: 7,
+        name: "الأرق",
+        description: "صعوبة في النوم",
+        category: "psychological",
+        icon: "😴",
+        color: "#e0e7ff",
+        enabled: true,
+        medication: "الميلاتونين",
+        medicationTime: "قبل النوم بـ ساعة"
+      }
+    ];
+
+    // بيانات النصائح الصحية
+    const healthTips = [
+      "💊 تذكر تناول أدويتك في موعدها",
+      "🥗 تناول وجبة إفطار صحية لتبدأ يومك بنشاط",
+      "💧 اشرب 8 أكواب من الماء يومياً",
+      "🚶‍♂️ امشِ 30 دقيقة يومياً لصحة قلبك",
+      "🧘‍♂️ خذ قسطاً من الراحة والتأمل لتخفيف القلق",
+      "📋 تابع قراءة السكر بانتظام إذا كنت مريض سكري",
+      "😊 الابتسام يقلل التوتر ويحسن المزاج",
+      "🥦 تجنب الأطعمة المسببة للحساسية",
+      "🌞 تعرض لأشعة الشمس الصباحية لفيتامين د",
+      "🧠 تمرن عقلك بالقراءة والألعاب الذهنية"
+    ];
+
+    // تحميل البيانات المحفوظة من localStorage
+    function loadHealthConditions() {
+      const savedConditions = localStorage.getItem('hayyak_health_conditions');
+      if (savedConditions) {
+        return JSON.parse(savedConditions);
+      }
+      // حفظ البيانات الأساسية إذا لم تكن موجودة
+      saveHealthConditions(healthConditions);
+      return healthConditions;
+    }
+
+    // حفظ البيانات إلى localStorage
+    function saveHealthConditions(conditions) {
+      localStorage.setItem('hayyak_health_conditions', JSON.stringify(conditions));
+    }
+
+    // تحميل إعدادات الخصوصية
+    function loadPrivacySettings() {
+      return {
+        shareHealthInfo: localStorage.getItem('shareHealthInfo') !== 'false',
+        personalizedRecommendations: localStorage.getItem('personalizedRecommendations') !== 'false',
+        healthNotifications: localStorage.getItem('healthNotifications') !== 'false'
+      };
+    }
+
+    // حفظ إعدادات الخصوصية
+    function savePrivacySettings() {
+      const settings = {
+        shareHealthInfo: document.getElementById('share-health-info').checked,
+        personalizedRecommendations: document.getElementById('personalized-recommendations').checked,
+        healthNotifications: document.getElementById('health-notifications').checked
+      };
+      
+      localStorage.setItem('shareHealthInfo', settings.shareHealthInfo);
+      localStorage.setItem('personalizedRecommendations', settings.personalizedRecommendations);
+      localStorage.setItem('healthNotifications', settings.healthNotifications);
+      
+      return settings;
+    }
+
+    // تحميل بيانات الملف الشخصي
+    function loadProfileData() {
+      return JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+    }
+
+    // عرض ملخص الحالة الصحية
+    function renderHealthSummary() {
+      const conditions = loadHealthConditions();
+      const activeConditions = conditions.filter(c => c.enabled);
+      const physicalConditions = activeConditions.filter(c => c.category === 'physical');
+      const psychologicalConditions = activeConditions.filter(c => c.category === 'psychological');
+      
+      const summaryHtml = `
+        <div class="status-header">
+          <div class="status-icon">📋</div>
+          <div class="status-title">ملخص صحتي</div>
+        </div>
+        <div class="status-list">
+          <div class="status-item">
+            <div class="status-item-icon" style="background: #dcfce7;">❤️</div>
+            <div>الحالات الصحية النشطة: ${physicalConditions.length}</div>
+          </div>
+          <div class="status-item">
+            <div class="status-item-icon" style="background: #fef3c7;">🧠</div>
+            <div>الحالات النفسية النشطة: ${psychologicalConditions.length}</div>
+          </div>
+          <div class="status-item">
+            <div class="status-item-icon" style="background: #e0f2fe;">💊</div>
+            <div>الأدوية اليومية: ${activeConditions.filter(c => c.medication).length}</div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('health-summary').innerHTML = summaryHtml;
+    }
+
+    // عرض قائمة الحالات الصحية
+    function renderConditions(category = 'all') {
+      const conditions = loadHealthConditions();
+      const container = document.getElementById('conditions-list');
+      
+      let filteredConditions = conditions;
+      if (category !== 'all') {
+        filteredConditions = conditions.filter(cond => cond.category === category);
+      }
+      
+      container.innerHTML = filteredConditions.map(condition => `
+        <div class="condition-item" data-id="${condition.id}">
+          <div class="condition-info">
+            <div class="condition-icon" style="background: ${condition.color}">
+              ${condition.icon}
+            </div>
+            <div class="condition-text">
+              <h4>${condition.name}</h4>
+              <p>${condition.description}</p>
+              ${condition.enabled && condition.medication ? 
+                `<div style="font-size: 11px; color: #10b981; margin-top: 2px;">
+                  💊 ${condition.medication} - ${condition.medicationTime}
+                </div>` : ''
+              }
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" ${condition.enabled ? 'checked' : ''} onchange="toggleCondition(${condition.id})">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      `).join('');
+    }
+
+    // تبديل تفعيل/تعطيل حالة صحية
+    function toggleCondition(id) {
+      const conditions = loadHealthConditions();
+      const index = conditions.findIndex(cond => cond.id === id);
+      
+      if (index !== -1) {
+        conditions[index].enabled = !conditions[index].enabled;
+        saveHealthConditions(conditions);
+        
+        // تحديث الملخص
+        renderHealthSummary();
+        
+        // إظهار رسالة تأكيد
+        showNotification(`تم ${conditions[index].enabled ? 'تفعيل' : 'تعطيل'} ${conditions[index].name}`);
+      }
+    }
+
+    // عرض الإشعار
+    function showNotification(message, type = 'info') {
+      // إزالة أي إشعارات سابقة
+      const existingNotification = document.querySelector('.notification');
+      if (existingNotification) {
+        existingNotification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => existingNotification.remove(), 300);
+      }
+      
+      // إنشاء عنصر الإشعار الجديد
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.innerHTML = `
+        <div class="notification-icon">${type === 'emergency' ? '🚨' : '💡'}</div>
+        <div class="notification-content">
+          <div class="notification-title">${type === 'emergency' ? 'تنبيه صحي' : 'نصيحة صحية'}</div>
+          <div class="notification-message">${message}</div>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.style.animation='slideOut 0.3s ease'; setTimeout(() => this.parentElement.remove(), 300)">×</button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // إزالة الإشعار تلقائياً بعد 5 ثوانٍ
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => notification.remove(), 300);
+        }
+      }, 5000);
+    }
+
+    // إظهار نصائح صحية (لصفحة index.html)
+    function showHealthAdvice() {
+      const settings = loadPrivacySettings();
+      
+      // فقط إذا كان المستخدم مفعل إشعارات الرعاية الصحية
+      if (settings.healthNotifications) {
+        const randomTip = healthTips[Math.floor(Math.random() * healthTips.length)];
+        
+        // التحقق من الصفحة الحالية
+        if (window.location.pathname.includes('index.html') || 
+            window.location.pathname.endsWith('/')) {
+          // انتظر حتى يتم تحميل الصفحة بالكامل
+          setTimeout(() => {
+            showNotification(randomTip, 'info');
+          }, 2000);
+        }
+      }
+    }
+
+    // إظهار أماكن زارها المستخدم (وهمي)
+    function showVisitedPlaces() {
+      showNotification("سيتم عرض الأماكن التي زرتها قريباً");
+    }
+
+    // البحث في الحالات الصحية
+    document.getElementById('health-search').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const conditions = loadHealthConditions();
+      const container = document.getElementById('conditions-list');
+      
+      if (!searchTerm) {
+        const activeCategory = document.querySelector('.health-cat.active').dataset.category;
+        renderConditions(activeCategory);
+        return;
+      }
+      
+      const filteredConditions = conditions.filter(cond => 
+        cond.name.toLowerCase().includes(searchTerm) || 
+        cond.description.toLowerCase().includes(searchTerm) ||
+        (cond.medication && cond.medication.toLowerCase().includes(searchTerm))
+      );
+      
+      container.innerHTML = filteredConditions.map(condition => `
+        <div class="condition-item" data-id="${condition.id}">
+          <div class="condition-info">
+            <div class="condition-icon" style="background: ${condition.color}">
+              ${condition.icon}
+            </div>
+            <div class="condition-text">
+              <h4>${condition.name}</h4>
+              <p>${condition.description}</p>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" ${condition.enabled ? 'checked' : ''} onchange="toggleCondition(${condition.id})">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      `).join('');
+    });
+
+    // تصفية الحالات حسب الفئة
+    document.querySelectorAll('.health-cat').forEach(cat => {
+      cat.addEventListener('click', function() {
+        // إزالة النشط من جميع الفئات
+        document.querySelectorAll('.health-cat').forEach(c => c.classList.remove('active'));
+        // إضافة النشط للفئة المحددة
+        this.classList.add('active');
+        
+        const category = this.dataset.category;
+        renderConditions(category);
+      });
+    });
+
+    // إعدادات الخصوصية - معالجة التغييرات
+    document.getElementById('share-health-info').addEventListener('change', function() {
+      savePrivacySettings();
+      
+      const profile = loadProfileData();
+      const conditions = loadHealthConditions();
+      const activeConditions = conditions.filter(c => c.enabled);
+      
+      if (this.checked) {
+        // حفظ الحالات الصحية النشطة في الملف الشخصي
+        profile.healthConditions = activeConditions.map(c => c.name);
+        localStorage.setItem('hayyak_user_profile', JSON.stringify(profile));
+        showNotification("سيتم مشاركة معلوماتك الصحية مع المطاعم والمتاجر");
+      } else {
+        // إزالة الحالات الصحية من الملف الشخصي
+        delete profile.healthConditions;
+        localStorage.setItem('hayyak_user_profile', JSON.stringify(profile));
+        showNotification("تم إيقاف مشاركة معلوماتك الصحية");
+      }
+    });
+
+    document.getElementById('personalized-recommendations').addEventListener('change', function() {
+      savePrivacySettings();
+      showNotification(this.checked ? 
+        "ستحصل على توصيات مخصصة بناءً على حالتك الصحية" : 
+        "تم إيقاف التوصيات المخصصة");
+    });
+
+    document.getElementById('health-notifications').addEventListener('change', function() {
+      savePrivacySettings();
+      showNotification(this.checked ? 
+        "ستتلقى نصائح وتذكيرات صحية" : 
+        "تم إيقاف الإشعارات الصحية");
+    });
+
+    // تحقق من وجود ملف المستخدم
+    const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile'));
+    if (!userProfile) {
+      window.location.href = 'indexQ.html';
+    }
+
+    // التهيئة الأولية
+    document.addEventListener('DOMContentLoaded', function() {
+      renderHealthSummary();
+      renderConditions();
+      
+      // تحميل إعدادات الخصوصية
+      const settings = loadPrivacySettings();
+      document.getElementById('share-health-info').checked = settings.shareHealthInfo;
+      document.getElementById('personalized-recommendations').checked = settings.personalizedRecommendations;
+      document.getElementById('health-notifications').checked = settings.healthNotifications;
+      
+      // إضافة أنماط للرسوم المتحركة
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // عرض نصيحة صحية إذا كانت الإشعارات مفعلة
+      if (settings.healthNotifications) {
+        setTimeout(() => {
+          const randomTip = healthTips[Math.floor(Math.random() * healthTips.length)];
+          showNotification(randomTip, 'info');
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>

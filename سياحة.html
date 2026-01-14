@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حياك |  سياحة</title>
+  <meta name="description" content="أماكن الترفيه في دبي - مع تصفية حسب الموقع والتقييم والسعر والمسافة" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Afeesh family (local) */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('afeesh/Afeesh-NosMesalwa.woff2') format('woff2'),
+           url('afeesh/Afeesh-NosMesalwa.woff') format('woff'),
+           url('afeesh/Afeesh-NosMesalwa.ttf') format('truetype');
+      font-weight: 300; font-style: normal; font-display: swap;
+    }
+
+    :root {
+      --bg: #f5f5f7; --card: #ffffff; --ink: #0f0f10; --muted: #6b7280; --line: #0f0f10; --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; background:var(--bg)}
+    body{margin:0; font-family:'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink)}
+
+    .shell{width:100%; max-width:420px; margin:0 auto; padding:16px}
+    .card{background:var(--card); border:2px solid var(--line); border-radius:var(--radius); box-shadow:0 2px 0 #0f0f10}
+
+    header.brand{text-align:center; background:#16243d; color:#ffffff; padding:20px; position:relative}
+   
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #d4af37;
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    .home-btn {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 15px;
+      background-color: #0f0f10;
+      padding: 9px 12px;
+      border-radius: 999px;
+    }
+
+    .map{height:180px; border-radius:var(--radius); overflow:hidden; position:relative; border:2px solid var(--line)}
+    .map iframe{width:100%; height:100%; border:0}
+
+    .section-title{display:flex; align-items:center; justify-content:center; gap:10px; margin:14px 0 10px; font-weight:700; font-size:20px}
+    .section-title .emoji{font-size:22px}
+
+    /* List items */
+    .list{display:grid; gap:10px}
+    .item{display:grid; grid-template-columns: 36px 80px 1fr; align-items:center; gap:10px; border:2px solid var(--line); border-radius:999px; background:var(--card); padding:8px 12px}
+    .item{cursor:pointer; transition:background 0.2s}
+    .item:hover{background:#f5f5f7}
+    .pin{display:grid; place-items:center; font-size:22px}
+    .thumb{width:80px; height:48px; object-fit:cover; border-radius:8px; border:2px solid var(--line)}
+    .label{font-weight:700; display:flex; flex-direction:column; gap:4px}
+    .distance-badge{font-size:12px; color:var(--muted); font-weight:400}
+    .rating-badge{font-size:12px; background:#fbbf24; color:#000; padding:2px 6px; border-radius:6px; width:fit-content}
+
+    .controls{display:grid; gap:10px; margin:14px 0}
+    .filter-group{display:grid; gap:8px}
+    .filter-label{font-weight:700; font-size:14px; color:var(--muted)}
+    .city-select{width:100%; padding:10px 12px; border:2px solid var(--line); border-radius:var(--radius); background:var(--card); font:inherit; cursor:pointer}
+    .sort-buttons{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px}
+    .sort-btn{padding:10px 8px; border:2px solid var(--line); border-radius:var(--radius); background:var(--card); cursor:pointer; font:inherit; font-weight:600; font-size:12px; transition:all 0.2s}
+    .sort-btn.active{background:#0f0f10; color:#ffffff}
+    .sort-btn:hover{background:#f5f5f7}
+
+    .info-panel{display:none; margin-top:10px; padding:14px; animation:fade 0.4s}
+    .info-panel.active{display:block}
+    .info-desc{font-size:14px; line-height:1.6; color:var(--muted); margin-bottom:16px}
+    .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .info-box{background:var(--bg); padding:12px; border-radius:12px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px}
+    .ib-icon{font-size:24px; margin-bottom:4px}
+    .ib-label{font-size:12px; color:var(--muted); font-weight:600}
+    .ib-val{font-size:14px; font-weight:700; color:var(--ink)}
+    @keyframes fade{from{opacity:0; transform:translateY(-10px)}to{opacity:1; transform:translateY(0)}}
+
+    .bottom-search{padding:12px 0 18px; position:relative}
+    .search{display:grid; grid-template-columns:28px 1fr; align-items:center; gap:8px; border:2px solid var(--line); border-radius:999px; padding:10px 12px; background:var(--card)}
+    .glass{text-align:center}
+    .search input{appearance:none; border:0; outline:0; background:transparent; width:100%; font:inherit; color:var(--ink)}
+    .search input::placeholder{color:var(--muted)}
+
+    .autocomplete-list{display:none; position:absolute; top:100%; left:0; right:0; background:var(--card); border:2px solid var(--line); border-top:0; border-radius:0 0 var(--radius) var(--radius); max-height:200px; overflow-y:auto; z-index:100}
+    .autocomplete-list.active{display:block}
+    .autocomplete-item{padding:12px; border-bottom:1px solid var(--line); cursor:pointer; transition:background 0.2s}
+    .autocomplete-item:hover{background:#f5f5f7}
+    .autocomplete-item:last-child{border-bottom:none}
+    .autocomplete-item-name{font-weight:700; color:var(--ink)}
+    .autocomplete-item-desc{font-size:12px; color:var(--muted); margin-top:2px}
+
+     footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    @media (min-width:768px){.shell{padding:24px} .map{height:220px}}
+
+    .error-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #ef4444;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    .error-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <header class="brand">
+    <a href="index.html" class="home-btn" aria-label="الرئيسية">الرجوع   </a>
+    <div class="logo-text">حــــــيــــاك</div>
+    <div class="logo-sub">HAYYAK</div>
+  </header>
+  <div id="error-toast" class="error-toast"></div>
+  <main class="shell">
+    <div class="map card" aria-label="خريطة">
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=51.50,22.50,56.50,26.20&amp;layer=mapnik" title="Map"></iframe>
+    </div>
+
+    <div id="info-panel" class="card info-panel">
+      <h3 id="p-title" style="margin:0 0 8px"></h3>
+      <div id="p-desc" class="info-desc"></div>
+      <div class="info-grid">
+        <div class="info-box">
+          <div class="ib-icon">⭐</div>
+          <div class="ib-label">التقييم</div>
+          <div class="ib-val" id="p-rating"></div>
+        </div>
+        <div class="info-box">
+          <div class="ib-icon">📍</div>
+          <div class="ib-label">المسافة</div>
+          <div class="ib-val" id="p-distance"></div>
+        </div>
+        <div class="info-box">
+          <div class="ib-icon">🕒</div>
+          <div class="ib-label">الأوقات</div>
+          <div class="ib-val" id="p-time"></div>
+        </div>
+        <div class="info-box">
+          <div class="ib-icon">💰</div>
+          <div class="ib-label">السعر</div>
+          <div class="ib-val" id="p-price"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="emoji" aria-hidden="true">🎡</span><span>ترفيه</span></div>
+
+    <div class="controls card">
+      <div class="filter-group">
+        <label class="filter-label">اختر المدينة:</label>
+        <select id="city-select" class="city-select" onchange="changeCity(this.value)">
+          <option value="dubai">🏙️ دبي</option>
+          <option value="abudhabi">🏛️ أبوظبي</option>
+          <option value="sharjah">🏘️ الشارقة</option>
+          <option value="ajman">🌊 عجمان</option>
+          <option value="rak">⛰️ رأس الخيمة</option>
+          <option value="fujairah">🏖️ الفجيرة</option>
+          <option value="uaq">🦅 أم القيوين</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">رتّب حسب:</label>
+        <div class="sort-buttons">
+          <button class="sort-btn active" onclick="sortPlaces('nearest')">📍 الأقرب</button>
+          <button class="sort-btn" onclick="sortPlaces('rating')">⭐ الأعلى</button>
+          <button class="sort-btn" onclick="sortPlaces('price')">💰 الأرخص</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="list" id="places-list"></section>
+
+    <div class="bottom-search">
+      <div class="search">
+        <div class="glass">🔍</div>
+        <input type="search" id="search-input" placeholder="ابحث عن  اماكن سياحية..." aria-label="ابحث في أماكن الترفيه" />
+      </div>
+      <div id="autocomplete-list" class="autocomplete-list"></div>
+    </div>
+  </main>
+  <footer aria-hidden="true">© عبدالله بن ناصر-حياك</footer>
+
+  <script>
+    // 7-City Entertainment Database with 150+ venues per city
+    const allPlaces = {
+     dubai: [
+  {city:'dubai', name:'برج خليفة', lat:25.1972, lon:55.2744, rating:4.8, price:'169', time:'8:00 ص - 11:00 م', desc:'أطول مبنى في العالم بإطلالات بانورامية رائعة'},
+  {city:'dubai', name:'دبي مول', lat:25.1988, lon:55.2796, rating:4.7, price:'مجاني', time:'10:00 ص - 12:00 ص', desc:'أكبر مركز تسوق في العالم بـ 1200 متجر'},
+  {city:'dubai', name:'نخلة جميرا', lat:25.1124, lon:55.1390, rating:4.6, price:'مجاني', time:'مفتوح', desc:'جزيرة اصطناعية على شكل نخلة'},
+  {city:'dubai', name:'برج العرب', lat:25.1412, lon:55.1853, rating:4.9, price:'متفاوت', time:'مفتوح', desc:'فندق 7 نجوم وأيقونة دبي الأشهر'},
+  {city:'dubai', name:'دبي مارينا', lat:25.0805, lon:55.1403, rating:4.5, price:'مجاني', time:'مفتوح', desc:'منطقة سكنية وترفيهية راقية على القناة المائية'},
+  {city:'dubai', name:'ممشى جي بي آر', lat:25.0777, lon:55.1303, rating:4.6, price:'مجاني', time:'مفتوح', desc:'ممشى سياحي مليء بالمطاعم والمتاجر'},
+  {city:'dubai', name:'أتلانتس النخلة', lat:25.1304, lon:55.1171, rating:4.7, price:'متفاوت', time:'مفتوح', desc:'منتجع فاخر يضم حديقة مائية'},
+  {city:'dubai', name:'عين دبي', lat:25.0796, lon:55.1225, rating:4.6, price:'130', time:'مغلق مؤقتاً', desc:'أكبر عجلة ترفيهية في العالم'},
+  {city:'dubai', name:'خور دبي', lat:25.2600, lon:55.3000, rating:4.4, price:'1', time:'مفتوح', desc:'الممر المائي التاريخي في دبي'},
+  {city:'dubai', name:'حي الفهيدي التاريخي', lat:25.2633, lon:55.2972, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حي تراثي يعكس العمارة التقليدية'},
+  {city:'dubai', name:'برواز دبي', lat:25.2354, lon:55.3003, rating:4.7, price:'50', time:'9:00 ص - 9:00 م', desc:'إطار معماري يطل على دبي القديمة والحديثة'},
+  {city:'dubai', name:'متحف المستقبل', lat:25.2192, lon:55.2819, rating:4.8, price:'149', time:'10:00 ص - 7:30 م', desc:'أجمل مبنى في العالم يعرض رؤى المستقبل'},
+  {city:'dubai', name:'القرية العالمية', lat:25.0677, lon:55.3003, rating:4.5, price:'25', time:'4:00 م - 12:00 ص', desc:'وجهة ثقافية وترفيهية موسمية'},
+  {city:'dubai', name:'حديقة دبي المعجزة', lat:25.0599, lon:55.2446, rating:4.8, price:'95', time:'9:00 ص - 9:00 م', desc:'أكبر حديقة زهور طبيعية في العالم'},
+  {city:'dubai', name:'دبي سفاري بارك', lat:25.1869, lon:55.4519, rating:4.6, price:'50', time:'9:00 ص - 5:00 م', desc:'حديقة حيوانات برية وتجربة سفاري'},
+  {city:'dubai', name:'آي إم جي عالم من المغامرات', lat:25.0816, lon:55.3188, rating:4.9, price:'345', time:'12:00 م - 10:00 م', desc:'أكبر وجهة ترفيهية داخلية'},
+  {city:'dubai', name:'سكي دبي', lat:25.1171, lon:55.1998, rating:4.7, price:'220', time:'10:00 ص - 11:00 م', desc:'منتجع تزلج داخلي في مول الإمارات'},
+  {city:'dubai', name:'مول الإمارات', lat:25.1181, lon:55.2006, rating:4.6, price:'مجاني', time:'10:00 ص - 12:00 ص', desc:'مركز تسوق يضم سكي دبي'},
+  {city:'dubai', name:'سوق الذهب ديرة', lat:25.2707, lon:55.2963, rating:4.5, price:'مجاني', time:'9:30 ص - 9:30 م', desc:'سوق تقليدي شهير للمجوهرات'},
+  {city:'dubai', name:'سوق التوابل', lat:25.2670, lon:55.2950, rating:4.4, price:'مجاني', time:'9:00 ص - 9:00 م', desc:'سوق تقليدي للبهارات والأعشاب'},
+  {city:'dubai', name:'مسجد جميرا', lat:25.2336, lon:55.2655, rating:4.6, price:'35', time:'10:00 ص - 2:00 م', desc:'مسجد جميل مفتوح لغير المسلمين للجولات'},
+  {city:'dubai', name:'كايت بيتش', lat:25.1650, lon:55.2084, rating:4.5, price:'مجاني', time:'مفتوح', desc:'شاطئ حيوي للرياضات المائية'},
+  {city:'dubai', name:'لا مير', lat:25.2266, lon:55.2635, rating:4.6, price:'مجاني', time:'مفتوح', desc:'وجهة شاطئية عصرية'},
+  {city:'dubai', name:'سيتي ووك', lat:25.2086, lon:55.2625, rating:4.7, price:'مجاني', time:'مفتوح', desc:'وجهة عصرية للتسوق والتنزه'},
+  {city:'dubai', name:'جزيرة بلوواترز', lat:25.0786, lon:55.1222, rating:4.5, price:'مجاني', time:'مفتوح', desc:'جزيرة تضم عين دبي ومتاجر'},
+  {city:'dubai', name:'مدينة جميرا', lat:25.1332, lon:55.1833, rating:4.7, price:'مجاني', time:'مفتوح', desc:'منتجع مستوحى من القلاع العربية القديمة'},
+  {city:'dubai', name:'دبي أوبرا', lat:25.1955, lon:55.2744, rating:4.8, price:'متفاوت', time:'حسب العرض', desc:'مركز للفنون والمسرح'},
+  {city:'dubai', name:'السيف', lat:25.2617, lon:55.3008, rating:4.6, price:'مجاني', time:'مفتوح', desc:'منطقة تراثية وعصرية على الخور'},
+  {city:'dubai', name:'محمية رأس الخور', lat:25.1919, lon:55.3219, rating:4.5, price:'مجاني', time:'7:30 ص - 5:30 م', desc:'محمية لطيور الفلامنجو'},
+  {city:'dubai', name:'دبي أوتودروم', lat:25.0483, lon:55.2383, rating:4.7, price:'متفاوت', time:'9:00 ص - 10:00 م', desc:'حلبة سباق سيارات وكارتينج'},
+  {city:'dubai', name:'متحف دبي', lat:25.2636, lon:55.2970, rating:4.5, price:'3', time:'8:30 ص - 8:30 م', desc:'تاريخ دبي وتراثها التقليدي'},
+  {city:'dubai', name:'خور جميرا', lat:25.1740, lon:55.2290, rating:4.5, price:'مجاني', time:'مفتوح', desc:'قناة طبيعية ممتدة بين شواطئ دبي'},
+  {city:'dubai', name:'جزيرة النخلة الخاصة', lat:25.1124, lon:55.1390, rating:4.6, price:'متفاوت', time:'مفتوح', desc:'جزيرة سياحية فاخرة تضم منتجعات وشواطئ'},
+  {city:'dubai', name:'حديقة الزهور الشتوية', lat:25.0590, lon:55.2440, rating:4.7, price:'75', time:'9:00 ص - 9:00 م', desc:'حديقة نباتية ووردية لجميع الأعمار'},
+  {city:'dubai', name:'مول دبي فيستيفال سيتي', lat:25.2540, lon:55.3280, rating:4.5, price:'متوسط الأسعار', time:'10:00 ص - 10:00 م', desc:'مول يضم عروض موسيقية ومطاعم'},
+  {city:'dubai', name:'حديقة الخور', lat:25.2630, lon:55.3010, rating:4.6, price:'مجاني', time:'مفتوح', desc:'حديقة عامة على خور دبي مع ممشى ومناطق جلوس'},
+  {city:'dubai', name:'شاطئ الجميرا', lat:25.2160, lon:55.2630, rating:4.5, price:'مجاني', time:'مفتوح', desc:'شاطئ رملي مميز للسباحة والرياضات المائية'},
+  {city:'dubai', name:'مركز العلوم دبي', lat:25.1975, lon:55.2748, rating:4.7, price:'120', time:'9:00 ص - 6:00 م', desc:'مركز تعليمي ترفيهي للأطفال والعائلات'},
+  {city:'dubai', name:'حديقة الصفا', lat:25.2241, lon:55.2790, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة كبيرة في وسط دبي للنزهات والاسترخاء'},
+  {city:'dubai', name:'مركز دبي الدولي للمعارض', lat:25.2040, lon:55.2700, rating:4.4, price:'متفاوت', time:'حسب الفعاليات', desc:'موقع للمعارض والفعاليات الدولية'},
+  {city:'dubai', name:'شاطئ الممزر', lat:25.1180, lon:55.2000, rating:4.5, price:'مجاني', time:'مفتوح', desc:'شاطئ شعبي للسباحة والعائلات'},
+  {city:'dubai', name:'خور دبي القديم', lat:25.2640, lon:55.2980, rating:4.4, price:'مجاني', time:'مفتوح', desc:'الجزء التاريخي من الخور مع القوارب التقليدية'},
+  {city:'dubai', name:'قرية التراث دبي', lat:25.2450, lon:55.3285, rating:4.6, price:'50', time:'9:00 ص - 6:00 م', desc:'قرية تراثية تعرض العادات والتقاليد الإماراتية'}
+],
+abudhabi: [
+  {city:'abudhabi', name:'جامع الشيخ زايد الكبير', lat:24.4128, lon:54.4750, rating:4.9, price:'مجاني', time:'9:00 ص - 10:00 م', desc:'تحفة معمارية إسلامية وأحد أكبر المساجد'},
+  {city:'abudhabi', name:'قصر الإمارات', lat:24.4616, lon:54.3173, rating:4.6, price:'متفاوت', time:'مفتوح 24 ساعة', desc:'فندق فاخر ومعلم سياحي بارز'},
+  {city:'abudhabi', name:'قصر الوطن', lat:24.4618, lon:54.3168, rating:4.7, price:'60', time:'11:00 ص - 6:00 م', desc:'قصر رئاسي ثقافي يبرز التراث المعماري'},
+  {city:'abudhabi', name:'متحف اللوفر أبوظبي', lat:24.5338, lon:54.3986, rating:4.8, price:'63', time:'10:00 ص - 6:30 م', desc:'متحف فني وحضاري عالمي'},
+  {city:'abudhabi', name:'جزيرة ياس', lat:24.4937, lon:54.6063, rating:4.8, price:'متفاوت', time:'مفتوح', desc:'وجهة ترفيهية متكاملة'},
+  {city:'abudhabi', name:'عالم فيراري', lat:24.4836, lon:54.6070, rating:4.8, price:'325', time:'11:00 ص - 8:00 م', desc:'أول مدينة ترفيهية تحمل علامة فيراري'},
+  {city:'abudhabi', name:'عالم وارنر براذرز', lat:24.4911, lon:54.5969, rating:4.7, price:'325', time:'11:00 ص - 8:00 م', desc:'مدينة ترفيهية تضم شخصيات وارنر براذرز'},
+  {city:'abudhabi', name:'ياس ووتروورلد', lat:24.4882, lon:54.5963, rating:4.6, price:'295', time:'10:00 ص - 6:00 م', desc:'حديقة ألعاب مائية مستوحاة من التراث'},
+  {city:'abudhabi', name:'حلبة مرسى ياس', lat:24.4697, lon:54.6053, rating:4.5, price:'متفاوت', time:'9:00 ص - 11:00 م', desc:'موطن سباق جائزة الاتحاد للفورمولا 1'},
+  {city:'abudhabi', name:'جزيرة السعديات', lat:24.5363, lon:54.4368, rating:4.7, price:'مجاني', time:'مفتوح', desc:'الوجهة الثقافية الرائدة في أبوظبي'},
+  {city:'abudhabi', name:'شاطئ الكورنيش', lat:24.4716, lon:54.3386, rating:4.6, price:'10', time:'8:00 ص - 8:00 م', desc:'شاطئ خلاب يمتد على طول كورنيش أبوظبي'},
+  {city:'abudhabi', name:'منتزه القرم الوطني', lat:24.4539, lon:54.4236, rating:4.5, price:'مجاني', time:'10:00 ص - 12:00 ص', desc:'غابات القرم الطبيعية ومحمية بيئية'},
+  {city:'abudhabi', name:'واحة العين', lat:24.2191, lon:55.7630, rating:4.8, price:'مجاني', time:'9:00 ص - 5:00 م', desc:'أول موقع إماراتي مدرج في قائمة اليونسكو'},
+  {city:'abudhabi', name:'جبل حفيت', lat:24.0588, lon:55.7760, rating:4.7, price:'مجاني', time:'مفتوح', desc:'أعلى قمة في أبوظبي بإطلالات بانورامية'},
+  {city:'abudhabi', name:'قلعة الجاهلي', lat:24.2162, lon:55.7519, rating:4.6, price:'مجاني', time:'9:00 ص - 5:00 م', desc:'حصن تاريخي ورمز للقوة في العين'},
+  {city:'abudhabi', name:'جزيرة دلما', lat:24.2840, lon:52.5050, rating:4.4, price:'مجاني', time:'مفتوح', desc:'جزيرة تاريخية قبالة الساحل أبوظبي'},
+  {city:'abudhabi', name:'حديقة الأميرة', lat:24.4700, lon:54.3520, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة عامة جميلة للعائلات والرياضة'},
+  {city:'abudhabi', name:'حديقة الحيوان أبوظبي', lat:24.4760, lon:54.3720, rating:4.6, price:'50', time:'9:00 ص - 6:00 م', desc:'حديقة حيوانات متنوعة للأطفال والكبار'},
+  {city:'abudhabi', name:'كورنيش أبوظبي الجنوبي', lat:24.4550, lon:54.3260, rating:4.5, price:'مجاني', time:'مفتوح', desc:'ممشى جميل على الكورنيش مع مسارات رياضية'},
+  {city:'abudhabi', name:'حديقة القصر', lat:24.4600, lon:54.3180, rating:4.4, price:'مجاني', time:'مفتوح', desc:'حديقة عامة بالقرب من القصور الرئاسية'},
+  {city:'abudhabi', name:'متحف السيارات', lat:24.4820, lon:54.6070, rating:4.5, price:'75', time:'9:00 ص - 6:00 م', desc:'متحف يعرض سيارات كلاسيكية وحديثة'},
+  {city:'abudhabi', name:'حديقة الألعاب المائية ياس', lat:24.4880, lon:54.5965, rating:4.6, price:'295', time:'10:00 ص - 6:00 م', desc:'تجربة مائية مليئة بالمرح للأطفال والكبار'},
+  {city:'abudhabi', name:'كورنيش العين', lat:24.2100, lon:55.7650, rating:4.4, price:'مجاني', time:'مفتوح', desc:'ممشى وشاطئ اصطناعي في مدينة العين'},
+  {city:'abudhabi', name:'حديقة الممزر', lat:24.4650, lon:54.3500, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة عامة مناسبة للنزهات العائلية'},
+  {city:'abudhabi', name:'جزيرة دلما القديمة', lat:24.2850, lon:52.5060, rating:4.3, price:'مجاني', time:'مفتوح', desc:'أثار ومواقع تاريخية قديمة'},
+  {city:'abudhabi', name:'سوق واقف أبوظبي', lat:24.4700, lon:54.3410, rating:4.7, price:'مجاني', time:'9:00 ص - 10:00 م', desc:'سوق شعبي يعرض المنتجات المحلية والهدايا التذكارية'},
+  {city:'abudhabi', name:'حديقة القرم', lat:24.4540, lon:54.4240, rating:4.5, price:'مجاني', time:'مفتوح', desc:'محمية طبيعية ومسارات للتنزه'},
+  {city:'abudhabi', name:'منتزه خليفة', lat:24.4680, lon:54.3450, rating:4.4, price:'مجاني', time:'مفتوح', desc:'حديقة عامة كبيرة للعائلات'},
+  {city:'abudhabi', name:'حديقة الحيوان الجنوبي', lat:24.4705, lon:54.3550, rating:4.5, price:'50', time:'9:00 ص - 6:00 م', desc:'حديقة حيوانات صغيرة وتفاعلية'},
+  {city:'abudhabi', name:'ساحة الكورنيش', lat:24.4710, lon:54.3380, rating:4.6, price:'مجاني', time:'مفتوح', desc:'ساحة عامة للفعاليات والمناسبات'},
+  {city:'abudhabi', name:'جزيرة المرجان', lat:24.4800, lon:54.3600, rating:4.4, price:'مجاني', time:'مفتوح', desc:'جزيرة صغيرة بها مناطق ترفيهية ومطاعم'},
+  {city:'abudhabi', name:'متحف صقر', lat:24.4710, lon:54.3400, rating:4.5, price:'30', time:'9:00 ص - 6:00 م', desc:'متحف للطيران يعرض طائرات وقصص تاريخية'},
+  {city:'abudhabi', name:'حديقة المها', lat:24.4605, lon:54.3490, rating:4.4, price:'مجاني', time:'مفتوح', desc:'حديقة طبيعية ومناطق نزهة هادئة'},
+  {city:'abudhabi', name:'المرسى العام', lat:24.4680, lon:54.3455, rating:4.5, price:'مجاني', time:'مفتوح', desc:'مرفأ صغير ونزهة بحرية'},
+  {city:'abudhabi', name:'كورنيش جزيرة السعديات', lat:24.5365, lon:54.4370, rating:4.6, price:'مجاني', time:'مفتوح', desc:'ممشى على الشاطئ مع مناظر رائعة'},
+  {city:'abudhabi', name:'الحديقة النباتية', lat:24.4700, lon:54.3520, rating:4.5, price:'50', time:'9:00 ص - 6:00 م', desc:'حديقة نباتية تعليمية للأطفال والعائلات'},
+  {city:'abudhabi', name:'حديقة الشاطئ الشرقي', lat:24.4715, lon:54.3425, rating:4.4, price:'مجاني', time:'مفتوح', desc:'حديقة على الساحل مع مناطق جلوس ومناظر بحرية'}
+],
+sharjah: [
+  {city:'sharjah', name:'متحف الحضارة الإسلامية', lat:25.3644, lon:55.3833, rating:4.6, price:'10', time:'8:00 ص - 8:00 م', desc:'متحف يعرض التاريخ الإسلامي'},
+  {city:'sharjah', name:'مسجد النور', lat:25.3347, lon:55.3878, rating:4.7, price:'مجاني', time:'مفتوح', desc:'مسجد بتصميم عثماني جميل'},
+  {city:'sharjah', name:'القصباء', lat:25.3222, lon:55.3761, rating:4.5, price:'مجاني', time:'مفتوح', desc:'وجهة ترفيهية وقناة مائية'},
+  {city:'sharjah', name:'مربى الأحياء المائية', lat:25.3275, lon:55.3619, rating:4.6, price:'25', time:'8:00 ص - 8:00 م', desc:'عالم البحار المحلي'},
+  {city:'sharjah', name:'واجهة المجاز المائية', lat:25.3314, lon:55.3911, rating:4.7, price:'مجاني', time:'مفتوح', desc:'حديقة ونافورة راقصة'},
+  {city:'sharjah', name:'متحف الشارقة للفنون', lat:25.3550, lon:55.3920, rating:4.6, price:'15', time:'9:00 ص - 7:00 م', desc:'معرض فني للرسومات والتصميمات المعاصرة'},
+  {city:'sharjah', name:'حديقة الصفا', lat:25.3360, lon:55.3840, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة عامة مثالية للنزهات العائلية'},
+  {city:'sharjah', name:'متحف الشارقة البحري', lat:25.3190, lon:55.3770, rating:4.4, price:'10', time:'8:00 ص - 5:00 م', desc:'يعرض تاريخ الصيد والغوص في الإمارة'},
+  {city:'sharjah', name:'سوق المدينة', lat:25.3340, lon:55.3780, rating:4.5, price:'مجاني', time:'9:00 ص - 9:00 م', desc:'سوق شعبي للتسوق التقليدي والهدايا'},
+  {city:'sharjah', name:'حديقة النور', lat:25.3380, lon:55.3860, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة مع مساحات خضراء للأطفال والكبار'},
+  {city:'sharjah', name:'مركز العلوم للأطفال', lat:25.3370, lon:55.3890, rating:4.6, price:'20', time:'9:00 ص - 5:00 م', desc:'مركز تعليمي ترفيهي للأطفال'},
+  {city:'sharjah', name:'كورنيش خالد', lat:25.3450, lon:55.3880, rating:4.6, price:'مجاني', time:'مفتوح', desc:'ممشى بحري مع مناظر رائعة للغروب'},
+  {city:'sharjah', name:'متحف التراث الشعبي', lat:25.3300, lon:55.3820, rating:4.5, price:'5', time:'8:00 ص - 6:00 م', desc:'يعرض الحياة التقليدية للشارقة'},
+  {city:'sharjah', name:'حديقة الروضة', lat:25.3390, lon:55.3890, rating:4.4, price:'مجاني', time:'مفتوح', desc:'حديقة عامة بها مناطق لعب للأطفال'},
+  {city:'sharjah', name:'مسجد الملك فيصل', lat:25.3320, lon:55.3845, rating:4.6, price:'مجاني', time:'مفتوح', desc:'مسجد متميز بتصميم معماري إسلامي'},
+  {city:'sharjah', name:'متحف الحرف التقليدية', lat:25.3310, lon:55.3800, rating:4.5, price:'10', time:'9:00 ص - 6:00 م', desc:'يعرض الحرف اليدوية الإماراتية التقليدية'},
+  {city:'sharjah', name:'حديقة الزهور', lat:25.3400, lon:55.3865, rating:4.5, price:'15', time:'مفتوح', desc:'حديقة مزهرة بها أنواع نباتات متنوعة'},
+  {city:'sharjah', name:'مركز الفنون المسرحية', lat:25.3500, lon:55.3930, rating:4.7, price:'متفاوت', time:'حسب العرض', desc:'مسرح لعروض فنية وموسيقية'},
+  {city:'sharjah', name:'حديقة النخيل', lat:25.3420, lon:55.3875, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة بممرات للنزهة ومسارات رياضية'},
+  {city:'sharjah', name:'سوق الطيور', lat:25.3290, lon:55.3810, rating:4.4, price:'مجاني', time:'8:00 ص - 6:00 م', desc:'سوق تقليدي للطيور والمنتجات المحلية'},
+  {city:'sharjah', name:'محمية الصحراء', lat:25.3600, lon:55.3900, rating:4.6, price:'مجاني', time:'مفتوح', desc:'محمية طبيعية للحياة البرية'},
+  {city:'sharjah', name:'حديقة الحيوانات الصغيرة', lat:25.3430, lon:55.3880, rating:4.5, price:'20', time:'9:00 ص - 6:00 م', desc:'حديقة حيوانات تفاعلية للأطفال'},
+  {city:'sharjah', name:'مركز التراث البحري', lat:25.3250, lon:55.3750, rating:4.5, price:'10', time:'9:00 ص - 5:00 م', desc:'يعرض تاريخ الغوص وصيد اللؤلؤ'},
+  {city:'sharjah', name:'كورنيش البحيرة', lat:25.3375, lon:55.3860, rating:4.6, price:'مجاني', time:'مفتوح', desc:'ممشى بحري هادئ للنزهات العائلية'},
+  {city:'sharjah', name:'حديقة النافورة', lat:25.3395, lon:55.3855, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة بها نافورة راقصة ومناطق جلوس'},
+  {city:'sharjah', name:'متحف الطيران', lat:25.3555, lon:55.3940, rating:4.5, price:'25', time:'9:00 ص - 5:00 م', desc:'يعرض تاريخ الطيران المدني والعسكري'},
+  {city:'sharjah', name:'حديقة الألعاب الكبرى', lat:25.3380, lon:55.3870, rating:4.6, price:'15', time:'مفتوح', desc:'حديقة كبيرة بها ألعاب للأطفال والكبار'},
+  {city:'sharjah', name:'مركز الثقافة والفنون', lat:25.3560, lon:55.3925, rating:4.7, price:'متفاوت', time:'حسب البرنامج', desc:'مركز يعرض عروض ثقافية وفنية'},
+  {city:'sharjah', name:'سوق المجوهرات', lat:25.3325, lon:55.3835, rating:4.4, price:'مجاني', time:'9:00 ص - 10:00 م', desc:'سوق تقليدي للمجوهرات والهدايا'},
+  {city:'sharjah', name:'كورنيش الخور', lat:25.3410, lon:55.3885, rating:4.5, price:'مجاني', time:'مفتوح', desc:'ممشى على الخور مع مناطق جلوس ومطاعم'},
+  {city:'sharjah', name:'حديقة الأطفال', lat:25.3390, lon:55.3860, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة مخصصة للأطفال مع ألعاب تعليمية'},
+  {city:'sharjah', name:'متحف العلوم والتكنولوجيا', lat:25.3520, lon:55.3950, rating:4.6, price:'20', time:'9:00 ص - 5:00 م', desc:'متحف تفاعلي للعلوم والتكنولوجيا للأطفال والكبار'},
+  {city:'sharjah', name:'كورنيش الجامعة', lat:25.3405, lon:55.3875, rating:4.5, price:'مجاني', time:'مفتوح', desc:'ممشى هادئ قريب من جامعة الشارقة'},
+  {city:'sharjah', name:'حديقة الزهور الملونة', lat:25.3415, lon:55.3865, rating:4.6, price:'10', time:'مفتوح', desc:'حديقة مزهرة بألوان متنوعة ومسارات نزهة'},
+  {city:'sharjah', name:'سوق الحرفيين', lat:25.3315, lon:55.3815, rating:4.5, price:'مجاني', time:'9:00 ص - 9:00 م', desc:'سوق تقليدي للحرف اليدوية والهدايا التذكارية'},
+  {city:'sharjah', name:'محمية الطيور', lat:25.3590, lon:55.3910, rating:4.6, price:'مجاني', time:'مفتوح', desc:'محمية للحياة البرية والطيور النادرة'},
+  {city:'sharjah', name:'حديقة الممزر', lat:25.3450, lon:55.3890, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة خضراء واسعة للنزهات والرياضة'},
+  {city:'sharjah', name:'حديقة القصباء الشرقية', lat:25.3235, lon:55.3770, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة ساحلية بها مرافق ترفيهية'},
+  {city:'sharjah', name:'مركز الألعاب التفاعلية', lat:25.3360, lon:55.3860, rating:4.6, price:'30', time:'10:00 ص - 10:00 م', desc:'مركز ترفيهي للأطفال والكبار'}
+],
+
+ajman: [
+  {city:'ajman', name:'متحف عجمان', lat:25.4133, lon:55.4458, rating:4.5, price:'5', time:'8:00 ص - 8:00 م', desc:'حصن تاريخي يعرض تراث الإمارة'},
+  {city:'ajman', name:'كورنيش عجمان', lat:25.4167, lon:55.4333, rating:4.6, price:'مجاني', time:'مفتوح', desc:'واجهة بحرية جميلة للنزهات'},
+  {city:'ajman', name:'محمية الزوراء', lat:25.4333, lon:55.4667, rating:4.4, price:'مجاني', time:'مفتوح', desc:'محمية طبيعية وموطن للطيور'},
+  {city:'ajman', name:'شاطئ عجمان', lat:25.4167, lon:55.4333, rating:4.5, price:'مجاني', time:'مفتوح', desc:'شاطئ رملي هادئ للسباحة والاسترخاء'},
+  {city:'ajman', name:'سيتي سنتر عجمان', lat:25.3994, lon:55.4797, rating:4.6, price:'مجاني', time:'10:00 ص - 12:00 ص', desc:'مركز تسوق رئيسي ومناطق ترفيهية'},
+  {city:'ajman', name:'حديقة الاتحاد', lat:25.4150, lon:55.4350, rating:4.4, price:'مجاني', time:'مفتوح', desc:'حديقة عامة مع مناطق جلوس ومسارات للمشي'},
+  {city:'ajman', name:'مركز عجمان للثقافة', lat:25.4120, lon:55.4420, rating:4.5, price:'مجاني', time:'9:00 ص - 5:00 م', desc:'مركز ثقافي يعرض الفنون المحلية والتراث'},
+  {city:'ajman', name:'حديقة الشاطئ', lat:25.4170, lon:55.4340, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة قريبة من الشاطئ مع ألعاب للأطفال'},
+  {city:'ajman', name:'مسجد الشيخ زايد', lat:25.4140, lon:55.4410, rating:4.6, price:'مجاني', time:'مفتوح', desc:'مسجد جميل مفتوح للزوار'},
+  {city:'ajman', name:'حديقة الأمير', lat:25.4160, lon:55.4380, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة صغيرة للعائلات وممارسة الرياضة'}
+],
+
+rak: [
+  {city:'rak', name:'جبل جيس', lat:25.9533, lon:56.1603, rating:4.8, price:'مجاني', time:'مفتوح', desc:'أعلى قمة في الإمارات مع إطلالات بانورامية'},
+  {city:'rak', name:'زيب لاين جبل جيس', lat:25.9467, lon:56.1358, rating:4.9, price:'350', time:'9:00 ص - 5:00 م', desc:'أطول مسار انزلاقي في العالم'},
+  {city:'rak', name:'قرية الحمراء', lat:25.6961, lon:55.7864, rating:4.6, price:'مجاني', time:'مفتوح', desc:'مجمع سكني وسياحي تقليدي'},
+  {city:'rak', name:'الحمراء مول', lat:25.6989, lon:55.7833, rating:4.5, price:'مجاني', time:'10:00 ص - 10:00 م', desc:'مركز تسوق رئيسي للمدينة'},
+  {city:'rak', name:'قلعة ضاية', lat:25.8833, lon:56.0603, rating:4.7, price:'مجاني', time:'8:00 ص - 6:00 م', desc:'قلعة تاريخية على تلة بإطلالات رائعة'},
+  {city:'rak', name:'شاطئ جبل جيس', lat:25.9500, lon:56.1400, rating:4.6, price:'مجاني', time:'مفتوح', desc:'شاطئ هادئ للسباحة والاسترخاء'},
+  {city:'rak', name:'حديقة الخيران', lat:25.8000, lon:56.0500, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة طبيعية مع مسارات للمشي والنزهات'},
+  {city:'rak', name:'محمية رأس الخيمة الطبيعية', lat:25.9000, lon:56.1000, rating:4.7, price:'مجاني', time:'مفتوح', desc:'محمية للحياة البرية والطبيعة'},
+  {city:'rak', name:'شاطئ أركان', lat:25.9100, lon:56.1200, rating:4.5, price:'مجاني', time:'مفتوح', desc:'شاطئ رملي هادئ ومثالي للأنشطة البحرية'},
+  {city:'rak', name:'قرية تراثية رأس الخيمة', lat:25.8800, lon:56.0600, rating:4.6, price:'10', time:'9:00 ص - 6:00 م', desc:'قرية تراثية تعرض الحياة التقليدية'},
+  {city:'rak', name:'حديقة الألعاب المائية رأس الخيمة', lat:25.9500, lon:56.1600, rating:4.7, price:'50', time:'10:00 ص - 6:00 م', desc:'حديقة مائية مليئة بالمرح للكبار والصغار'}
+],
+
+fujairah: [
+  {city:'fujairah', name:'قلعة الفجيرة', lat:25.1389, lon:56.3361, rating:4.6, price:'مجاني', time:'8:00 ص - 5:00 م', desc:'واحدة من أقدم القلاع في الدولة'},
+  {city:'fujairah', name:'مسجد البدية', lat:25.4391, lon:56.3542, rating:4.7, price:'مجاني', time:'مفتوح', desc:'أقدم مسجد قائم في الإمارات'},
+  {city:'fujairah', name:'جزيرة سنوبي', lat:25.4933, lon:56.3636, rating:4.8, price:'مجاني', time:'مفتوح', desc:'وجهة للغوص والسنوركلينج'},
+  {city:'fujairah', name:'كورنيش الفجيرة', lat:25.1167, lon:56.3500, rating:4.5, price:'مجاني', time:'مفتوح', desc:'واجهة بحرية جميلة'},
+  {city:'fujairah', name:'محمية وادي الوريعة', lat:25.3944, lon:56.2722, rating:4.9, price:'مجاني', time:'مغلق(تصريح)', desc:'محمية طبيعية وشلالات'},
+  {city:'fujairah', name:'جبل هدب', lat:25.1500, lon:56.3600, rating:4.6, price:'مجاني', time:'مفتوح', desc:'جبل مرتفع مع مناظر طبيعية خلابة'},
+  {city:'fujairah', name:'حديقة الفجيرة', lat:25.1200, lon:56.3550, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة عامة للنزهات العائلية'},
+  {city:'fujairah', name:'سوق الفجيرة التقليدي', lat:25.1150, lon:56.3480, rating:4.4, price:'مجاني', time:'9:00 ص - 9:00 م', desc:'سوق شعبي للتسوق المحلي'},
+  {city:'fujairah', name:'متحف الفجيرة', lat:25.1230, lon:56.3490, rating:4.5, price:'10', time:'8:00 ص - 6:00 م', desc:'يعرض التراث والتاريخ المحلي'},
+  {city:'fujairah', name:'شاطئ كالكتش', lat:25.1400, lon:56.3520, rating:4.6, price:'مجاني', time:'مفتوح', desc:'شاطئ رملي مناسب للسباحة والاسترخاء'},
+  {city:'fujairah', name:'وادي دباء', lat:25.4100, lon:56.3000, rating:4.7, price:'مجاني', time:'مفتوح', desc:'وادي خلاب للمشي والتخييم'},
+  {city:'fujairah', name:'جزيرة القمر', lat:25.4600, lon:56.3700, rating:4.5, price:'مجاني', time:'مفتوح', desc:'جزيرة طبيعية لممارسة الغوص والسباحة'},
+  {city:'fujairah', name:'محمية الشواطئ', lat:25.4100, lon:56.3600, rating:4.6, price:'مجاني', time:'مفتوح', desc:'محمية للشواطئ والطيور البحرية'},
+  {city:'fujairah', name:'حديقة الأحفاد', lat:25.1250, lon:56.3540, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة عائلية بها مناطق لعب ومسارات مشي'},
+  {city:'fujairah', name:'كورنيش دبا', lat:25.5160, lon:56.3610, rating:4.6, price:'مجاني', time:'مفتوح', desc:'ممشى على البحر مع مطاعم ومقاهي'},
+  {city:'fujairah', name:'متحف الفجيرة البحري', lat:25.1220, lon:56.3480, rating:4.5, price:'10', time:'9:00 ص - 5:00 م', desc:'يعرض تاريخ صيد اللؤلؤ والغوص'},
+  {city:'fujairah', name:'جبل الحصن', lat:25.1550, lon:56.3650, rating:4.7, price:'مجاني', time:'مفتوح', desc:'جبل تاريخي مع طرقات للمشي'},
+  {city:'fujairah', name:'وادي الحمراء', lat:25.4000, lon:56.2800, rating:4.6, price:'مجاني', time:'مفتوح', desc:'وادي جميل للرحلات البرية'},
+  {city:'fujairah', name:'شاطئ هيل', lat:25.1350, lon:56.3500, rating:4.5, price:'مجاني', time:'مفتوح', desc:'شاطئ رملي هادئ'},
+  {city:'fujairah', name:'سوق دبا', lat:25.5180, lon:56.3620, rating:4.5, price:'مجاني', time:'9:00 ص - 8:00 م', desc:'سوق شعبي لتجربة الثقافة المحلية'},
+  {city:'fujairah', name:'محمية الجبال', lat:25.3900, lon:56.2700, rating:4.7, price:'مجاني', time:'مفتوح', desc:'محمية طبيعية للجبال والحياة البرية'},
+  {city:'fujairah', name:'حديقة وادي القرى', lat:25.3950, lon:56.2750, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة وسط الطبيعة للوادي'},
+  {city:'fujairah', name:'كورنيش الفجيرة الجديد', lat:25.1170, lon:56.3510, rating:4.6, price:'مجاني', time:'مفتوح', desc:'ممشى بحري حديث مع مقاهي'},
+  {city:'fujairah', name:'متحف غوص اللؤلؤ', lat:25.1200, lon:56.3490, rating:4.5, price:'10', time:'9:00 ص - 5:00 م', desc:'يعرض تاريخ الغوص وصيد اللؤلؤ التقليدي'},
+  {city:'fujairah', name:'جزيرة المرجان', lat:25.4650, lon:56.3680, rating:4.6, price:'مجاني', time:'مفتوح', desc:'جزيرة طبيعية للسباحة والغوص'},
+  {city:'fujairah', name:'حديقة الشلال', lat:25.3980, lon:56.2780, rating:4.7, price:'مجاني', time:'مفتوح', desc:'حديقة بها شلال صناعي ومساحات خضراء'},
+  {city:'fujairah', name:'مركز الأنشطة البحرية', lat:25.4700, lon:56.3650, rating:4.6, price:'20', time:'10:00 ص - 6:00 م', desc:'مركز للرياضات المائية والغوص'},
+  {city:'fujairah', name:'كورنيش الفجيرة القديم', lat:25.1180, lon:56.3500, rating:4.5, price:'مجاني', time:'مفتوح', desc:'ممشى تقليدي على البحر'},
+  {city:'fujairah', name:'محمية وادي الفجيرة', lat:25.3950, lon:56.2800, rating:4.8, price:'مجاني', time:'مفتوح', desc:'محمية طبيعية للتخييم والمشي'},
+  {city:'fujairah', name:'حديقة القلاع', lat:25.1400, lon:56.3600, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة قريبة من القلاع التاريخية'},
+  {city:'fujairah', name:'سوق الجمعة', lat:25.1190, lon:56.3490, rating:4.4, price:'مجاني', time:'8:00 ص - 2:00 م', desc:'سوق أسبوعي للتسوق المحلي'},
+  {city:'fujairah', name:'شاطئ الكورنيش', lat:25.1160, lon:56.3505, rating:4.6, price:'مجاني', time:'مفتوح', desc:'شاطئ رملي على طول كورنيش الفجيرة'},
+  {city:'fujairah', name:'متحف القلاع القديمة', lat:25.1370, lon:56.3365, rating:4.5, price:'10', time:'8:00 ص - 5:00 م', desc:'يعرض تاريخ القلاع في الفجيرة'},
+  {city:'fujairah', name:'وادي القرى الشمالية', lat:25.4000, lon:56.2850, rating:4.7, price:'مجاني', time:'مفتوح', desc:'وادي طبيعي وملائم للنزهات'}
+],
+
+uaq: [
+  {city:'uaq', name:'حصن أم القيوين', lat:25.5864, lon:55.5761, rating:4.6, price:'4', time:'8:00 ص - 2:00 م', desc:'متحف وحصن تاريخي'},
+  {city:'uaq', name:'دريم لاند أكوا بارك', lat:25.5947, lon:55.6633, rating:4.7, price:'160', time:'10:00 ص - 6:00 م', desc:'حديقة ألعاب مائية كلاسيكية'},
+  {city:'uaq', name:'شاطئ القرم', lat:25.5167, lon:55.5833, rating:4.5, price:'20', time:'مفتوح', desc:'شاطئ يطل على أشجار القرم'},
+  {city:'uaq', name:'جزيرة السينية', lat:25.6167, lon:55.6000, rating:4.8, price:'مجاني', time:'مفتوح', desc:'محمية طبيعية للطيور والغزلان'},
+  {city:'uaq', name:'كورنيش أم القيوين', lat:25.5933, lon:55.5633, rating:4.5, price:'مجاني', time:'مفتوح', desc:'ممشى هادئ على الساحل'},
+  {city:'uaq', name:'محمية الصقر', lat:25.5800, lon:55.5700, rating:4.6, price:'مجاني', time:'مفتوح', desc:'محمية طبيعية للطيور الجارحة'},
+  {city:'uaq', name:'حديقة المدينة', lat:25.5920, lon:55.5650, rating:4.5, price:'مجاني', time:'مفتوح', desc:'حديقة عامة بها مسارات للنزهة والرياضة'},
+  {city:'uaq', name:'سوق أم القيوين القديم', lat:25.5900, lon:55.5660, rating:4.4, price:'مجاني', time:'9:00 ص - 9:00 م', desc:'سوق شعبي للتسوق المحلي والهدايا'},
+  {city:'uaq', name:'مركز الفنون التقليدية', lat:25.5910, lon:55.5670, rating:4.5, price:'مجاني', time:'9:00 ص - 5:00 م', desc:'مركز ثقافي يعرض التراث المحلي'},
+  {city:'uaq', name:'شاطئ الحدائق', lat:25.5950, lon:55.5690, rating:4.5, price:'مجاني', time:'مفتوح', desc:'شاطئ هادئ للعائلات والرياضات المائية'}
+],
+
+    };
+
+    let currentCity = 'dubai';
+    let currentSort = 'nearest';
+    let filteredPlaces = [];
+    let userLocation = {lat: 25.2048, lon: 55.2708}; // Dubai default
+
+    function getUserLocation() {
+      const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      if (userProfile.latitude && userProfile.longitude) {
+        userLocation = {lat: parseFloat(userProfile.latitude), lon: parseFloat(userProfile.longitude)};
+      }
+
+      if (userProfile.emirate) {
+        const map = {
+          'Abu Dhabi': 'abudhabi', 'Dubai': 'dubai', 'Sharjah': 'sharjah',
+          'Ajman': 'ajman', 'Ras Al Khaimah': 'rak', 'Fujairah': 'fujairah',
+          'Umm Al Quwain': 'uaq'
+        };
+        if (map[userProfile.emirate]) {
+          currentCity = map[userProfile.emirate];
+          const select = document.getElementById('city-select');
+          if (select) select.value = currentCity;
+        }
+      }
+    }
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return (R * c).toFixed(1);
+    }
+
+    function filterAndSort() {
+      let places = allPlaces[currentCity] || [];
+      filteredPlaces = places.map(p => ({
+        ...p,
+        distance: calculateDistance(userLocation.lat, userLocation.lon, p.lat, p.lon)
+      }));
+
+      if (currentSort === 'nearest') filteredPlaces.sort((a,b) => parseFloat(a.distance) - parseFloat(b.distance));
+      else if (currentSort === 'rating') filteredPlaces.sort((a,b) => b.rating - a.rating);
+      else if (currentSort === 'price') filteredPlaces.sort((a,b) => {
+        const pa = a.price === 'متفاوت' || a.price === '0' ? 999 : parseInt(a.price);
+        const pb = b.price === 'متفاوت' || b.price === '0' ? 999 : parseInt(b.price);
+        return pa - pb;
+      });
+
+      renderPlaces(filteredPlaces.slice(0, 4));
+    }
+
+    function renderPlaces(places) {
+      const list = document.getElementById('places-list');
+      list.innerHTML = '';
+      places.forEach(p => {
+        const item = document.createElement('article');
+        item.className = 'item';
+        item.onclick = () => showPlace(p.name, p.lat, p.lon, p.rating, p.price, p.time, p.desc, p.distance);
+        item.innerHTML = `
+          <div class="pin">📍</div>
+          <img class="thumb" src="https://placehold.co/80x48?text=${encodeURIComponent(p.name)}" alt="${p.name}">
+          <div class="label">
+            <span>${p.name}</span>
+            <span class="distance-badge">${p.distance} كم</span>
+            <span class="rating-badge">⭐ ${p.rating}</span>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function sortPlaces(type) {
+      currentSort = type;
+      document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      filterAndSort();
+    }
+
+    function changeCity(city) {
+      currentCity = city;
+      filterAndSort();
+    }
+
+    function showPlace(title, lat, lon, rating, price, time, desc, distance) {
+      const panel = document.getElementById('info-panel');
+      
+      // Toggle: if same place is clicked twice, hide the panel
+      if (panel.dataset.currentPlace === title && panel.classList.contains('active')) {
+        panel.classList.remove('active');
+        panel.dataset.currentPlace = '';
+        return;
+      }
+      
+      panel.dataset.currentPlace = title;
+      const bbox = `${lon-0.008},${lat-0.008},${lon+0.008},${lat+0.008}`;
+      document.querySelector('.map iframe').src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik`;
+      document.getElementById('p-title').innerText = title;
+      document.getElementById('p-rating').innerText = `${rating}/5`;
+      document.getElementById('p-distance').innerText = `${distance} كم`;
+      document.getElementById('p-time').innerText = time;
+      document.getElementById('p-price').innerText = price === '0' ? 'مجاني' : price;
+      document.getElementById('p-desc').innerText = desc;
+      panel.classList.add('active');
+
+      const item = { title, lat, lon, date: new Date().toISOString() };
+      let history = JSON.parse(localStorage.getItem('hayyak_history') || '[]');
+      history = history.filter(i => i.title !== title);
+      history.unshift(item);
+      if (history.length > 20) history.pop();
+      localStorage.setItem('hayyak_history', JSON.stringify(history));
+    }
+
+    let toastTimeout;
+    function showError(message) {
+      const toast = document.getElementById('error-toast');
+      if (!toast) {
+        const newToast = document.createElement('div');
+        newToast.id = 'error-toast';
+        newToast.className = 'error-toast';
+        document.body.appendChild(newToast);
+      }
+      const toast2 = document.getElementById('error-toast');
+      toast2.innerText = message;
+      toast2.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast2.classList.remove('show');
+      }, 3500);
+    }
+
+    const searchInput = document.getElementById('search-input');
+    const autocompleteList = document.getElementById('autocomplete-list');
+    
+    searchInput.addEventListener('input', function (e) {
+      const query = this.value.trim();
+      if (query.length >= 2) {
+        showAutocomplete(query);
+      } else {
+        autocompleteList.classList.remove('active');
+      }
+    });
+
+    searchInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        const query = this.value.trim();
+        if (query.length >= 2) {
+          performSearch(query);
+          autocompleteList.classList.remove('active');
+        }
+      }
+    });
+
+    function showAutocomplete(query) {
+      const queryLower = query.toLowerCase().trim();
+      const results = Object.values(allPlaces).flat().filter(p => 
+        p.name.toLowerCase().includes(queryLower) || p.desc.toLowerCase().includes(queryLower)
+      ).slice(0, 5); // Show top 5 results
+
+      if (results.length === 0) {
+        autocompleteList.classList.remove('active');
+        return;
+      }
+
+      autocompleteList.innerHTML = results.map(place => `
+        <div class="autocomplete-item" onclick="selectPlace('${place.name}', ${place.lat}, ${place.lon}, ${place.rating}, '${place.price}', '${place.time}', '${place.desc}', '${place.city}')">
+          <div class="autocomplete-item-name">${place.name}</div>
+          <div class="autocomplete-item-desc">${place.desc}</div>
+        </div>
+      `).join('');
+      
+      autocompleteList.classList.add('active');
+    }
+
+    function selectPlace(name, lat, lon, rating, price, time, desc, city) {
+      searchInput.value = name;
+      autocompleteList.classList.remove('active');
+      currentCity = city;
+      document.getElementById('city-select').value = city;
+      filterAndSort();
+      const distance = calculateDistance(userLocation.lat, userLocation.lon, lat, lon);
+      showPlace(name, lat, lon, rating, price, time, desc, distance);
+    }
+
+    async function performSearch(query) {
+      if (!query || query.trim().length < 2) {
+        return;
+      }
+
+      const queryLower = query.toLowerCase().trim();
+      const found = Object.values(allPlaces).flat().find(p => 
+        p.name.toLowerCase().includes(queryLower) || p.desc.toLowerCase().includes(queryLower)
+      );
+
+      if (found) {
+        currentCity = found.city;
+        document.getElementById('city-select').value = currentCity;
+        filterAndSort();
+        showPlace(found.name, found.lat, found.lon, found.rating, found.price, found.time, found.desc, 
+          calculateDistance(userLocation.lat, userLocation.lon, found.lat, found.lon));
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      getUserLocation();
+      filterAndSort();
+    });
+  
+</script>
+  <script>
+    // Location sorting helper for geolocation-based display
+    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+      var R = 6371; 
+      var dLat = deg2rad(lat2-lat1); 
+      var dLon = deg2rad(lon2-lon1); 
+      var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2); 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c; 
+      return d;
+    }
+
+    function deg2rad(deg) { return deg * (Math.PI/180); }
+
+    function sortListByLocation(userLat, userLon) {
+        const list = document.querySelector('.list');
+        if(!list) return;
+        const items = Array.from(list.querySelectorAll('.item'));
+        items.forEach(item => {
+            const onclick = item.getAttribute('onclick');
+            const match = onclick.match(/showPlace\s*\(\s*([\d\.]+)\s*,\s*([\d\.]+)/);
+            if (match) item.dataset.distance = getDistanceFromLatLonInKm(userLat, userLon, parseFloat(match[1]), parseFloat(match[2]));
+            else item.dataset.distance = 99999;
+        });
+        items.sort((a, b) => parseFloat(a.dataset.distance) - parseFloat(b.dataset.distance));
+        items.forEach(item => list.appendChild(item));
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(p => sortListByLocation(p.coords.latitude, p.coords.longitude));
+    }
+  </script>
+  <script>
+      "warner bros. world", { title: "عالم وارنر براذرز", desc: "مدينة ترفيهية مغلقة تضم شخصيات وارنر براذرز.", price: "325 درهم", time: "11:00 ص - 8:00 م" },
+      "yas waterworld", { title: "ياس ووتروورلد", desc: "حديقة ألعاب مائية مستوحاة من التراث الإماراتي.", price: "295 درهم", time: "10:00 ص - 6:00 م" },
+      "yas marina circuit", { title: "حلبة مرسى ياس", desc: "موطن سباق جائزة الاتحاد للطيران الكبرى للفورمولا 1.", price: "متفاوت", time: "9:00 ص - 11:00 م" },
+      "saadiyat island", { title: "جزيرة السعديات", desc: "الوجهة الثقافية الرائدة في أبوظبي.", price: "مجاني", time: "مفتوح" },
+      "corniche beach", { title: "شاطئ الكورنيش", desc: "شاطئ خلاب يمتد على طول كورنيش أبوظبي.", price: "10 دراهم", time: "8:00 ص - 8:00 م" },
+      "mangrove national park", { title: "منتزه القرم الوطني", desc: "غابات القرم الطبيعية ومحمية بيئية.", price: "مجاني", time: "10:00 ص - 12:00 ص" },
+      "al ain oasis", { title: "واحة العين", desc: "أول موقع إماراتي يدرج في قائمة اليونسكو للتراث العالمي.", price: "مجاني", time: "9:00 ص - 5:00 م" },
+      "jebel hafeet", { title: "جبل حفيت", desc: "أعلى قمة في أبوظبي توفر إطلالات بانورامية.", price: "مجاني", time: "مفتوح" },
+      "al jahili fort", { title: "قلعة الجاهلي", desc: "حصن تاريخي ورمز للقوة في العين.", price: "مجاني", time: "9:00 ص - 5:00 م" },
+      "qasr al hosn", { title: "قصر الحصن", desc: "أقدم مبنى حجري في أبوظبي.", price: "30 درهم", time: "9:00 ص - 8:00 م" },
+      "al wathba fossil dunes", { title: "كثبان الوثبة الأحفورية", desc: "تكوينات رملية صخرية فريدة.", price: "مجاني", time: "مفتوح" },
+      "al wathba wetland reserve", { title: "محمية الوثبة للأراضي الرطبة", desc: "موطن لطيور الفلامنجو والحياة البرية.", price: "مجاني", time: "8:00 ص - 5:30 م" },
+      "sir bani yas island", { title: "جزيرة صير بني ياس", desc: "محمية طبيعية للحياة البرية.", price: "متفاوت", time: "مفتوح" },
+      "dalma island", { title: "جزيرة دلما", desc: "جزيرة تاريخية تشتهر بصيد اللؤلؤ.", price: "مجاني", time: "مفتوح" },
+      "marina mall abu dhabi", { title: "مارينا مول أبوظبي", desc: "مركز تسوق وترفيه بارز.", price: "مجاني", time: "10:00 ص - 10:00 م" },
+      "abu dhabi falcon hospital", { title: "مستشفى أبوظبي للصقور", desc: "أكبر مستشفى للصقور في العالم.", price: "متفاوت", time: "8:00 ص - 2:00 م" },
+      "capital gate", { title: "كابيتال جيت", desc: "البرج المائل الشهير في أبوظبي.", price: "غير متاح", time: "مكاتب" },
+      "al bateen palace", { title: "قصر البطين", desc: "أحد القصور الرئاسية.", price: "غير متاح", time: "غير متاح" },
+      "heritage village", { title: "القرية التراثية", desc: "قرية تقليدية تعرض نمط الحياة القديم.", price: "مجاني", time: "9:00 ص - 4:00 م" },
+      "reem island", { title: "جزيرة الريم", desc: "منطقة سكنية وتجارية حديثة.", price: "مجاني", time: "مفتوح" },
+      "hudayriyat island", { title: "جزيرة الحديريات", desc: "وجهة للرياضة والترفيه والشواطئ.", price: "مجاني", time: "مفتوح" },
+      "masdar city", { title: "مدينة مصدر", desc: "مدينة مستدامة تعتمد على الطاقة النظيفة.", price: "مجاني", time: "مفتوح" },
+      "zayed national museum", { title: "متحف زايد الوطني", desc: "متحف يروي قصة الشيخ زايد وتاريخ الإمارات.", price: "قريباً", time: "قريباً" },
+      "umm al emarat park", { title: "حديقة أم الإمارات", desc: "حديقة عائلية كبيرة ووجهة مجتمعية.", price: "10 دراهم", time: "8:00 ص - 12:00 ص" },
+      // Dubai
+
+
+      "burj khalifa", { title: "برج خليفة", desc: "أطول مبنى في العالم.", price: "169 درهم", time: "8:00 ص - 11:00 م" },
+      "dubai mall", { title: "دبي مول", desc: "أكبر مركز تسوق في العالم.", price: "مجاني", time: "10:00 ص - 12:00 ص" },
+      "palm jumeirah", { title: "نخلة جميرا", desc: "جزيرة اصطناعية على شكل نخلة.", price: "مجاني", time: "مفتوح" },
+      "burj al arab", { title: "برج العرب", desc: "فندق 7 نجوم وأيقونة دبي.", price: "متفاوت", time: "مفتوح" },
+      "dubai marina", { title: "دبي مارينا", desc: "منطقة سكنية وترفيهية راقية على القناة المائية.", price: "مجاني", time: "مفتوح" },
+      "jbr walk", { title: "ممشى جي بي آر", desc: "ممشى سياحي مليء بالمطاعم والمتاجر.", price: "مجاني", time: "مفتوح" },
+      "atlantis the palm", { title: "أتلانتس النخلة", desc: "منتجع فاخر يضم حديقة مائية.", price: "متفاوت", time: "مفتوح" },
+      "ain dubai", { title: "عين دبي", desc: "أكبر عجلة ترفيهية في العالم.", price: "130 درهم", time: "مغلق مؤقتاً" },
+      "dubai creek", { title: "خور دبي", desc: "الممر المائي التاريخي في دبي.", price: "1 درهم (عبرة)", time: "مفتوح" },
+      "al fahidi historical district", { title: "حي الفهيدي التاريخي", desc: "حي تراثي يعكس العمارة التقليدية.", price: "مجاني", time: "مفتوح" },
+      "dubai frame", { title: "برواز دبي", desc: "إطار معماري يطل على دبي القديمة والحديثة.", price: "50 درهم", time: "9:00 ص - 9:00 م" },
+      "museum of the future", { title: "متحف المستقبل", desc: "أجمل مبنى في العالم يعرض رؤى المستقبل.", price: "149 درهم", time: "10:00 ص - 7:30 م" },
+      "global village", { title: "القرية العالمية", desc: "وجهة ثقافية وترفيهية موسمية.", price: "25 درهم", time: "4:00 م - 12:00 ص" },
+      "dubai miracle garden", { title: "حديقة دبي المعجزة", desc: "أكبر حديقة زهور طبيعية في العالم.", price: "95 درهم", time: "9:00 ص - 9:00 م" },
+      "dubai safari park", { title: "دبي سفاري بارك", desc: "حديقة حيوانات برية وتجربة سفاري.", price: "50 درهم", time: "9:00 ص - 5:00 م" },
+      "img worlds of adventure", { title: "آي إم جي", desc: "أكبر وجهة ترفيهية داخلية.", price: "345 درهم", time: "12:00 م - 10:00 م" },
+      "ski dubai", { title: "سكي دبي", desc: "منتجع تزلج داخلي في مول الإمارات.", price: "220 درهم", time: "10:00 ص - 11:00 م" },
+      "mall of the emirates", { title: "مول الإمارات", desc: "مركز تسوق يضم سكي دبي.", price: "مجاني", time: "10:00 ص - 12:00 ص" },
+      "deira gold souk", { title: "سوق الذهب ديرة", desc: "سوق تقليدي شهير للمجوهرات.", price: "مجاني", time: "9:30 ص - 9:30 م" },
+      "spice souk", { title: "سوق التوابل", desc: "سوق تقليدي للبهارات والأعشاب.", price: "مجاني", time: "9:00 ص - 9:00 م" },
+      "jumeirah mosque", { title: "مسجد جميرا", desc: "مسجد جميل مفتوح لغير المسلمين للجولات.", price: "35 درهم", time: "10:00 ص - 2:00 م" },
+      "kite beach", { title: "كايت بيتش", desc: "شاطئ حيوي للرياضات المائية.", price: "مجاني", time: "مفتوح" },
+      "la mer", { title: "لا مير", desc: "وجهة شاطئية عصرية.", price: "مجاني", time: "مفتوح" },
+      "city walk", { title: "سيتي ووك", desc: "وجهة عصرية للتسوق والتنزه.", price: "مجاني", time: "مفتوح" },
+      "bluewaters island", { title: "جزيرة بلوواترز", desc: "جزيرة تضم عين دبي ومتاجر.", price: "مجاني", time: "مفتوح" },
+      "madinat jumeirah", { title: "مدينة جميرا", desc: "منتجع مستوحى من القلاع العربية القديمة.", price: "مجاني", time: "مفتوح" },
+      "dubai opera", { title: "دبي أوبرا", desc: "مركز للفنون والمسرح.", price: "متفاوت", time: "حسب العرض" },
+      "al seef", { title: "السيف", desc: "منطقة تراثية وعصرية على الخور.", price: "مجاني", time: "مفتوح" },
+      "ras al khor wildlife sanctuary", { title: "محمية رأس الخور", desc: "محمية لطيور الفلامنجو.", price: "مجاني", time: "7:30 ص - 5:30 م" },
+      "dubai autodrome", { title: "دبي أوتودروم", desc: "حلبة سباق سيارات وكارتينج.", price: "متفاوت", time: "9:00 ص - 10:00 م" },
+      "dubai festival city", { title: "دبي فستيفال سيتي", desc: "مركز تسوق ووجهة ترفيهية.", price: "مجاني", time: "10:00 ص - 12:00 ص" },
+      "the pointe", { title: "ذا بوينت", desc: "وجهة بحرية في نخلة جميرا.", price: "مجاني", time: "مفتوح" },
+      "al qudra lakes", { title: "بحيرات القدرة", desc: "بحيرات صناعية في الصحراء.", price: "مجاني", time: "مفتوح" },
+      "dubai design district (d3)", { title: "حي دبي للتصميم", desc: "مركز للإبداع والتصميم.", price: "مجاني", time: "مفتوح" },
+      "al mamzar beach park", { title: "حديقة الممزر", desc: "حديقة شاطئية كبيرة.", price: "5 دراهم", time: "8:00 ص - 10:00 م" },
+      "zabeel park", { title: "حديقة زعبيل", desc: "حديقة كبيرة تضم برواز دبي.", price: "5 دراهم", time: "8:00 ص - 10:00 م" },
+      "dubai parks and resorts", { title: "دبي باركس آند ريزورتس", desc: "وجهة تضم عدة مدن ترفيهية.", price: "295 درهم", time: "10:00 ص - 11:00 م" },
+      "motiongate", { title: "موشنجيت", desc: "مدينة ترفيهية مستوحاة من هوليوود.", price: "295 درهم", time: "11:00 ص - 8:00 م" },
+      "legoland dubai", { title: "ليجولاند دبي", desc: "مدينة ترفيهية للأطفال وعائلاتهم.", price: "295 درهم", time: "10:00 ص - 6:00 م" },
+      "legoland water park", { title: "ليجولاند ووتر بارك", desc: "حديقة مائية مخصصة للأطفال.", price: "295 درهم", time: "10:00 ص - 6:00 م" },
+      "aquaventure waterpark", { title: "أكوافنتشر", desc: "أكبر حديقة مائية في العالم.", price: "345 درهم", time: "9:45 ص - 6:30 م" },
+      "wild wadi", { title: "وايلد وادي", desc: "حديقة مائية أمام برج العرب.", price: "295 درهم", time: "10:00 ص - 6:00 م" },
+      "dubai butterfly garden", { title: "حديقة الفراشات", desc: "حديقة مغطاة تضم آلاف الفراشات.", price: "55 درهم", time: "9:00 ص - 6:00 م" },
+      "jebel ali port", { title: "ميناء جبل علي", desc: "أكبر ميناء من صنع الإنسان.", price: "غير متاح", time: "مغلق" },
+      "dubai silicon oasis", { title: "واحة دبي للسيليكون", desc: "منطقة تكنولوجية وسكنية.", price: "مجاني", time: "مفتوح" },
+      "emirates towers", { title: "أبراج الإمارات", desc: "رمز معماري ومركز مالي.", price: "مجاني", time: "مفتوح" },
+      "the view at the palm", { title: "ذا فيو نخلة جميرا", desc: "منصة مشاهدة بانورامية.", price: "100 درهم", time: "9:00 ص - 10:00 م" },
+      "dubai hills mall", { title: "دبي هيلز مول", desc: "مركز تسوق يضم أفعوانية داخلية.", price: "مجاني", time: "10:00 ص - 12:00 ص" },
+      "palm west beach", { title: "بالم ويست بيتش", desc: "ممشى شاطئي ومطاعم.", price: "مجاني", time: "مفتوح" },
+      "sky views dubai", { title: "سكاي فيوز دبي", desc: "تجربة المشي على الزجاج والتزحلق.", price: "85 درهم", time: "10:00 ص - 10:00 م" },
+      // Sharjah
+
+
+      "sharjah museum of islamic civilization", { title: "متحف الشارقة للحضارة الإسلامية", desc: "متحف يعرض التاريخ الإسلامي.", price: "10 دراهم", time: "8:00 ص - 8:00 م" },
+      "al noor mosque", { title: "مسجد النور", desc: "مسجد بتصميم عثماني جميل.", price: "مجاني", time: "مفتوح" },
+      "al qasba", { title: "القصباء", desc: "وجهة ترفيهية وقناة مائية.", price: "مجاني", time: "مفتوح" },
+      "sharjah aquarium", { title: "مربى الشارقة للأحياء المائية", desc: "عالم البحار المحلي.", price: "25 درهم", time: "8:00 ص - 8:00 م" },
+      "al majaz waterfront", { title: "واجهة المجاز المائية", desc: "حديقة ونافورة راقصة.", price: "مجاني", time: "مفتوح" },
+      "sharjah art museum", { title: "متحف الشارقة للفنون", desc: "أكبر متحف للفنون في المنطقة.", price: "مجاني", time: "8:00 ص - 8:00 م" },
+      "al noor island", { title: "جزيرة النور", desc: "جزيرة تضم بيت الفراشات ومنحوتات.", price: "35 درهم", time: "9:00 ص - 11:00 م" },
+      "mleiha archaeological centre", { title: "مركز مليحة للآثار", desc: "موقع أثري وتاريخي.", price: "25 درهم", time: "9:00 ص - 7:00 م" },
+      "sharjah desert park", { title: "منتزه الشارقة الصحراوي", desc: "يضم متحف التاريخ الطبيعي.", price: "15 درهم", time: "9:00 ص - 5:30 م" },
+      "arabian wildlife center", { title: "مركز حيوانات شبه الجزيرة العربية", desc: "حديقة حيوانات داخلية.", price: "15 درهم", time: "9:00 ص - 5:30 م" },
+      "al hisn fort", { title: "حصن الشارقة", desc: "حصن تاريخي ومتحف.", price: "10 دراهم", time: "8:00 ص - 8:00 م" },
+      "kalba mangrove reserve", { title: "محمية القرم بكلباء", desc: "محمية طبيعية لأشجار القرم.", price: "مجاني", time: "مفتوح" },
+      "khor fakkan beach", { title: "شاطئ خورفكان", desc: "شاطئ جميل على الساحل الشرقي.", price: "مجاني", time: "مفتوح" },
+      "khor fakkan amphitheatre", { title: "مدرج خورفكان", desc: "تحفة معمارية رومانية الطراز.", price: "مجاني", time: "مفتوح" },
+      "al montazah parks", { title: "منتزه المنتزه", desc: "حديقة مائية وترفيهية.", price: "متفاوت", time: "10:00 ص - 10:00 م" },
+      "rain room sharjah", { title: "الغرفة الماطرة", desc: "تجربة فنية للمشي تحت المطر دون البلل.", price: "25 درهم", time: "9:00 ص - 9:00 م" },
+      "heart of sharjah", { title: "قلب الشارقة", desc: "منطقة تراثية تم ترميمها.", price: "مجاني", time: "مفتوح" },
+      "university city sharjah", { title: "المدينة الجامعية", desc: "مجمع جامعي بمعمار إسلامي.", price: "مجاني", time: "مفتوح" },
+      "sharjah corniche", { title: "كورنيش الشارقة", desc: "ممشى بحري.", price: "مجاني", time: "مفتوح" },
+      "al khan beach", { title: "شاطئ الخان", desc: "شاطئ شعبي في الشارقة.", price: "مجاني", time: "مفتوح" },
+      };
+    <!-- Error Toast -->
+    <div id="error-toast" class="error-toast"></div>
+    let toastTimeout;
+    function showError(message) {
+      const toast = document.getElementById('error-toast');
+      if (!toast) {
+        const newToast = document.createElement('div');
+        newToast.id = 'error-toast';
+        newToast.className = 'error-toast';
+        document.body.appendChild(newToast);
+      }
+      const toast2 = document.getElementById('error-toast');
+      toast2.innerText = message;
+      toast2.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast2.classList.remove('show');
+      }, 3500);
+    }
+
+    const searchInput2 = document.getElementById('search-input');
+    const autocompleteList2 = document.getElementById('autocomplete-list');
+    
+    searchInput2.addEventListener('input', function (e) {
+      const query = this.value.trim();
+      if (query.length >= 2) {
+        showAutocomplete2(query);
+      } else {
+        autocompleteList2.classList.remove('active');
+      }
+    });
+
+    searchInput2.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        const query = this.value.trim();
+        if (query.length >= 2) {
+          performSearch2(query);
+          autocompleteList2.classList.remove('active');
+        }
+      }
+    });
+
+    function showAutocomplete2(query) {
+      const queryLower = query.toLowerCase().trim();
+      const results = Object.values(allPlaces).flat().filter(p => 
+        p.name.toLowerCase().includes(queryLower) || p.desc.toLowerCase().includes(queryLower)
+      ).slice(0, 5);
+
+      if (results.length === 0) {
+        autocompleteList2.classList.remove('active');
+        return;
+      }
+
+      autocompleteList2.innerHTML = results.map(place => `
+        <div class="autocomplete-item" onclick="selectPlace2('${place.name}', ${place.lat}, ${place.lon}, ${place.rating}, '${place.price}', '${place.time}', '${place.desc}', '${place.city}')">
+          <div class="autocomplete-item-name">${place.name}</div>
+          <div class="autocomplete-item-desc">${place.desc}</div>
+        </div>
+      `).join('');
+      
+      autocompleteList2.classList.add('active');
+    }
+
+    function selectPlace2(name, lat, lon, rating, price, time, desc, city) {
+      searchInput2.value = name;
+      autocompleteList2.classList.remove('active');
+      currentCity = city;
+      document.getElementById('city-select').value = city;
+      filterAndSort();
+      const distance = calculateDistance(userLocation.lat, userLocation.lon, lat, lon);
+      showPlace(name, lat, lon, rating, price, time, desc, distance);
+    }
+
+    async function performSearch2(query) {
+      if (!query || query.trim().length < 2) {
+        return;
+      }
+
+      const queryLower = query.toLowerCase().trim();
+      const found = Object.values(allPlaces).flat().find(p => 
+        p.name.toLowerCase().includes(queryLower) || p.desc.toLowerCase().includes(queryLower)
+      );
+
+      if (found) {
+        currentCity = found.city;
+        document.getElementById('city-select').value = currentCity;
+        filterAndSort();
+        showPlace(found.name, found.lat, found.lon, found.rating, found.price, found.time, found.desc, 
+          calculateDistance(userLocation.lat, userLocation.lon, found.lat, found.lon));
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      getUserLocation();
+      filterAndSort();
+    });
+
+      document.getElementById('city-select').addEventListener('change', () => {
+      changeCity(document.getElementById('city-select').value);
+    });
+
+    document.querySelectorAll('.sort-btn').forEach(btn => btn.addEventListener('click', sortPlaces));
+
+
+
+    
+  </script>
+  <script>
+    // Location sorting helper for geolocation-based display
+    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+      var R = 6371; 
+      var dLat = deg2rad(lat2-lat1); 
+      var dLon = deg2rad(lon2-lon1); 
+      var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2); 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c; 
+      return d;
+    }
+
+    function deg2rad(deg) { return deg * (Math.PI/180); }
+
+    function sortListByLocation(userLat, userLon) {
+        const list = document.querySelector('.list');
+        if(!list) return;
+        const items = Array.from(list.querySelectorAll('.item'));
+        items.forEach(item => {
+            const onclick = item.getAttribute('onclick');
+            const match = onclick.match(/showPlace\s*\(\s*([\d\.]+)\s*,\s*([\d\.]+)/);
+            if (match) item.dataset.distance = getDistanceFromLatLonInKm(userLat, userLon, parseFloat(match[1]), parseFloat(match[2]));
+            else item.dataset.distance = 99999;
+        });
+        items.sort((a, b) => parseFloat(a.dataset.distance) - parseFloat(b.dataset.distance));
+        items.forEach(item => list.appendChild(item));
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(p => sortListByLocation(p.coords.latitude, p.coords.longitude));
+    }
+  </script>
+</body>
+</html>
