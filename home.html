@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حياك | HAYYAK</title>
+  <meta name="description" content="اهلين، وين حاب تروح اليوم؟ اكتشف المتاجر، المطاعم، السياحة، الشواطئ، والفنادق مع أفضل العروض اليومية." />
+
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Afeesh local fonts (single family name, multiple weights) -->
+  <style>
+    /* Map several available Afeesh font files to one family name for easy usage */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('afeesh/Afeesh-NosMesalwa.woff2') format('woff2'),
+           url('afeesh/Afeesh-NosMesalwa.woff') format('woff'),
+           url('afeesh/Afeesh-NosMesalwa.ttf') format('truetype');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --ink: #0f0f10;
+      --muted: #6b7280;
+      --line: #0f0f10;
+      --accent: #0f0f10;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .page {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    /* Phone-width centered container to resemble the mockup, but responsive */
+    .shell {
+      width: 100%;
+      max-width: 420px; /* close to the phone width in the screenshot */
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 0 #0f0f10;
+    }
+
+    header.brand {
+      text-align: center;
+      margin: 0;
+      background: #16243d;
+      color: #ffffff;
+      padding: 20px;
+      position: relative;
+    }
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+       color: #d4af37;
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    .home-btn {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 15px;
+      background-color: #0f0f10;
+      padding: 9px 12px;
+      border-radius: 999px;
+    }
+
+    /* Map placeholder to mimic the image in the phone */
+    .map {
+      height: 180px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      border: 2px solid var(--line);
+    }
+    .map iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    h1, h2, h3 { margin: 0; }
+
+    .question {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 14px 6px 8px;
+    }
+
+    /* Categories row */
+    .cats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      padding: 8px 4px 2px;
+    }
+    .cat {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      font-size: 12px;
+      text-align: center;
+      user-select: none;
+      text-decoration: none;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .cat .ico {
+      width: 52px; height: 46px;
+      display: grid; place-items: center;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+    }
+    .cat .emoji { font-size: 22px; line-height: 1; }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 22px;
+      margin: 6px 6px 10px;
+    }
+
+    /* Offer card */
+    .offer { padding: 0 6px 8px; }
+    .offer .deal {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      align-items: center;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 6px 8px 6px 12px;
+      background: var(--card);
+    }
+    .offer .deal img {
+      width: 64px; height: 40px; object-fit: cover; border-radius: 8px;
+      border: 2px solid var(--line);
+    }
+    .offer .deal .title { font-weight: 700; }
+    .offer .deal .sub { color: var(--muted); font-weight: 600; font-size: 13px; }
+
+    /* List of quick links */
+    .quick { padding: 6px; display: grid; gap: 8px; }
+    .quick .item {
+      display: flex; align-items: center; gap: 10px;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      background: var(--card);
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .quick .item .label { flex: 1 1 auto; }
+
+    /* History Panel */
+    .history-panel {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--card); border-top-left-radius: 20px; border-top-right-radius: 20px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      padding: 20px; z-index: 1000;
+      transform: translateY(100%); transition: transform 0.3s ease;
+      max-height: 70vh; display: flex; flex-direction: column;
+    }
+    .history-panel.active { transform: translateY(0); }
+    .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .history-list { overflow-y: auto; display: grid; gap: 10px; }
+    .history-item { padding: 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+    .history-item:hover { background: var(--bg); }
+
+    /* Bottom search */
+    .bottom-search { padding: 10px 6px 18px; }
+    .search {
+      display: grid; grid-template-columns: 28px 1fr; align-items: center; gap: 8px;
+      border: 2px solid var(--line); border-radius: 999px; padding: 10px 12px;
+      background: var(--card);
+    }
+    .search .glass { text-align: center; font-size: 16px; }
+    .search input {
+      appearance: none; border: 0; outline: 0; background: transparent; width: 100%;
+      font: inherit; color: var(--ink);
+    }
+    .search input::placeholder { color: var(--muted); }
+
+   
+    footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    /* Larger screens: breathe a bit more */
+    @media (min-width: 768px) {
+      .shell { padding: 24px; }
+      .map { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="brand">
+      <div class="logo-text">حــــــيــــاك</div>
+      <div class="logo-sub">HAYYAK</div>
+    </header>
+    <main class="shell">
+      <div class="map card" aria-label="خريطة">
+        <iframe id="user-map" src="https://www.openstreetmap.org/export/embed.html?bbox=51.50,22.50,56.50,26.20&amp;layer=mapnik" title="Map"></iframe>
+      </div>
+
+      <h1 class="question">اهلين، وين حاب تروح اليوم؟</h1>
+
+      <section class="cats">
+        <a href="متاجر.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🛍️</span></div>
+          <div>متاجر</div>
+        </a>
+        <a href="مطاعم.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🍽️</span></div>
+          <div>مطاعم</div>
+        </a>
+        <a href="سياحة.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🗺️</span></div>
+          <div>سياحة</div>
+        </a>
+        <a href="ترفيه.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🏖️</span></div>
+          <div>ترفيه</div>
+        </a>
+        <a href="فنادق.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🏨</span></div>
+          <div>فنادق</div>
+        </a>
+        <a href="مزارع.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🌾</span></div>
+          <div>مزارع</div>
+        </a>
+      </section>
+
+      <h2 class="section-title">عرض اليوم!</h2>
+
+      <section class="offer">
+        <div class="deal">
+          <img src="img.jpg" alt="عرض ترفيهي" />
+          <div>
+            <div class="title">خصم 40% على IMG </div>
+            <div class="sub">لفترة محدودة • اطّلع على التفاصيل</div>
+          </div>
+        </div>
+      </section>   
+
+      <section class="quick">
+        <a href="family.html" class="item"><div class="label">افراد العائلة والاصدقاء⬅ </div></a>
+        <a href="profile.html" class="item"><div class="label">الملف الشخصي⬅</div></a>
+        <a href="air.html" class="item"><div class="label">محطة قياس جودة المكان  لاصحاب الحساسية⬅</div></a>
+        <a href="javascript:void(0)" onclick="toggleHistory()" class="item"><div class="label">اماكن زرتها مسبق ⬅</div></a>
+        <a href="hlthPrb.html" class="item"><div class="label">المشاكل الصحية/النفسية⬅</div></a>
+        <a href="ID.HTML" class="item"><div class="label">بطاقة التعريف الرقمية⬅</div></a>
+        <a href="uae_laws.html" class="item"><div class="label">قوانين دولة الإمارات العربية المتحدة⬅</div></a>
+      </section>
+
+      <div class="bottom-search">
+        <div class="search">
+          <div class="glass">🔍</div>
+          <input type="search" placeholder="ابحث هنا" aria-label="ابحث هنا" />
+        </div>
+      </div>
+    </main>
+
+    <div id="history-panel" class="history-panel" aria-hidden="true">
+      <div class="history-header">
+        <h3 style="font-size:18px; font-weight:700">الأماكن التي زرتها مؤخراً</h3>
+        <button onclick="toggleHistory()" style="background:none; border:none; font-size:20px; cursor:pointer">✕</button>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </div>
+
+    <footer aria-hidden="true">© عبدالله بن ناصر-حياك</footer>
+  </div>
+
+  <script>
+    // Check for user profile
+    const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile'));
+    if (!userProfile) {
+      window.location.href = 'indexQ.html';
+    } else {
+      document.querySelector('.question').innerText = `اهلين ${userProfile.name}، وين حاب تروح اليوم؟`;
+    }
+
+    function toggleHistory() {
+      const panel = document.getElementById('history-panel');
+      panel.classList.toggle('active');
+      if (panel.classList.contains('active')) {
+        loadHistory();
+      }
+    }
+
+    function loadHistory() {
+      const list = document.getElementById('history-list');
+      const history = JSON.parse(localStorage.getItem('hayyak_history') || '[]');
+      
+      if (history.length === 0) {
+        list.innerHTML = '<div style="text-align:center; color:var(--muted); padding:20px;">لا يوجد سجل زيارات بعد</div>';
+        return;
+      }
+
+      list.innerHTML = history.map(item => `
+        <div class="history-item" onclick="locateHistory(${item.lat}, ${item.lon})">
+          <div style="font-weight:700">${item.title}</div>
+          <div style="font-size:12px; color:var(--muted)">${new Date(item.date).toLocaleDateString('ar-AE')}</div>
+        </div>
+      `).join('');
+    }
+
+    function locateHistory(lat, lon) {
+      const f = 0.01;
+      const bbox = `${lon-f},${lat-f},${lon+f},${lat+f}`;
+      document.getElementById('user-map').src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik`;
+      toggleHistory();
+    }
+  </script>
+  <script>
+  // تحميل إعدادات الخصوصية
+  const settings = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+  
+  // بيانات النصائح الصحية
+  const healthTips = [
+    "💊 تذكر تناول أدويتك في موعدها",
+    "🥗 تناول وجبة إفطار صحية لتبدأ يومك بنشاط",
+    "💧 اشرب 8 أكواب من الماء يومياً",
+    "🚶‍♂️ امشِ 30 دقيقة يومياً لصحة قلبك",
+    "🧘‍♂️ خذ قسطاً من الراحة والتأمل لتخفيف القلق",
+    "📋 تابع قراءة السكر بانتظام إذا كنت مريض سكري",
+    "😊 الابتسام يقلل التوتر ويحسن المزاج",
+    "🥦 تجنب الأطعمة المسببة للحساسية",
+    "🌞 تعرض لأشعة الشمس الصباحية لفيتامين د",
+    "🧠 تمرن عقلك بالقراءة والألعاب الذهنية"
+  ];
+
+  // عرض الإشعار
+  function showHealthNotification() {
+    const privacySettings = {
+      healthNotifications: localStorage.getItem('healthNotifications') !== 'false'
+    };
+    
+    // فقط إذا كان المستخدم مفعل إشعارات الرعاية الصحية
+    if (privacySettings.healthNotifications) {
+      const randomTip = healthTips[Math.floor(Math.random() * healthTips.length)];
+      
+      // انتظر حتى يتم تحميل الصفحة بالكامل
+      setTimeout(() => {
+        // إنشاء عنصر الإشعار الجديد
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #16243d;
+          color: white;
+          padding: 15px 20px;
+          border-radius: 14px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          animation: slideIn 0.3s ease;
+          max-width: 320px;
+        `;
+        
+        notification.innerHTML = `
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: #d4af37; display: grid; place-items: center; font-size: 18px;">💡</div>
+          <div style="flex: 1;">
+            <div style="font-weight: 700; margin-bottom: 4px;">نصيحة صحية</div>
+            <div style="font-size: 14px; opacity: 0.9;">${randomTip}</div>
+          </div>
+          <button onclick="this.parentElement.style.animation='slideOut 0.3s ease'; setTimeout(() => this.parentElement.remove(), 300)" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0; width: 24px; height: 24px; display: grid; place-items: center;">×</button>
+        `;
+        
+        // إضافة أنماط للرسوم المتحركة
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+          }
+          @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        document.body.appendChild(notification);
+        
+        // إزالة الإشعار تلقائياً بعد 5 ثوانٍ
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+          }
+        }, 5000);
+      }, 2000);
+    }
+  }
+
+  // تشغيل الإشعار عند تحميل الصفحة
+  if (settings.name) { // تحقق من وجود مستخدم مسجل
+    document.addEventListener('DOMContentLoaded', showHealthNotification);
+  }
+</script>
+</body>
+</html>
