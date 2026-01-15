@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حياك | HAYYAK</title>
+  <meta name="description" content="اهلين، وين حاب تروح اليوم؟ اكتشف المتاجر، المطاعم، السياحة، الشواطئ، والفنادق مع أفضل العروض اليومية." />
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Afeesh local fonts (single family name, multiple weights) -->
+  <style>
+    /* Map several available Afeesh font files to one family name for easy usage */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('afeesh/Afeesh-NosMesalwa.woff2') format('woff2'),
+           url('afeesh/Afeesh-NosMesalwa.woff') format('woff'),
+           url('afeesh/Afeesh-NosMesalwa.ttf') format('truetype');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --ink: #0f0f10;
+      --muted: #6b7280;
+      --line: #0f0f10;
+      --accent: #0f0f10;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .page {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    /* Phone-width centered container to resemble the mockup, but responsive */
+    .shell {
+      width: 100%;
+      max-width: 420px; /* close to the phone width in the screenshot */
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 0 #0f0f10;
+    }
+
+    header.brand {
+      text-align: center;
+      margin: 0;
+      background: #16243d;
+      color: #ffffff;
+      padding: 20px;
+      position: relative;
+    }
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+       color: #d4af37;
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    
+    /* Translate Button Styles */
+    .translate-btn {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      background: #d4af37;
+      border: 2px solid #ffffff;
+      border-radius: 20px;
+      color: #16243d;
+      padding: 6px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+      z-index: 100;
+    }
+    
+    .translate-btn:hover {
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+      background: #f7ef8a;
+    }
+    
+    .translate-btn .icon {
+      font-size: 16px;
+      transition: transform 0.3s ease;
+    }
+    
+    .translate-btn:hover .icon {
+      transform: rotate(20deg);
+    }
+    
+    .translate-btn.switching {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(0.9); }
+      100% { transform: translateY(-50%) scale(1); }
+    }
+
+    /* Map placeholder to mimic the image in the phone */
+    .map {
+      height: 180px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      border: 2px solid var(--line);
+    }
+    .map iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    h1, h2, h3 { margin: 0; }
+
+    .question {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 14px 6px 8px;
+    }
+
+    /* Categories row */
+    .cats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      padding: 8px 4px 2px;
+    }
+    .cat {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      font-size: 12px;
+      text-align: center;
+      user-select: none;
+      text-decoration: none;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .cat .ico {
+      width: 52px; height: 46px;
+      display: grid; place-items: center;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+    }
+    .cat .emoji { font-size: 22px; line-height: 1; }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 22px;
+      margin: 6px 6px 10px;
+    }
+
+    /* Offer card */
+    .offer { padding: 0 6px 8px; }
+    .offer .deal {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      align-items: center;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 6px 8px 6px 12px;
+      background: var(--card);
+    }
+    .offer .deal img {
+      width: 64px; height: 40px; object-fit: cover; border-radius: 8px;
+      border: 2px solid var(--line);
+    }
+    .offer .deal .title { font-weight: 700; }
+    .offer .deal .sub { color: var(--muted); font-weight: 600; font-size: 13px; }
+
+    /* List of quick links */
+    .quick { padding: 6px; display: grid; gap: 8px; }
+    .quick .item {
+      display: flex; align-items: center; gap: 10px;
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      background: var(--card);
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .quick .item .label { flex: 1 1 auto; }
+
+    /* History Panel */
+    .history-panel {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--card); border-top-left-radius: 20px; border-top-right-radius: 20px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      padding: 20px; z-index: 1000;
+      transform: translateY(100%); transition: transform 0.3s ease;
+      max-height: 70vh; display: flex; flex-direction: column;
+    }
+    .history-panel.active { transform: translateY(0); }
+    .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .history-list { overflow-y: auto; display: grid; gap: 10px; }
+    .history-item { padding: 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+    .history-item:hover { background: var(--bg); }
+
+    /* Bottom search */
+    .bottom-search { padding: 10px 6px 18px; }
+    .search {
+      display: grid; grid-template-columns: 28px 1fr; align-items: center; gap: 8px;
+      border: 2px solid var(--line); border-radius: 999px; padding: 10px 12px;
+      background: var(--card);
+    }
+    .search .glass { text-align: center; font-size: 16px; }
+    .search input {
+      appearance: none; border: 0; outline: 0; background: transparent; width: 100%;
+      font: inherit; color: var(--ink);
+    }
+    .search input::placeholder { color: var(--muted); }
+
+   
+    footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+    
+    /* Notification styles */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #16243d;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.3s ease;
+      max-width: 320px;
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+
+    /* Larger screens: breathe a bit more */
+    @media (min-width: 768px) {
+      .shell { padding: 24px; }
+      .map { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="brand">
+      <div class="logo-text">حــــــيــــاك</div>
+      <div class="logo-sub">HAYYAK</div>
+      <button class="translate-btn" id="translateBtn" aria-label="تبديل اللغة">
+        <span class="icon">🌐</span>
+        <span>English</span>
+      </button>
+    </header>
+    <main class="shell">
+      <div class="map card" aria-label="خريطة" data-ar-label="خريطة" data-en-label="Map">
+        <iframe id="user-map" src="https://www.openstreetmap.org/export/embed.html?bbox=51.50,22.50,56.50,26.20&amp;layer=mapnik" title="Map"></iframe>
+      </div>
+
+      <h1 class="question" data-ar-prefix="اهلين" data-en-prefix="Hello" data-ar-suffix="، وين حاب تروح اليوم؟" data-en-suffix=", where would you like to go today?">
+        اهلين، وين حاب تروح اليوم؟
+      </h1>
+
+      <section class="cats">
+        <a href="متاجر.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🛍️</span></div>
+          <div class="cat-text" data-ar="متاجر" data-en="Stores">متاجر</div>
+        </a>
+        <a href="مطاعم.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🍽️</span></div>
+          <div class="cat-text" data-ar="مطاعم" data-en="Restaurants">مطاعم</div>
+        </a>
+        <a href="سياحة.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🗺️</span></div>
+          <div class="cat-text" data-ar="سياحة" data-en="Tourism">سياحة</div>
+        </a>
+        <a href="ترفيه.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🏖️</span></div>
+          <div class="cat-text" data-ar="ترفيه" data-en="Entertainment">ترفيه</div>
+        </a>
+        <a href="فنادق.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🏨</span></div>
+          <div class="cat-text" data-ar="فنادق" data-en="Hotels">فنادق</div>
+        </a>
+        <a href="مزارع.html" class="cat">
+          <div class="ico"><span class="emoji" aria-hidden="true">🌾</span></div>
+          <div class="cat-text" data-ar="مزارع" data-en="Farms">مزارع</div>
+        </a>
+      </section>
+
+      <h2 class="section-title" data-ar="عرض اليوم!" data-en="Today's Offer!">عرض اليوم!</h2>
+
+      <section class="offer">
+        <div class="deal">
+          <img src="img.jpg" alt="عرض ترفيهي" data-ar-alt="عرض ترفيهي" data-en-alt="Entertainment offer" />
+          <div>
+            <div class="title" data-ar="خصم 40% على IMG" data-en="40% off on IMG">خصم 40% على IMG</div>
+            <div class="sub" data-ar="لفترة محدودة • اطّلع على التفاصيل" data-en="For a limited time • View details">
+              لفترة محدودة • اطّلع على التفاصيل
+            </div>
+          </div>
+        </div>
+      </section>   
+
+      <section class="quick">
+        <a href="family.html" class="item">
+          <div class="label" data-ar="افراد العائلة والاصدقاء⬅" data-en="Family & Friends⬅">افراد العائلة والاصدقاء⬅</div>
+        </a>
+        <a href="profile.html" class="item">
+          <div class="label" data-ar="الملف الشخصي⬅" data-en="Profile⬅">الملف الشخصي⬅</div>
+        </a>
+        <a href="air.html" class="item">
+          <div class="label" data-ar="محطة قياس جودة المكان لاصحاب الحساسية⬅" data-en="Air Quality Station for Allergy Sufferers⬅">
+            محطة قياس جودة المكان لاصحاب الحساسية⬅
+          </div>
+        </a>
+        <a href="javascript:void(0)" onclick="toggleHistory()" class="item">
+          <div class="label" data-ar="اماكن زرتها مسبق⬅" data-en="Previously Visited Places⬅">اماكن زرتها مسبق⬅</div>
+        </a>
+        <a href="hlthPrb.html" class="item">
+          <div class="label" data-ar="المشاكل الصحية/النفسية⬅" data-en="Health/Psychological Issues⬅">المشاكل الصحية/النفسية⬅</div>
+        </a>
+        <a href="ID.HTML" class="item">
+          <div class="label" data-ar="بطاقة التعريف الرقمية⬅" data-en="Digital ID Card⬅">بطاقة التعريف الرقمية⬅</div>
+        </a>
+        <a href="uae_laws.html" class="item">
+          <div class="label" data-ar="قوانين دولة الإمارات العربية المتحدة⬅" data-en="UAE Laws⬅">قوانين دولة الإمارات العربية المتحدة⬅</div>
+        </a>
+      </section>
+
+      <div class="bottom-search">
+        <div class="search">
+          <div class="glass">🔍</div>
+          <input type="search" 
+                 placeholder="ابحث هنا" 
+                 data-ar-placeholder="ابحث هنا" 
+                 data-en-placeholder="Search here" 
+                 aria-label="ابحث هنا" 
+                 id="search-input" />
+        </div>
+      </div>
+    </main>
+
+    <div id="history-panel" class="history-panel" aria-hidden="true">
+      <div class="history-header">
+        <h3 style="font-size:18px; font-weight:700" data-ar="الأماكن التي زرتها مؤخراً" data-en="Recently Visited Places">
+          الأماكن التي زرتها مؤخراً
+        </h3>
+        <button onclick="toggleHistory()" style="background:none; border:none; font-size:20px; cursor:pointer">✕</button>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </div>
+
+    <footer id="site-footer" data-ar="© عبدالله بن ناصر - حياك" data-en="© Abdullah bin Nasser - Hayyak">
+      © عبدالله بن ناصر - حياك
+    </footer>
+  </div>
+
+  <script>
+    // Language state
+    let currentLanguage = 'ar';
+    
+    // Translation function
+    function toggleLanguage() {
+      const btn = document.getElementById('translateBtn');
+      btn.classList.add('switching');
+      
+      // Switch language
+      currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+      
+      // Update button text
+      const langText = btn.querySelector('span:last-child');
+      langText.textContent = currentLanguage === 'ar' ? 'English' : 'العربية';
+      
+      // Update page direction
+      document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = currentLanguage;
+      
+      // Update page title
+      document.title = currentLanguage === 'ar' ? 'حياك | HAYYAK' : 'Hayyak | Home';
+      
+      // Translate all content
+      translatePage();
+      
+      // Update welcome message with user's name
+      updateWelcomeMessage();
+      
+      // Show notification
+      showNotification(currentLanguage === 'ar' ? 'تم التبديل إلى العربية' : 'Switched to English');
+      
+      // Remove animation class
+      setTimeout(() => {
+        btn.classList.remove('switching');
+      }, 500);
+    }
+    
+    // Translate the page
+    function translatePage() {
+      console.log('Translating to:', currentLanguage);
+      
+      // 1. Translate FOOTER (explicitly target the footer element)
+      const footer = document.getElementById('site-footer');
+      if (footer && footer.hasAttribute('data-ar') && footer.hasAttribute('data-en')) {
+        const footerText = currentLanguage === 'ar' ? 
+          footer.getAttribute('data-ar') : 
+          footer.getAttribute('data-en');
+        footer.textContent = footerText;
+        console.log('Footer translated:', footerText);
+      }
+      
+      // 2. Translate CATEGORIES (emoji stays separate)
+      document.querySelectorAll('.cat-text').forEach(element => {
+        if (element.hasAttribute('data-ar') && element.hasAttribute('data-en')) {
+          const text = currentLanguage === 'ar' ? 
+            element.getAttribute('data-ar') : 
+            element.getAttribute('data-en');
+          element.textContent = text;
+        }
+      });
+      
+      // 3. Translate all elements with data-ar and data-en attributes
+      document.querySelectorAll('[data-ar]:not(.cat-text):not(footer)').forEach(element => {
+        if (element.hasAttribute('data-ar') && element.hasAttribute('data-en')) {
+          const text = currentLanguage === 'ar' ? 
+            element.getAttribute('data-ar') : 
+            element.getAttribute('data-en');
+          element.textContent = text;
+        }
+      });
+      
+      // 4. Translate placeholders
+      document.querySelectorAll('[data-ar-placeholder]').forEach(element => {
+        if (element.hasAttribute('data-ar-placeholder') && element.hasAttribute('data-en-placeholder')) {
+          element.placeholder = currentLanguage === 'ar' ? 
+            element.getAttribute('data-ar-placeholder') : 
+            element.getAttribute('data-en-placeholder');
+        }
+      });
+      
+      // 5. Translate aria-labels
+      document.querySelectorAll('[data-ar-label]').forEach(element => {
+        if (element.hasAttribute('data-ar-label') && element.hasAttribute('data-en-label')) {
+          element.setAttribute('aria-label', currentLanguage === 'ar' ? 
+            element.getAttribute('data-ar-label') : 
+            element.getAttribute('data-en-label'));
+        }
+      });
+      
+      // 6. Translate alt text for images
+      document.querySelectorAll('[data-ar-alt]').forEach(element => {
+        if (element.hasAttribute('data-ar-alt') && element.hasAttribute('data-en-alt')) {
+          element.setAttribute('alt', currentLanguage === 'ar' ? 
+            element.getAttribute('data-ar-alt') : 
+            element.getAttribute('data-en-alt'));
+        }
+      });
+      
+      // 7. Translate section titles
+      document.querySelectorAll('.section-title').forEach(title => {
+        if (title.hasAttribute('data-ar') && title.hasAttribute('data-en')) {
+          title.textContent = currentLanguage === 'ar' ? 
+            title.getAttribute('data-ar') : 
+            title.getAttribute('data-en');
+        }
+      });
+      
+      // 8. Translate history panel title
+      const historyTitle = document.querySelector('.history-panel h3');
+      if (historyTitle && historyTitle.hasAttribute('data-ar') && historyTitle.hasAttribute('data-en')) {
+        historyTitle.textContent = currentLanguage === 'ar' ? 
+          historyTitle.getAttribute('data-ar') : 
+          historyTitle.getAttribute('data-en');
+      }
+      
+      console.log('Translation complete!');
+    }
+    
+    // Update welcome message with user's name
+    function updateWelcomeMessage() {
+      const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile'));
+      const questionElement = document.querySelector('.question');
+      
+      if (userProfile && userProfile.name) {
+        const prefix = currentLanguage === 'ar' ? 
+          questionElement.getAttribute('data-ar-prefix') : 
+          questionElement.getAttribute('data-en-prefix');
+        const suffix = currentLanguage === 'ar' ? 
+          questionElement.getAttribute('data-ar-suffix') : 
+          questionElement.getAttribute('data-en-suffix');
+        
+        questionElement.textContent = `${prefix} ${userProfile.name}${suffix}`;
+      } else {
+        // If no user profile, show default message
+        const defaultMsg = currentLanguage === 'ar' ? 
+          'اهلين، وين حاب تروح اليوم؟' : 
+          'Hello, where would you like to go today?';
+        questionElement.textContent = defaultMsg;
+      }
+    }
+
+    // Check for user profile
+    const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile'));
+    if (!userProfile) {
+      window.location.href = 'indexQ.html';
+    } else {
+      updateWelcomeMessage();
+    }
+
+    function toggleHistory() {
+      const panel = document.getElementById('history-panel');
+      panel.classList.toggle('active');
+      if (panel.classList.contains('active')) {
+        loadHistory();
+      }
+    }
+
+    function loadHistory() {
+      const list = document.getElementById('history-list');
+      const history = JSON.parse(localStorage.getItem('hayyak_history') || '[]');
+      
+      if (history.length === 0) {
+        list.innerHTML = `<div style="text-align:center; color:var(--muted); padding:20px;">
+          ${currentLanguage === 'ar' ? 'لا يوجد سجل زيارات بعد' : 'No visit history yet'}
+        </div>`;
+        return;
+      }
+
+      list.innerHTML = history.map(item => `
+        <div class="history-item" onclick="locateHistory(${item.lat}, ${item.lon})">
+          <div style="font-weight:700">${item.title}</div>
+          <div style="font-size:12px; color:var(--muted)">
+            ${new Date(item.date).toLocaleDateString(currentLanguage === 'ar' ? 'ar-AE' : 'en-US')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function locateHistory(lat, lon) {
+      const f = 0.01;
+      const bbox = `${lon-f},${lat-f},${lon+f},${lat+f}`;
+      document.getElementById('user-map').src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik`;
+      toggleHistory();
+      
+      const message = currentLanguage === 'ar' ? 
+        `تم تحديد الموقع: ${lat.toFixed(4)}, ${lon.toFixed(4)}` :
+        `Location set to: ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+      showNotification(message);
+    }
+
+    // Search functionality
+    document.getElementById('search-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && this.value.trim()) {
+        const searchTerm = this.value.trim();
+        const message = currentLanguage === 'ar' ? 
+          `جارٍ البحث عن: ${searchTerm}` :
+          `Searching for: ${searchTerm}`;
+        showNotification(message);
+        this.value = '';
+      }
+    });
+    
+    // Show notification
+    function showNotification(message, type = 'info') {
+      // Remove any existing notification
+      const existingNotification = document.querySelector('.notification');
+      if (existingNotification) {
+        existingNotification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => existingNotification.remove(), 300);
+      }
+      
+      // Create new notification element
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.innerHTML = `
+        <div style="width: 36px; height: 36px; border-radius: 50%; background: #d4af37; display: grid; place-items: center; font-size: 18px;">
+          ${type === 'error' ? '⚠️' : '💡'}
+        </div>
+        <div style="flex: 1;">
+          <div style="font-weight: 700; margin-bottom: 4px;">
+            ${currentLanguage === 'ar' ? (type === 'error' ? 'تنبيه' : 'إشعار') : (type === 'error' ? 'Alert' : 'Notification')}
+          </div>
+          <div style="font-size: 14px; opacity: 0.9;">${message}</div>
+        </div>
+        <button onclick="this.parentElement.style.animation='slideOut 0.3s ease'; setTimeout(() => this.parentElement.remove(), 300)" 
+                style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0; width: 24px; height: 24px; display: grid; place-items: center;">
+          ×
+        </button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Remove notification automatically after 5 seconds
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => notification.remove(), 300);
+        }
+      }, 5000);
+    }
+
+    // Health tips data in both languages
+    const healthTips = {
+      ar: [
+        "💊 تذكر تناول أدويتك في موعدها",
+        "🥗 تناول وجبة إفطار صحية لتبدأ يومك بنشاط",
+        "💧 اشرب 8 أكواب من الماء يومياً",
+        "🚶‍♂️ امشِ 30 دقيقة يومياً لصحة قلبك",
+        "🧘‍♂️ خذ قسطاً من الراحة والتأمل لتخفيف القلق",
+        "📋 تابع قراءة السكر بانتظام إذا كنت مريض سكري",
+        "😊 الابتسام يقلل التوتر ويحسن المزاج",
+        "🥦 تجنب الأطعمة المسببة للحساسية",
+        "🌞 تعرض لأشعة الشمس الصباحية لفيتامين د",
+        "🧠 تمرن عقلك بالقراءة والألعاب الذهنية"
+      ],
+      en: [
+        "💊 Remember to take your medications on time",
+        "🥗 Eat a healthy breakfast to start your day energetically",
+        "💧 Drink 8 glasses of water daily",
+        "🚶‍♂️ Walk 30 minutes daily for heart health",
+        "🧘‍♂️ Take a break and meditate to reduce anxiety",
+        "📋 Monitor your sugar regularly if you have diabetes",
+        "😊 Smiling reduces stress and improves mood",
+        "🥦 Avoid foods that cause allergies",
+        "🌞 Get morning sun exposure for Vitamin D",
+        "🧠 Exercise your brain with reading and mental games"
+      ]
+    };
+
+    // Show health notification
+    function showHealthNotification() {
+      const privacySettings = {
+        healthNotifications: localStorage.getItem('healthNotifications') !== 'false'
+      };
+      
+      // Only if user has enabled health notifications
+      if (privacySettings.healthNotifications) {
+        const tips = currentLanguage === 'ar' ? healthTips.ar : healthTips.en;
+        const randomTip = tips[Math.floor(Math.random() * tips.length)];
+        
+        // Wait for page to fully load
+        setTimeout(() => {
+          showNotification(randomTip, 'info');
+        }, 2000);
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add click event to translate button
+      document.getElementById('translateBtn').addEventListener('click', toggleLanguage);
+      
+      // Apply profile language
+      if (userProfile && userProfile.language && userProfile.language !== currentLanguage) {
+        currentLanguage = userProfile.language;
+        document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = currentLanguage;
+        const btn = document.getElementById('translateBtn');
+        if (btn) {
+          const langText = btn.querySelector('span:last-child');
+          if (langText) langText.textContent = currentLanguage === 'ar' ? 'English' : 'العربية';
+        }
+        translatePage();
+      }
+
+      // Show health notification if enabled
+      if (userProfile && userProfile.name) {
+        showHealthNotification();
+      }
+    });
+  </script>
+</body>
+</html>

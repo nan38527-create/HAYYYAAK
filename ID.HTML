@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بطاقة التعريف الرقمية | حياك</title>
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  <meta name="description" content="احمل بطاقة التعريف الرقمية الخاصة بك مع حياك. سهولة الوصول، أمان، وراحة في متناول يدك." />
+    
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/lucide-static/font/lucide.css" rel="stylesheet">
+  
+  <style>
+    /* Afeesh Font Faces */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* Design Tokens */
+    :root {
+      --bg-primary: #f5f5f7;
+      --bg-card: #ffffff;
+      --text-primary: #0f0f10;
+      --text-secondary: #6b7280;
+      --border-dark: #0f0f10;
+      --border-light: #e5e7eb;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+      --shadow-card: 0 2px 0 #0f0f10;
+      --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.1);
+      
+      /* Additional variables for search bar */
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --ink: #0f0f10;
+      --muted: #6b7280;
+      --line: #0f0f10;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg-primary);
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      flex: 1;
+      background: var(--bg-primary);
+      position: relative;
+      padding: 0;
+    }
+
+    /* Header Styles */
+    header.brand {
+      text-align: center;
+      background: #16243d;
+      color: #ffffff;
+      padding: 20px;
+      position: relative;
+    }
+   
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #d4af37;
+    }
+    
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    
+    .home-btn {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 15px;
+      background-color: #0f0f10;
+      padding: 9px 12px;
+      border-radius: 999px;
+      transition: all 0.3s ease;
+    }
+    
+    .home-btn:hover {
+      background-color: #d4af37;
+      color: #0f0f10;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    /* Translate Button Styles */
+    .translate-btn {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      background: #d4af37;
+      border: 2px solid #ffffff;
+      border-radius: 20px;
+      color: #16243d;
+      padding: 6px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+      z-index: 100;
+    }
+    
+    .translate-btn:hover {
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+      background: #f7ef8a;
+    }
+    
+    .translate-btn .icon {
+      font-size: 16px;
+      transition: transform 0.3s ease;
+    }
+    
+    .translate-btn:hover .icon {
+      transform: rotate(20deg);
+    }
+    
+    .translate-btn.switching {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(0.9); }
+      100% { transform: translateY(-50%) scale(1); }
+    }
+
+    /* Map Section */
+    .map-section {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      border-bottom: 2px solid var(--border-dark);
+    }
+
+    .map-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ID Card Section */
+    .id-card-wrapper {
+      padding: 30px 30px;
+      background: var(--bg-primary);
+    }
+
+    .card-label {
+      font-family: 'Afeesh', 'Cairo', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .id-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 24px;
+    }
+
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .profile-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border-dark);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .profile-info {
+      flex: 1;
+      padding-top: 8px;
+    }
+
+    .name-ar {
+      font-family: 'Afeesh', 'Cairo', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+    }
+
+    .name-en {
+      font-family: 'Cairo', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* QR Code Section */
+    .qr-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      background: var(--bg-card);
+    }
+
+    .qr-code img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Bottom Search */
+    .bottom-search {
+      padding: 12px 0 18px;
+    }
+    
+    .search {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: var(--card);
+    }
+    
+    .glass {
+      text-align: center;
+    }
+    
+    .search input {
+      appearance: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      width: 100%;
+      font: inherit;
+      color: var(--ink);
+    }
+    
+    .search input::placeholder {
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 420px) {
+      .container {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="brand">
+    <a href="home.html" class="home-btn" aria-label="الرئيسية" data-ar="رجوع" data-en="Back">رجوع</a>
+    <div class="logo-text">حــــــيــــاك</div>
+    <div class="logo-sub">HAYYAK</div>
+    <button class="translate-btn" id="translateBtn" aria-label="تبديل اللغة">
+      <span class="icon">🌐</span>
+      <span>English</span>
+    </button>
+  </header>
+  
+  <div class="container">
+    <!-- ID Card Section -->
+    <div class="id-card-wrapper">
+      <div class="card-label" data-ar="بطاقة التعريف الرقمية" data-en="Digital ID Card">بطاقة التعريف الرقمية</div>
+      
+      <div class="id-card">
+        <!-- Profile Section -->
+        <div class="profile-section">
+          <img src="Screenshot 2026-01-04 205021.jpg" 
+               alt="صورة شخصية" 
+               data-ar-alt="صورة شخصية" 
+               data-en-alt="Profile Photo"
+               class="profile-photo" 
+               style="width: 80px; height: 80px; background-color: #0c2640;"/>
+          <div class="profile-info">
+            <div class="name-ar" data-ar="راشد سيف الكبوري النقبي" data-en="Rashid Saif AlKaboori Alnaqbi">راشد سيف الكبوري النقبي</div>
+            <div class="name-en">Rashid Saif AlKaboori Alnaqbi</div>
+          </div>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="qr-section">
+          <div class="qr-code">
+            <img 
+              src="Screenshot 2026-01-04 21023w4.jpg"
+              alt="رمز QR - QR code by OpenClipart-Vectors on Pixabay"
+              data-ar-alt="رمز QR"
+              data-en-alt="QR Code"
+              style="width: 100%; height: 100%;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-search">
+      <div class="search">
+        <div class="glass">🔍</div>
+        <input type="search" 
+               id="search-input" 
+               placeholder="ابحث عن معلومات" 
+               data-ar-placeholder="ابحث عن معلومات" 
+               data-en-placeholder="Search information" 
+               aria-label="ابحث عن معلومات" />
+      </div>
+    </div>
+  </div>
+  
+  <footer data-ar="© عبدالله بن ناصر-حياك" data-en="© Abdullah bin Nasser - Hayyak">© عبدالله بن ناصر-حياك</footer>
+
+  <script>
+    // Language state
+    let currentLanguage = 'ar';
+    
+    // Translation function
+    function toggleLanguage() {
+      const btn = document.getElementById('translateBtn');
+      btn.classList.add('switching');
+      
+      // Switch language
+      currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+      
+      // Update button text
+      const langText = btn.querySelector('span:last-child');
+      langText.textContent = currentLanguage === 'ar' ? 'English' : 'العربية';
+      
+      // Update page direction
+      document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = currentLanguage;
+      
+      // Update page title
+      document.title = currentLanguage === 'ar' ? 'بطاقة التعريف الرقمية | حياك' : 'Digital ID Card | Hayyak';
+      
+      // Translate all content including header and footer
+      translatePage();
+      
+      // Show notification
+      showNotification(currentLanguage === 'ar' ? 'تم التبديل إلى العربية' : 'Switched to English');
+      
+      // Remove animation class
+      setTimeout(() => {
+        btn.classList.remove('switching');
+      }, 500);
+    }
+    
+    // Translate the page (including header and footer)
+    function translatePage() {
+      // Translate elements with data attributes in the entire document
+      document.querySelectorAll('[data-ar], [data-en]').forEach(element => {
+        if (element.hasAttribute('data-ar') && element.hasAttribute('data-en')) {
+          element.textContent = currentLanguage === 'ar' ? element.getAttribute('data-ar') : element.getAttribute('data-en');
+        }
+      });
+      
+      // Translate placeholders
+      document.querySelectorAll('[data-ar-placeholder], [data-en-placeholder]').forEach(element => {
+        if (element.hasAttribute('data-ar-placeholder') && element.hasAttribute('data-en-placeholder')) {
+          element.placeholder = currentLanguage === 'ar' ? element.getAttribute('data-ar-placeholder') : element.getAttribute('data-en-placeholder');
+        }
+      });
+      
+      // Translate alt text for images
+      document.querySelectorAll('[data-ar-alt], [data-en-alt]').forEach(element => {
+        if (element.hasAttribute('data-ar-alt') && element.hasAttribute('data-en-alt')) {
+          element.setAttribute('alt', currentLanguage === 'ar' ? element.getAttribute('data-ar-alt') : element.getAttribute('data-en-alt'));
+        }
+      });
+      
+      // Update aria-label for home button
+      const homeBtn = document.querySelector('.home-btn');
+      if (homeBtn) {
+        homeBtn.setAttribute('aria-label', currentLanguage === 'ar' ? 'الرئيسية' : 'Home');
+      }
+      
+      // Update aria-label for translate button
+      const translateBtn = document.getElementById('translateBtn');
+      if (translateBtn) {
+        translateBtn.setAttribute('aria-label', currentLanguage === 'ar' ? 'تبديل اللغة' : 'Toggle Language');
+      }
+      
+      // Update aria-label for search input
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        searchInput.setAttribute('aria-label', currentLanguage === 'ar' ? 'ابحث عن معلومات' : 'Search information');
+      }
+      
+      // Remove aria-hidden from footer (if it exists) to make it accessible
+      const footer = document.querySelector('footer');
+      if (footer && footer.hasAttribute('aria-hidden')) {
+        footer.removeAttribute('aria-hidden');
+      }
+    }
+    
+    // Show notification
+    function showNotification(message, type = 'info') {
+      // Remove any existing notification
+      const existingNotification = document.querySelector('.notification');
+      if (existingNotification) {
+        existingNotification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => existingNotification.remove(), 300);
+      }
+      
+      // Create new notification element
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #16243d;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: slideIn 0.3s ease;
+        max-width: 320px;
+      `;
+      
+      notification.innerHTML = `
+        <div style="width: 36px; height: 36px; border-radius: 50%; background: #d4af37; display: grid; place-items: center; font-size: 18px;">
+          ${type === 'error' ? '⚠️' : '💡'}
+        </div>
+        <div style="flex: 1;">
+          <div style="font-weight: 700; margin-bottom: 4px;">
+            ${currentLanguage === 'ar' ? (type === 'error' ? 'تنبيه' : 'إشعار') : (type === 'error' ? 'Alert' : 'Notification')}
+          </div>
+          <div style="font-size: 14px; opacity: 0.9;">${message}</div>
+        </div>
+        <button onclick="this.parentElement.style.animation='slideOut 0.3s ease'; setTimeout(() => this.parentElement.remove(), 300)" 
+                style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0; width: 24px; height: 24px; display: grid; place-items: center;">
+          ×
+        </button>
+      `;
+      
+      // Add animation styles if not already present
+      if (!document.querySelector('#animation-styles')) {
+        const style = document.createElement('style');
+        style.id = 'animation-styles';
+        style.textContent = `
+          @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+          }
+          @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      document.body.appendChild(notification);
+      
+      // Remove notification automatically after 5 seconds
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => notification.remove(), 300);
+        }
+      }, 5000);
+    }
+    
+    // Search functionality
+    document.getElementById('search-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && this.value.trim()) {
+        const searchTerm = this.value.trim();
+        const message = currentLanguage === 'ar' ? 
+          `جارٍ البحث عن: ${searchTerm}` :
+          `Searching for: ${searchTerm}`;
+        showNotification(message);
+        this.value = '';
+      }
+    });
+    
+    // Load user data
+    function loadUserData() {
+      const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      if (!userProfile || !userProfile.name) {
+        // Redirect to login if no user profile
+        window.location.href = 'indexQ.html';
+        return;
+      }
+      
+      // Update the name if it's different from the default
+      if (userProfile.name !== 'راشد سيف الكبوري النقبي') {
+        document.querySelector('.name-ar').textContent = userProfile.name;
+        document.querySelector('.name-ar').setAttribute('data-ar', userProfile.name);
+        document.querySelector('.name-ar').setAttribute('data-en', userProfile.name);
+      }
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add click event to translate button
+      document.getElementById('translateBtn').addEventListener('click', toggleLanguage);
+      
+      const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      if (userProfile.language && userProfile.language !== currentLanguage) {
+        currentLanguage = userProfile.language;
+        document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = currentLanguage;
+        translatePage();
+      }
+      
+      // Load user data
+      loadUserData();
+      
+      // Add click event to QR code to show info
+      document.querySelector('.qr-code').addEventListener('click', function() {
+        const message = currentLanguage === 'ar' ? 
+          'رمز QR يحتوي على معلومات البطاقة التعريفية' :
+          'QR code contains ID card information';
+        showNotification(message);
+      });
+    });
+  </script>
+</body>
+</html>

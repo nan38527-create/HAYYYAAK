@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حياك | قوانين الإمارات</title>
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  <meta name="description" content="تعرف على القوانين الأساسية في الإمارات العربية المتحدة لضمان تجربة آمنة ومحترمة أثناء زيارتك." />
+
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Afeesh family (local) */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMesalwa.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMesalwa.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMesalwa.ttf') format('truetype');
+      font-weight: 300; font-style: normal; font-display: swap;
+    }
+
+    :root {
+      --bg: #f5f5f7; --card: #ffffff; --ink: #0f0f10; --muted: #6b7280; --line: #0f0f10; --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; background:var(--bg)}
+    body{margin:0; font-family:'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink)}
+
+    .shell{width:100%; max-width:420px; margin:0 auto; padding:16px}
+    .card{background:var(--card); border:2px solid var(--line); border-radius:var(--radius); box-shadow:0 2px 0 #0f0f10}
+
+    header.brand{text-align:center; background:#16243d; color:#ffffff; padding:20px; position:relative}
+   
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #d4af37;
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    .home-btn {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 15px;
+      background-color: #0f0f10;
+      padding: 9px 12px;
+      border-radius: 999px;
+      transition: all 0.3s ease;
+    }
+    
+    .home-btn:hover {
+      background-color: #d4af37;
+      color: #0f0f10;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    /* Translate Button Styles */
+    .translate-btn {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      background: #d4af37;
+      border: 2px solid #ffffff;
+      border-radius: 20px;
+      color: #16243d;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+      z-index: 100;
+    }
+    
+    .translate-btn:hover {
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+      background: #f7ef8a;
+    }
+    
+    .translate-btn .icon {
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+    
+    .translate-btn:hover .icon {
+      transform: rotate(20deg);
+    }
+    
+    .translate-btn.switching {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(0.9); }
+      100% { transform: translateY(-50%) scale(1); }
+    }
+
+    .map{height:180px; border-radius:var(--radius); overflow:hidden; position:relative; border:2px solid var(--line)}
+    .map iframe{width:100%; height:100%; border:0}
+
+    .section-title{display:flex; align-items:center; justify-content:center; gap:10px; margin:14px 0 10px; font-weight:700; font-size:20px}
+    .section-title .emoji{font-size:22px}
+
+    /* List items */
+    .list{display:grid; gap:10px}
+    .item{border:2px solid var(--line); border-radius:var(--radius); background:var(--card); padding:16px 20px; font-weight:700; line-height:1.6}
+    .item{cursor:default; transition:background 0.2s}
+    .item:hover{background:#f5f5f7}
+    .pin{display:grid; place-items:center; font-size:22px}
+    .thumb{width:80px; height:48px; object-fit:cover; border-radius:8px; border:2px solid var(--line)}
+
+    .info-panel{display:none; margin-top:10px; padding:14px; animation:fade 0.4s}
+    .info-panel.active{display:block}
+    .info-desc{font-size:14px; line-height:1.6; color:var(--muted); margin-bottom:16px}
+    .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .info-box{background:var(--bg); padding:12px; border-radius:12px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px}
+    .ib-icon{font-size:24px; margin-bottom:4px}
+    .ib-label{font-size:12px; color:var(--muted); font-weight:600}
+    .ib-val{font-size:14px; font-weight:700; color:var(--ink)}
+    @keyframes fade{from{opacity:0; transform:translateY(-10px)}to{opacity:1; transform:translateY(0)}}
+
+    .bottom-search{padding:12px 0 18px}
+    .search{display:grid; grid-template-columns:28px 1fr; align-items:center; gap:8px; border:2px solid var(--line); border-radius:999px; padding:10px 12px; background:var(--card)}
+    .glass{text-align:center}
+    .search input{appearance:none; border:0; outline:0; background:transparent; width:100%; font:inherit; color:var(--ink)}
+    .search input::placeholder{color:var(--muted)}
+
+     footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    @media (min-width:768px){.shell{padding:24px} .map{height:220px}}
+
+    .error-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #ef4444;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    .error-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    
+  </style>
+</head>
+<body>
+  <header class="brand">
+    <a href="home.html" class="home-btn" aria-label="الرئيسية" data-ar="الرجوع" data-en="Back">الرجوع</a>
+    <div class="logo-text">حــــــيــــاك</div>
+    <div class="logo-sub">HAYYAK</div>
+    <!-- Translation Button -->
+    <button class="translate-btn" id="translateBtn" aria-label="تبديل اللغة">
+      <span class="icon">🌐</span>
+      <span id="translateText">English</span>
+    </button>
+  </header>
+  <div id="error-toast" class="error-toast"></div>
+  <main class="shell">
+          
+    <div class="map card" aria-label="خريطة">
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=51.50,22.50,56.50,26.20&amp;layer=mapnik" title="Map"></iframe>
+    </div>
+
+    <div class="section-title">
+      <span class="emoji" aria-hidden="true">⚖️</span>
+      <span data-ar="القوانين" data-en="Laws">القوانين</span>
+      <span></span>
+    </div>
+
+    <section class="list">
+
+         <article class="item" data-ar="اللباس المحتشم: يطلب من الجميع ارتداء ملابس محتشمة في الأماكن العامة" data-en="Modest Dress: Everyone is required to wear modest clothing in public places">
+          اللباس المحتشم: يطلب من الجميع ارتداء ملابس محتشمة في الأماكن العامة
+        </article>
+
+         <article class="item" data-ar="تجنب إظهار المشاعر الحميمة علناً: يمنع التقبيل أو العناق أو أي تصرفات حميمة" data-en="Avoid Public Display of Affection: Kissing, hugging, or any intimate behavior is prohibited">
+          تجنب إظهار المشاعر الحميمة علناً: يمنع التقبيل أو العناق أو أي تصرفات حميمة
+        </article>
+
+         <article class="item" data-ar="الامتناع عن الألفاظ والإيماءات المسيئة: يُمنع استخدام الشتائم أو الألفاظ البذيئة" data-en="Refrain from Offensive Language and Gestures: Using profanity or vulgar language is prohibited">
+          الامتناع عن الألفاظ والإيماءات المسيئة: يُمنع استخدام الشتائم أو الألفاظ البذيئة
+        </article>
+
+         <article class="item" data-ar="تجنب الجدال والصراخ: يُفضل تجنب التحدث بصوت مرتفع" data-en="Avoid Arguments and Shouting: It is preferable to avoid speaking loudly">
+          تجنب الجدال والصراخ: يُفضل تجنب التحدث بصوت مرتفع
+        </article>
+
+         <article class="item" data-ar="الكحول: يُمنع شرب الكحول في الأماكن العامة غير المرخصة" data-en="Alcohol: Drinking alcohol in unlicensed public places is prohibited">
+          الكحول: يُمنع شرب الكحول في الأماكن العامة غير المرخصة
+        </article>
+
+         <article class="item" data-ar="يمنع تصوير الأشخاص (خاصة النساء والعائلات المحلية)" data-en="Photographing people is prohibited (especially local women and families)">
+          يمنع تصوير الأشخاص (خاصة النساء والعائلات المحلية)
+        </article>
+
+         <article class="item" data-ar="احترام الدين والحكومة: يُمنع انتقاد الحكومة أو الدين أو إهانة الرموز الوطنية" data-en="Respect Religion and Government: Criticizing the government, religion, or insulting national symbols is prohibited">
+          احترام الدين والحكومة: يُمنع انتقاد الحكومة أو الدين أو إهانة الرموز الوطنية
+        </article>
+
+         <article class="item" data-ar="تصوير الأماكن العامة: يُمنع تصوير المباني الحكومية والمنشآت العسكرية" data-en="Photographing Public Places: Taking pictures of government buildings and military installations is prohibited">
+          تصوير الأماكن العامة: يُمنع تصوير المباني الحكومية والمنشآت العسكرية
+        </article>
+
+        <article class="item" style="grid-template-columns: 1fr; padding: 0; border: 2px solid var(--line); border-radius: var(--radius); overflow: hidden;">
+          <img src="UAE.jpg" alt="علم الإمارات" data-ar-alt="علم الإمارات" data-en-alt="UAE Flag" style="width: 100%; height: auto; display: block; border: none;">
+        </article>
+
+    </section>
+
+    <div class="bottom-search">
+      <div class="search">
+        <div class="glass">🔍</div>
+        <input type="search" 
+               id="search-input" 
+               placeholder="ابحث عن معلومات" 
+               data-ar-placeholder="ابحث عن معلومات" 
+               data-en-placeholder="Search information" 
+               aria-label="ابحث عن معلومات" 
+               data-ar-aria-label="ابحث عن معلومات"
+               data-en-aria-label="Search information" />
+      </div>
+    </div>
+
+  </main>
+  
+  <footer data-ar="© عبدالله بن ناصر-حياك" data-en="© Abdullah bin Nasser - Hayyak">© عبدالله بن ناصر-حياك</footer>
+
+  <script>
+    // Language state
+    let currentLanguage = 'ar';
+    
+    // Translation data
+    const translations = {
+      ar: {
+        pageTitle: "حياك | قوانين الإمارات",
+        homeBtn: "الرجوع",
+        homeAria: "الرئيسية",
+        footer: "© عبدالله بن ناصر-حياك",
+        translateBtn: "English",
+        translateAria: "تبديل اللغة",
+        sectionTitle: "القوانين",
+        mapAria: "خريطة",
+        law1: "اللباس المحتشم: يطلب من الجميع ارتداء ملابس محتشمة في الأماكن العامة",
+        law2: "تجنب إظهار المشاعر الحميمة علناً: يمنع التقبيل أو العناق أو أي تصرفات حميمة",
+        law3: "الامتناع عن الألفاظ والإيماءات المسيئة: يُمنع استخدام الشتائم أو الألفاظ البذيئة",
+        law4: "تجنب الجدال والصراخ: يُفضل تجنب التحدث بصوت مرتفع",
+        law5: "الكحول: يُمنع شرب الكحول في الأماكن العامة غير المرخصة",
+        law6: "يمنع تصوير الأشخاص (خاصة النساء والعائلات المحلية)",
+        law7: "احترام الدين والحكومة: يُمنع انتقاد الحكومة أو الدين أو إهانة الرموز الوطنية",
+        law8: "تصوير الأماكن العامة: يُمنع تصوير المباني الحكومية والمنشآت العسكرية",
+        flagAlt: "علم الإمارات",
+        searchPlaceholder: "ابحث عن معلومات",
+        searchAriaLabel: "ابحث عن معلومات",
+        searchErrorShort: "يرجى كتابة أكثر من حرف للبحث.",
+        searchErrorNotFound: "لم يتم العثور على المكان، يرجى المحاولة مرة أخرى.",
+        searchErrorGeneral: "حدث خطأ أثناء البحث.",
+        switched: "تم التبديل إلى العربية"
+      },
+      en: {
+        pageTitle: "Hayyak | UAE Laws",
+        homeBtn: "Back",
+        homeAria: "Home",
+        footer: "© Abdullah bin Nasser - Hayyak",
+        translateBtn: "العربية",
+        translateAria: "Toggle Language",
+        sectionTitle: "Laws",
+        mapAria: "Map",
+        law1: "Modest Dress: Everyone is required to wear modest clothing in public places",
+        law2: "Avoid Public Display of Affection: Kissing, hugging, or any intimate behavior is prohibited",
+        law3: "Refrain from Offensive Language and Gestures: Using profanity or vulgar language is prohibited",
+        law4: "Avoid Arguments and Shouting: It is preferable to avoid speaking loudly",
+        law5: "Alcohol: Drinking alcohol in unlicensed public places is prohibited",
+        law6: "Photographing people is prohibited (especially local women and families)",
+        law7: "Respect Religion and Government: Criticizing the government, religion, or insulting national symbols is prohibited",
+        law8: "Photographing Public Places: Taking pictures of government buildings and military installations is prohibited",
+        flagAlt: "UAE Flag",
+        searchPlaceholder: "Search information",
+        searchAriaLabel: "Search information",
+        searchErrorShort: "Please type more than one character to search.",
+        searchErrorNotFound: "Place not found, please try again.",
+        searchErrorGeneral: "An error occurred while searching.",
+        switched: "Switched to English"
+      }
+    };
+    
+    // Translation function
+    function toggleLanguage() {
+      const btn = document.getElementById('translateBtn');
+      btn.classList.add('switching');
+      
+      // Switch language
+      currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+      
+      // Update page direction
+      document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = currentLanguage;
+      
+      // Translate all content
+      translatePage();
+      
+      // Show notification
+      showError(translations[currentLanguage].switched, true);
+      
+      // Remove animation class
+      setTimeout(() => {
+        btn.classList.remove('switching');
+      }, 500);
+    }
+    
+    // Translate the entire page
+    function translatePage() {
+      const t = translations[currentLanguage];
+      
+      // Update page title
+      document.title = t.pageTitle;
+      
+      // Update translate button text and aria-label
+      const translateBtn = document.getElementById('translateBtn');
+      document.getElementById('translateText').textContent = t.translateBtn;
+      translateBtn.setAttribute('aria-label', t.translateAria);
+      
+      // Update home button
+      const homeBtn = document.querySelector('.home-btn');
+      homeBtn.textContent = t.homeBtn;
+      homeBtn.setAttribute('aria-label', t.homeAria);
+      
+      // Update footer
+      document.querySelector('footer').textContent = t.footer;
+      
+      // Update section title
+      const sectionTitle = document.querySelector('.section-title span:nth-child(2)');
+      sectionTitle.textContent = t.sectionTitle;
+      
+      // Update map aria-label
+      document.querySelector('.map').setAttribute('aria-label', t.mapAria);
+      
+      // Update law items
+      const lawItems = document.querySelectorAll('.item[data-ar]');
+      lawItems.forEach((item, index) => {
+        const lawKey = `law${index + 1}`;
+        if (translations[currentLanguage][lawKey]) {
+          item.textContent = translations[currentLanguage][lawKey];
+        }
+      });
+      
+      // Update flag image alt text
+      const flagImg = document.querySelector('img[src="UAE.jpg"]');
+      if (flagImg) {
+        flagImg.setAttribute('alt', t.flagAlt);
+      }
+      
+      // Update search input
+      const searchInput = document.getElementById('search-input');
+      searchInput.placeholder = t.searchPlaceholder;
+      searchInput.setAttribute('aria-label', t.searchAriaLabel);
+      
+      // Update all elements with data attributes
+      document.querySelectorAll('[data-ar], [data-en]').forEach(element => {
+        if (element.hasAttribute('data-ar') && element.hasAttribute('data-en')) {
+          element.textContent = currentLanguage === 'ar' ? element.getAttribute('data-ar') : element.getAttribute('data-en');
+        }
+      });
+      
+      // Update all placeholders
+      document.querySelectorAll('[data-ar-placeholder], [data-en-placeholder]').forEach(element => {
+        if (element.hasAttribute('data-ar-placeholder') && element.hasAttribute('data-en-placeholder')) {
+          element.placeholder = currentLanguage === 'ar' ? element.getAttribute('data-ar-placeholder') : element.getAttribute('data-en-placeholder');
+        }
+      });
+      
+      // Update all aria-labels
+      document.querySelectorAll('[data-ar-aria-label], [data-en-aria-label]').forEach(element => {
+        if (element.hasAttribute('data-ar-aria-label') && element.hasAttribute('data-en-aria-label')) {
+          element.setAttribute('aria-label', currentLanguage === 'ar' ? element.getAttribute('data-ar-aria-label') : element.getAttribute('data-en-aria-label'));
+        }
+      });
+      
+      // Update all alt text
+      document.querySelectorAll('[data-ar-alt], [data-en-alt]').forEach(element => {
+        if (element.hasAttribute('data-ar-alt') && element.hasAttribute('data-en-alt')) {
+          element.setAttribute('alt', currentLanguage === 'ar' ? element.getAttribute('data-ar-alt') : element.getAttribute('data-en-alt'));
+        }
+      });
+    }
+    
+    // Show error or notification
+    function showError(message, isSuccess = false) {
+      const toast = document.getElementById('error-toast');
+      toast.textContent = message;
+      toast.style.background = isSuccess ? '#10b981' : '#ef4444';
+      
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Search functionality
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        performSearch(this.value);
+      }
+    });
+
+    async function performSearch(query) {
+      if (!query) return;
+      if (query.trim().length < 2) {
+        showError(translations[currentLanguage].searchErrorShort);
+        return;
+      }
+      
+      // Show searching message
+      showError(currentLanguage === 'ar' ? `جار البحث عن: ${query}` : `Searching for: ${query}`, true);
+      
+      // Clear input
+      searchInput.value = '';
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add click event to translate button
+      document.getElementById('translateBtn').addEventListener('click', toggleLanguage);
+      
+      const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      if (userProfile.language && userProfile.language !== currentLanguage) {
+        currentLanguage = userProfile.language;
+        document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = currentLanguage;
+      }
+      
+      // Initialize the page in Arabic
+      translatePage();
+    });
+    
+    // Remove the existing performSearch function and replace with simplified version
+    // The existing placesDB and related functions are not needed for this page
+  </script>
+</body>
+</html>

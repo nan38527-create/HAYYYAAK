@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حياك | مطاعم</title>
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Afeesh family (local) */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMesalwa.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMesalwa.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMesalwa.ttf') format('truetype');
+      font-weight: 300; font-style: normal; font-display: swap;
+    }
+
+    :root {
+      --bg: #f5f5f7; --card: #ffffff; --ink: #0f0f10; --muted: #6b7280; --line: #0f0f10; --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; background:var(--bg)}
+    body{margin:0; font-family:'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink)}
+
+    .shell{width:100%; max-width:420px; margin:0 auto; padding:16px}
+    .card{background:var(--card); border:2px solid var(--line); border-radius:var(--radius); box-shadow:0 2px 0 #0f0f10}
+
+    header.brand{text-align:center; background:#16243d; color:#ffffff; padding:20px; position:relative}
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #d4af37;
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+    .home-btn {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 15px;
+      background-color: #0f0f10;
+      padding: 9px 12px;
+      border-radius: 999px;
+    }
+
+    /* Translate Button Styles */
+    .translate-btn {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      background: #d4af37;
+      border: 2px solid #ffffff;
+      border-radius: 20px;
+      color: #16243d;
+      padding: 6px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+      z-index: 100;
+    }
+    
+    .translate-btn:hover {
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+      background: #f7ef8a;
+    }
+    
+    .translate-btn .icon {
+      font-size: 16px;
+      transition: transform 0.3s ease;
+    }
+    
+    .translate-btn:hover .icon {
+      transform: rotate(20deg);
+    }
+    
+    .translate-btn.switching {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(0.9); }
+      100% { transform: translateY(-50%) scale(1); }
+    }
+
+    .map{height:180px; border-radius:var(--radius); overflow:hidden; position:relative; border:2px solid var(--line)}
+    .map iframe{width:100%; height:100%; border:0}
+
+    .section-title{display:flex; align-items:center; justify-content:center; gap:10px; margin:14px 0 10px; font-weight:700; font-size:20px}
+    .section-title .emoji{font-size:22px}
+
+    /* List items */
+    .list{display:grid; gap:10px}
+    .item{display:flex; align-items:center; gap:10px; border:2px solid var(--line); border-radius:999px; background:var(--card); padding:8px 16px 8px 12px; cursor:pointer; transition:background 0.2s}
+    .item:hover{background:#f5f5f7}
+    .pin{display:grid; place-items:center; font-size:22px; width:36px; flex-shrink:0}
+    .thumb{width:60px; height:50px; border-radius:8px; object-fit:cover; flex-shrink:0}
+    .label{flex:1}
+    .label span{display:block; font-weight:700; font-size:13px}
+    .distance-badge{font-size:11px; color:#6b7280; font-weight:600}
+    .rating-badge{font-size:11px; color:#d97706; font-weight:600}
+
+    .info-panel{display:none; margin-top:10px; padding:14px; animation:fade 0.4s}
+    .info-panel.active{display:block}
+    .info-panel h3{margin:0 0 8px; font-size:18px}
+    .info-desc{font-size:14px; line-height:1.6; color:#6b7280; margin-bottom:16px}
+    
+    .allergy-warning{background:#fff3cd; border:2px solid #ffc107; border-radius:8px; padding:12px; margin-top:12px; display:none; align-items:center; gap:10px}
+    .allergy-warning.show{display:flex}
+    .allergy-warning-icon{font-size:20px; flex-shrink:0}
+    .allergy-warning-text{font-size:13px; color:#856404; font-weight:600}
+    .allergy-items{font-size:12px; color:#856404; margin-top:8px; font-weight:500}
+    
+    .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .info-box{background:#f5f5f7; padding:12px; border-radius:12px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px}
+    .ib-icon{font-size:24px}
+    .ib-label{font-size:12px; color:#6b7280; font-weight:600}
+    .ib-val{font-size:14px; font-weight:700}
+    @keyframes fade{from{opacity:0; transform:translateY(-10px)}to{opacity:1; transform:translateY(0)}}
+
+    .controls{display:grid; gap:10px; margin-bottom:16px}
+    .filter-group{display:grid; gap:8px}
+    .filter-label{font-weight:600; font-size:14px; color:var(--ink)}
+    .city-select{padding:10px 12px; border:2px solid var(--line); border-radius:999px; background:var(--card); color:var(--ink); font-family:inherit; cursor:pointer; font-weight:600; font-size:13px; width:100%}
+    .sort-buttons{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px}
+    .sort-btn{padding:10px 12px; border:2px solid var(--line); border-radius:999px; background:var(--card); color:var(--ink); font-family:inherit; cursor:pointer; font-weight:600; font-size:13px}
+    .sort-btn.active{background:#0f0f10; color:#ffffff}
+
+    .bottom-search{padding:12px 0 18px; position:relative}
+    .search{display:grid; grid-template-columns:28px 1fr; align-items:center; gap:8px; border:2px solid var(--line); border-radius:999px; padding:10px 12px; background:var(--card)}
+    .glass{text-align:center}
+    .search input{appearance:none; border:0; outline:0; background:transparent; width:100%; font:inherit; color:var(--ink)}
+    .search input::placeholder{color:var(--muted)}
+
+    .autocomplete-list{display:none; position:absolute; top:100%; left:0; right:0; background:var(--card); border:2px solid var(--line); border-top:0; border-radius:0 0 var(--radius) var(--radius); max-height:200px; overflow-y:auto; z-index:100}
+    .autocomplete-list.active{display:block}
+    .autocomplete-item{padding:12px; border-bottom:1px solid var(--line); cursor:pointer; transition:background 0.2s}
+    .autocomplete-item:hover{background:#f5f5f7}
+    .autocomplete-item:last-child{border-bottom:none}
+    .autocomplete-item-name{font-weight:700; color:var(--ink)}
+    .autocomplete-item-desc{font-size:12px; color:var(--muted); margin-top:2px}
+
+    footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .error-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #ef4444;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    .error-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (min-width:768px){.shell{padding:24px} .map{height:220px}}
+  </style>
+</head>
+<body>
+  <header class="brand">
+    <a href="home.html" class="home-btn" aria-label="الرئيسية" data-ar="رجوع" data-en="Back">رجوع</a>
+    <div class="logo-text">حــــــيــــاك</div>
+    <div class="logo-sub">HAYYAK</div>
+    <button class="translate-btn" id="translateBtn" aria-label="تبديل اللغة">
+      <span class="icon">🌐</span>
+      <span>English</span>
+    </button>
+  </header>
+  <div id="error-toast" class="error-toast"></div>
+  <main class="shell">
+    <div class="map card" aria-label="خريطة" data-ar-label="خريطة" data-en-label="Map">
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=51.50,22.50,56.50,26.20&amp;layer=mapnik" title="Map"></iframe>
+    </div>
+
+    <div id="info-panel" class="card info-panel">
+      <h3 id="p-title" style="margin:0 0 8px"></h3>
+      <div id="p-desc" class="info-desc"></div>
+      
+      <div class="allergy-warning" id="allergy-warning">
+        <div class="allergy-warning-icon">⚠️</div>
+        <div>
+          <div class="allergy-warning-text" data-ar="تحذير: يحتوي على مواد قد تسبب حساسية" data-en="Warning: Contains ingredients that may cause allergies">تحذير: يحتوي على مواد قد تسبب حساسية</div>
+          <div class="allergy-items" id="allergy-items"></div>
+        </div>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-box">
+          <div class="ib-icon">⭐</div>
+          <div class="ib-label" data-ar="التقييم" data-en="Rating">التقييم</div>
+          <div class="ib-val" id="p-rating"></div>
+        </div>
+        <div class="info-box">
+          <div class="ib-icon">📏</div>
+          <div class="ib-label" data-ar="المسافة" data-en="Distance">المسافة</div>
+          <div class="ib-val" id="p-distance"></div>
+        </div>
+        <div class="info-box">
+          <div class="ib-icon">🕒</div>
+          <div class="ib-label" data-ar="الأوقات" data-en="Hours">الأوقات</div>
+          <div class="ib-val" id="p-time"></div>
+        </div>
+        <div class="info-box">
+          <div class="ib-icon">💰</div>
+          <div class="ib-label" data-ar="متوسط السعر" data-en="Avg. Price">متوسط السعر</div>
+          <div class="ib-val" id="p-price"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="emoji" aria-hidden="true">🍴</span><span data-ar="مطاعم" data-en="Restaurants">مطاعم</span></div>
+
+    <div class="controls card">
+      <div class="filter-group">
+        <label class="filter-label" data-ar="اختر المدينة:" data-en="Choose City:">اختر المدينة:</label>
+        <select id="city-select" class="city-select" onchange="changeCity(this.value)">
+          <option value="dubai">🏙️ <span data-ar="دبي" data-en="Dubai">دبي</span></option>
+          <option value="abudhabi">🏛️ <span data-ar="أبوظبي" data-en="Abu Dhabi">أبوظبي</span></option>
+          <option value="sharjah">🏘️ <span data-ar="الشارقة" data-en="Sharjah">الشارقة</span></option>
+          <option value="ajman">🌊 <span data-ar="عجمان" data-en="Ajman">عجمان</span></option>
+          <option value="rak">⛰️ <span data-ar="رأس الخيمة" data-en="Ras Al Khaimah">رأس الخيمة</span></option>
+          <option value="fujairah">🏖️ <span data-ar="الفجيرة" data-en="Fujairah">الفجيرة</span></option>
+          <option value="uaq">🦅 <span data-ar="أم القيوين" data-en="Umm Al Quwain">أم القيوين</span></option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label" data-ar="نوع الطعام:" data-en="Food Type:">نوع الطعام:</label>
+        <select id="food-type-select" class="city-select" onchange="changeFoodType(this.value)">
+          <option value="" data-ar="جميع الأنواع" data-en="All Types">جميع الأنواع</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label" data-ar="رتّب حسب:" data-en="Sort by:">رتّب حسب:</label>
+        <div class="sort-buttons">
+          <button class="sort-btn active" onclick="sortPlaces('nearest')" data-ar="📍 الأقرب" data-en="📍 Nearest">📍 الأقرب</button>
+          <button class="sort-btn" onclick="sortPlaces('rating')" data-ar="⭐ الأعلى" data-en="⭐ Highest">⭐ الأعلى</button>
+          <button class="sort-btn" onclick="sortPlaces('price')" data-ar="💰 الأرخص" data-en="💰 Cheapest">💰 الأرخص</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="list" id="places-list"></section>
+
+    <div class="bottom-search">
+      <div class="search">
+        <div class="glass">🔍</div>
+        <input type="search" id="search-input" 
+               placeholder="ابحث عن مطعم..." 
+               data-ar-placeholder="ابحث عن مطعم..." 
+               data-en-placeholder="Search for a restaurant..." 
+               aria-label="ابحث عن مطعم" />
+      </div>
+      <div id="autocomplete-list" class="autocomplete-list"></div>
+    </div>
+  </main>
+  <footer data-ar="© عبدالله بن ناصر-حياك" data-en="© Abdullah bin Nasser - Hayyak">© عبدالله بن ناصر-حياك</footer>
+
+  <script>
+    // Language state
+    let currentLanguage = 'ar';
+    let currentCity = 'dubai';
+    let currentSort = 'nearest';
+    let currentFoodType = '';
+    let filteredPlaces = [];
+    let userLocation = {lat: 25.2048, lon: 55.2708};
+
+    // Translation function
+    function toggleLanguage() {
+      const btn = document.getElementById('translateBtn');
+      btn.classList.add('switching');
+      
+      // Switch language
+      currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+      
+      // Update button text
+      const langText = btn.querySelector('span:last-child');
+      langText.textContent = currentLanguage === 'ar' ? 'English' : 'العربية';
+      
+      // Update page direction
+      document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = currentLanguage;
+      
+      // Update page title
+      document.title = currentLanguage === 'ar' ? 'حياك | مطاعم' : 'Hayyak | Restaurants';
+      
+      // Translate all content
+      translateAllContent();
+      
+      // Re-filter and render places with new language
+      filterAndSort();
+      
+      // Show notification
+      showError(currentLanguage === 'ar' ? 'تم التبديل إلى العربية' : 'Switched to English');
+      
+      // Remove animation class
+      setTimeout(() => {
+        btn.classList.remove('switching');
+      }, 500);
+    }
+    
+    // Translate all content including header and footer
+    function translateAllContent() {
+      // Translate elements with data attributes in the entire document
+      document.querySelectorAll('[data-ar], [data-en]').forEach(element => {
+        if (element.hasAttribute('data-ar') && element.hasAttribute('data-en')) {
+          element.textContent = currentLanguage === 'ar' ? element.getAttribute('data-ar') : element.getAttribute('data-en');
+        }
+      });
+      
+      // Translate placeholders
+      document.querySelectorAll('[data-ar-placeholder], [data-en-placeholder]').forEach(element => {
+        if (element.hasAttribute('data-ar-placeholder') && element.hasAttribute('data-en-placeholder')) {
+          element.placeholder = currentLanguage === 'ar' ? element.getAttribute('data-ar-placeholder') : element.getAttribute('data-en-placeholder');
+        }
+      });
+      
+      // Update aria-label for home button
+      const homeBtn = document.querySelector('.home-btn');
+      if (homeBtn) {
+        homeBtn.setAttribute('aria-label', currentLanguage === 'ar' ? 'الرئيسية' : 'Home');
+      }
+      
+      // Update aria-label for translate button
+      const translateBtn = document.getElementById('translateBtn');
+      if (translateBtn) {
+        translateBtn.setAttribute('aria-label', currentLanguage === 'ar' ? 'تبديل اللغة' : 'Toggle Language');
+      }
+      
+      // Update aria-label for search input
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        searchInput.setAttribute('aria-label', currentLanguage === 'ar' ? 'ابحث عن مطعم' : 'Search for a restaurant');
+      }
+      
+      // Update aria-label for map
+      const map = document.querySelector('.map');
+      if (map) {
+        map.setAttribute('aria-label', currentLanguage === 'ar' ? 'خريطة' : 'Map');
+      }
+      
+      // Translate city options in select
+      const citySelect = document.getElementById('city-select');
+      if (citySelect) {
+        Array.from(citySelect.options).forEach(option => {
+          const span = option.querySelector('span');
+          if (span && span.hasAttribute('data-ar') && span.hasAttribute('data-en')) {
+            span.textContent = currentLanguage === 'ar' ? span.getAttribute('data-ar') : span.getAttribute('data-en');
+          }
+        });
+      }
+      
+      // Translate food type options
+      const foodTypeSelect = document.getElementById('food-type-select');
+      if (foodTypeSelect) {
+        Array.from(foodTypeSelect.options).forEach(option => {
+          if (option.hasAttribute('data-ar') && option.hasAttribute('data-en')) {
+            option.textContent = currentLanguage === 'ar' ? option.getAttribute('data-ar') : option.getAttribute('data-en');
+          }
+        });
+      }
+    }
+
+    // Allergen mapping by cuisine type
+    const allergenMap = {
+      'ياباني': ['سمك', 'جمبري', 'فول سوداني'],
+      'ياباني راقي': ['سمك', 'جمبري'],
+      'سوشي': ['سمك', 'جمبري', 'فول سوداني'],
+      'بحري': ['سمك', 'جمبري', 'محار'],
+      'مأكولات بحرية': ['سمك', 'جمبري', 'محار'],
+      'أطباق بحرية': ['سمك', 'جمبري', 'محار'],
+      'إيطالي': ['القمح', 'منتجات ألبان', 'بيض'],
+      'بيتزا': ['القمح', 'منتجات ألبان', 'بيض'],
+      'فرنسي': ['منتجات ألبان', 'بيض'],
+      'باستا': ['القمح', 'بيض'],
+      'هندي': ['فول سوداني', 'سمسم', 'الخردل'],
+      'باكستاني': ['فول سوداني', 'سمسم'],
+      'تايلاندي': ['فول سوداني', 'سمك', 'جمبري'],
+      'صيني': ['فول سوداني', 'سمسم', 'سمك'],
+      'آسيوي': ['فول سوداني', 'سمسم'],
+      'لبناني': ['السمسم'],
+      'عربي': ['السمسم'],
+      'برغر': ['القمح', 'بيض'],
+      'مخبوزات': ['القمح', 'بيض', 'منتجات ألبان'],
+      'مقهى': ['منتجات ألبان'],
+      'حلويات': ['منتجات ألبان', 'بيض', 'فول سوداني']
+    };
+
+    // Food type extraction from descriptions
+    const foodTypeKeywords = {
+      'ياباني': ['ياباني', 'سوشي', 'نوري', 'يابان'],
+      'إيطالي': ['إيطالي', 'بيتزا', 'باستا', 'ايطالي'],
+      'فرنسي': ['فرنسي', 'فرنسية', 'باريس'],
+      'هندي': ['هندي', 'هندية', 'برياني', 'تندوري'],
+      'باكستاني': ['باكستاني', 'باكستانية'],
+      'تايلاندي': ['تايلاندي', 'تايلاند'],
+      'صيني': ['صيني', 'صينية', 'صين'],
+      'بحري': ['بحري', 'سمك', 'جمبري', 'محار', 'أسماك', 'بحرية', 'seafood'],
+      'عربي': ['عربي', 'عربية', 'مشاوي', 'شاورما', 'كباب', 'مندي'],
+      'لبناني': ['لبناني', 'لبنانية'],
+      'سوري': ['سوري', 'سورية'],
+      'برغر': ['برغر', 'burger'],
+      'مقهى': ['كافيه', 'مقهى', 'قهوة', 'كفي'],
+      'تايلاندي': ['تايلاندي', 'تايلند'],
+      'كوري': ['كوري', 'كورية', 'كوريا'],
+      'إماراتي': ['إماراتي', 'إمارات', 'خليجي'],
+      'متوسطي': ['متوسطي', 'متوسط'],
+      'أوروبي': ['أوروبي', 'أوروبية']
+    };
+
+    function extractFoodTypes(description) {
+      const types = new Set();
+      const descLower = description.toLowerCase();
+      
+      for (const [type, keywords] of Object.entries(foodTypeKeywords)) {
+        for (const keyword of keywords) {
+          if (descLower.includes(keyword)) {
+            types.add(type);
+            break;
+          }
+        }
+      }
+      
+      return Array.from(types);
+    }
+
+    // Add types to all restaurants on load
+    function enrichRestaurantData() {
+      for (const city in allPlaces) {
+        allPlaces[city].forEach(place => {
+          if (!place.types) {
+            place.types = extractFoodTypes(place.desc);
+          }
+        });
+      }
+    }
+
+    // 7-City Restaurants Database with restaurants
+    const allPlaces = {
+      dubai: [
+        {city:'dubai', name:'Tresind Studio', nameAr:'تريسند ستوديو', lat:25.1259, lon:55.1410, rating:4.9, price:'$$$$', time:'12:00 م - 11:00 م', desc:'مأكولات هندية مبتكرة راقية', descAr:'Innovative Indian cuisine', allergens:['فول سوداني', 'سمسم', 'الخردل', 'القمح', 'منتجات ألبان', 'بيض']},  
+        {city:'dubai', name:'FZN by Björn Frantzén', nameAr:'اف زد ان بيورن فرانتزن', lat:25.1302, lon:55.1175, rating:4.9, price:'$$$$', time:'12:00 م - 11:00 م', desc:'إبداع نوردِك + ياباني في أتلانتس', descAr:'Nordic + Japanese fusion at Atlantis', allergens:['سمك', 'جمبري', 'فول سوداني', 'القمح', 'منتجات ألبان', 'بيض']},  
+        {city:'dubai', name:'Row on 45', nameAr:'رو أون 45', lat:25.0785, lon:55.1426, rating:4.8, price:'$$$$', time:'6:00 م - 11:00 م', desc:'مطعم ميشلان ستار في Grosvenor House', descAr:'Michelin star restaurant in Grosvenor House', allergens:['سمك', 'جمبري', 'منتجات ألبان', 'بيض', 'القمح']},  
+        {city:'dubai', name:'Manāo', nameAr:'ماناو', lat:25.1935, lon:55.2777, rating:4.7, price:'$$$', time:'12:00 م - 11:00 م', desc:'مأكولات تايلاندية عصرية', descAr:'Modern Thai cuisine', allergens:['فول سوداني', 'سمك', 'جمبري', 'القمح', 'منتجات ألبان']},  
+        {city:'dubai', name:'Il Ristorante – Niko Romito', nameAr:'إل ريستورانتي - نيكو روميتو', lat:25.1045, lon:55.1361, rating:4.8, price:'$$$$', time:'12:00 م - 11:00 م', desc:'إيطالي راقي في منتجع بولغاري', descAr:'Fine Italian cuisine at Bulgari Resort', allergens:['القمح', 'منتجات ألبان', 'بيض']}
+      ],
+      abudhabi: [
+        {city:'abudhabi', name:'99 Sushi Bar & Restaurant', nameAr:'99 سوشي بار و مطعم', lat:24.4790, lon:54.3620, rating:4.7, price:'$$$', time:'12:00 م - 11:00 م', desc:'مطعم ياباني راقي مع نجمة ميشلان', descAr:'Fine Japanese restaurant with Michelin star', allergens:['سمك', 'جمبري', 'فول سوداني']},  
+        {city:'abudhabi', name:'Talea by Antonio Guida', nameAr:'تاليا باني أنطونيو غويدا', lat:24.4870, lon:54.3650, rating:4.7, price:'$$$$', time:'12:00 م - 11:00 م', desc:'مطعم إيطالي فخم حائز نجمة ميشلان', descAr:'Luxury Italian restaurant with Michelin star', allergens:['القمح', 'منتجات ألبان', 'بيض']},  
+        {city:'abudhabi', name:'Erth', nameAr:'إرث', lat:24.4800, lon:54.3600, rating:4.7, price:'$$$$', time:'12:00 م - 11:00 م', desc:'مطعم إماراتي معاصر حائز تقييم عالي', descAr:'Contemporary Emirati restaurant with high rating', allergens:['السمسم', 'القمح']},  
+        {city:'abudhabi', name:'Hakkasan Abu Dhabi', nameAr:'هاكاسان أبوظبي', lat:24.4607, lon:54.3699, rating:4.7, price:'$$$$', time:'12:00 م - 12:00 ص', desc:'مطعم صيني فاخر عالمي', descAr:'Luxury global Chinese restaurant', allergens:['فول سوداني', 'سمسم', 'سمك']},  
+        {city:'abudhabi', name:'La Petite Maison Abu Dhabi', nameAr:'لا بيتي مايزون أبوظبي', lat:24.4730, lon:54.3625, rating:4.7, price:'$$$$', time:'12:00 م - 11:00 م', desc:'مطعم فرنسي راقي عالمي', descAr:'Fine French global restaurant', allergens:['سمك', 'جمبري', 'منتجات ألبان', 'بيض']}
+      ],
+      sharjah: [
+        {city:'sharjah', name:'Mahrosah Restaurant and Sweets', nameAr:'مطعم ومخبز المحروسة', lat:25.3340, lon:55.3830, rating:4.9, price:'50-150', time:'12:00 م - 11:00 م', desc:'مطعم ومخبز عالمي يقدم أطباق عالمية وق local favorites', descAr:'International restaurant and bakery with global and local dishes', allergens:['القمح', 'منتجات ألبان', 'بيض', 'فول سوداني']},
+        {city:'sharjah', name:'Yasmina Restaurant', nameAr:'مطعم ياسمينة', lat:25.3350, lon:55.3810, rating:4.9, price:'80-200', time:'12:00 م - 11:30 م', desc:'مطعم بحري ودولي مع أجواء عائلية', descAr:'Seafood and international restaurant with family atmosphere', allergens:['سمك', 'جمبري', 'محار', 'منتجات ألبان']}, 
+        {city:'sharjah', name:'Casa Samak Seafood', nameAr:'كازا ساماك للمأكولات البحرية', lat:25.3270, lon:55.3640, rating:4.9, price:'70-180', time:'1:00 م - 11:00 م', desc:'أطباق بحرية طازجة ومشويات من البحر', descAr:'Fresh seafood and grilled dishes', allergens:['سمك', 'جمبري', 'محار']},
+        {city:'sharjah', name:'La Bamba Restaurant', nameAr:'مطعم لا بامبا', lat:25.3335, lon:55.3842, rating:4.9, price:'60-160', time:'12:00 م - 11:00 م', desc:'أكل بحري ومأكولات متوسطية', descAr:'Seafood and Mediterranean cuisine', allergens:['سمك', 'جمبري', 'منتجات ألبان']},
+        {city:'sharjah', name:'Thai Gate - Heera Beach', nameAr:'ثاي جيت - هيرا بيتش', lat:25.3590, lon:55.3875, rating:4.9, price:'70-150', time:'12:00 م - 10:30 م', desc:'مطعم تايلاندي وسوشي على البحر', descAr:'Thai and sushi restaurant by the sea', allergens:['فول سوداني', 'سمك', 'جمبري']}
+      ],
+      ajman: [
+        {city:'ajman', name:'Al Zahra Restaurant', nameAr:'مطعم الزهرة', lat:25.4050, lon:55.4780, rating:4.5, price:'50-130', time:'12:00 م - 11:00 م', desc:'مطعم عربي ومشاوي وأطباق رز متنوعة', descAr:'Arabic restaurant with grilled dishes and rice varieties', allergens:['القمح', 'السمسم']},
+        {city:'ajman', name:'Biryani Pot', nameAr:'بوت البرياني', lat:25.4100, lon:55.4785, rating:4.6, price:'40-120', time:'12:00 م - 10:30 م', desc:'مطعم هندي متخصص بالبرياني وأطباق الدجاج', descAr:'Indian restaurant specializing in biryani and chicken dishes', allergens:['فول سوداني', 'سمسم', 'القمح']},
+        {city:'ajman', name:'Casa de Mar Seafood', nameAr:'كازا دي مار للمأكولات البحرية', lat:25.4125, lon:55.4800, rating:4.7, price:'70-180', time:'12:00 م - 11:00 م', desc:'مأكولات بحرية طازجة ومشاوي على البحر', descAr:'Fresh seafood and grilled dishes by the sea', allergens:['سمك', 'جمبري', 'محار']},
+        {city:'ajman', name:'Al Manama Restaurant', nameAr:'مطعم المنامة', lat:25.4065, lon:55.4790, rating:4.4, price:'50-140', time:'12:00 م - 11:00 م', desc:'مطعم عربي وإماراتي ومشاوي', descAr:'Arabic and Emirati restaurant with grilled dishes', allergens:['القمح', 'السمسم']},
+        {city:'ajman', name:'Thai Spice Ajman', nameAr:'ثاي سبايس عجمان', lat:25.4070, lon:55.4805, rating:4.3, price:'60-150', time:'12:00 م - 10:30 م', desc:'مطعم تايلاندي وأطباق بحرية', descAr:'Thai restaurant with seafood dishes', allergens:['فول سوداني', 'سمك', 'جمبري']}
+      ],
+      rak: [
+        {city:'rak', name:'Pesto Italian Restaurant', nameAr:'مطعم بيستو الإيطالي', lat:25.8000, lon:55.9500, rating:4.6, price:'60-150', time:'12:00 م - 11:00 م', desc:'مطعم إيطالي بيتزا وباستا', descAr:'Italian restaurant with pizza and pasta', allergens:['القمح', 'منتجات ألبان', 'بيض']},
+        {city:'rak', name:'Fish Market & Seafood', nameAr:'سوق السمك والمأكولات البحرية', lat:25.7990, lon:55.9510, rating:4.7, price:'70-180', time:'12:00 م - 11:00 م', desc:'مأكولات بحرية طازجة ومشاوي', descAr:'Fresh seafood and grilled dishes', allergens:['سمك', 'جمبري', 'محار']},
+        {city:'rak', name:'Al Fanar RAK', nameAr:'مطعم الفنار رأس الخيمة', lat:25.8010, lon:55.9520, rating:4.5, price:'50-150', time:'12:00 م - 11:00 م', desc:'أطباق إماراتية تقليدية ومشاوي', descAr:'Traditional Emirati dishes and grilled meats', allergens:['القمح', 'السمسم']},
+        {city:'rak', name:'Bombay Chowpatty', nameAr:'بومباي تشوباتي', lat:25.8020, lon:55.9530, rating:4.4, price:'40-120', time:'11:00 ص - 10:30 م', desc:'مطعم هندي وأطباق برياني ودجاج تندوري', descAr:'Indian restaurant with biryani and tandoori chicken', allergens:['فول سوداني', 'سمسم', 'الخردل', 'القمح']},
+        {city:'rak', name:'The Grill House', nameAr:'ذا غريل هاوس', lat:25.8030, lon:55.9540, rating:4.5, price:'60-160', time:'12:00 م - 11:00 م', desc:'مأكولات مشوية ولحوم متنوعة', descAr:'Grilled dishes and various meats', allergens:['منتجات ألبان']}
+      ],
+      fujairah: [
+        {city:'fujairah', name:'Azzurro Ristorante', nameAr:'مطعم أزورو', lat:25.1220, lon:56.3260, rating:4.6, price:'60-180', time:'12:00 م - 11:00 م', desc:'مطعم إيطالي بيتزا وباستا ومشاوي', descAr:'Italian restaurant with pizza, pasta and grilled dishes', allergens:['القمح', 'منتجات ألبان', 'بيض']},
+        {city:'fujairah', name:'Beach Restaurant Fujairah', nameAr:'مطعم الشاطئ الفجيرة', lat:25.1280, lon:56.3290, rating:4.5, price:'70-200', time:'11:00 ص - 11:00 م', desc:'مأكولات بحرية متنوعة ومشاوي', descAr:'Various seafood and grilled dishes', allergens:['سمك', 'جمبري', 'محار']},
+        {city:'fujairah', name:'Al Aqah Beach Restaurant', nameAr:'مطعم العقبة بيتش', lat:25.1285, lon:56.3350, rating:4.4, price:'80-180', time:'12:00 م - 10:30 م', desc:'مأكولات بحرية رز ومشاوي', descAr:'Seafood, rice and grilled dishes', allergens:['سمك', 'جمبري', 'محار']},
+        {city:'fujairah', name:'Thai Garden', nameAr:'ثاي جاردن', lat:25.1310, lon:56.3310, rating:4.3, price:'60-150', time:'12:00 م - 10:30 م', desc:'مطعم تايلاندي وأطباق رز ودجاج', descAr:'Thai restaurant with rice and chicken dishes', allergens:['فول سوداني', 'سمك', 'جمبري']},
+        {city:'fujairah', name:'Le Marché', nameAr:'لو مارشي', lat:25.1330, lon:56.3340, rating:4.5, price:'70-200', time:'12:00 م - 11:00 م', desc:'مأكولات عالمية وإيطالية ومشاوي', descAr:'International and Italian cuisine with grilled dishes', allergens:['سمك', 'جمبري', 'القمح', 'منتجات ألبان']}
+      ],
+      uaq: [
+        {city:'uaq', name:'Al Meshwar Restaurant', nameAr:'مطعم المشوار', lat:25.5660, lon:55.5550, rating:4.4, price:'50-120', time:'12:00 م - 11:00 م', desc:'مأكولات عربية ومشاوي وأرز', descAr:'Arabic cuisine with grilled dishes and rice', allergens:['القمح']},
+        {city:'uaq', name:'UQ Seafood', nameAr:'يو كيو للمأكولات البحرية', lat:25.5670, lon:55.5560, rating:4.5, price:'60-180', time:'12:00 م - 10:30 م', desc:'مأكولات بحرية وأطباق رز متنوعة', descAr:'Seafood and various rice dishes', allergens:['سمك', 'جمبري', 'محار']},
+        {city:'uaq', name:'Biryani House UQ', nameAr:'بيت البرياني أم القيوين', lat:25.5680, lon:55.5570, rating:4.4, price:'50-130', time:'12:00 م - 11:00 م', desc:'مطعم هندي، برياني، دجاج تندوري وأرز', descAr:'Indian restaurant with biryani, tandoori chicken and rice', allergens:['فول سوداني', 'سمسم', 'الخردل', 'القمح']},
+        {city:'uaq', name:'Al Fanar UQ', nameAr:'مطعم الفنار أم القيوين', lat:25.5690, lon:55.5580, rating:4.3, price:'60-150', time:'12:00 م - 10:30 م', desc:'أطباق إماراتية ومشاوي وأرز', descAr:'Emirati dishes with grilled meats and rice', allergens:['القمح', 'السمسم']},
+        {city:'uaq', name:'Ocean View UQ', nameAr:'أوشن فيو أم القيوين', lat:25.5700, lon:55.5590, rating:4.5, price:'70-200', time:'12:00 م - 11:00 م', desc:'مأكولات بحرية ومشاوي متنوعة', descAr:'Various seafood and grilled dishes', allergens:['سمك', 'جمبري', 'محار']}
+      ]
+    };
+
+    function getUserLocation() {
+      const profile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      if (profile.latitude && profile.longitude) {
+        userLocation = {lat: parseFloat(profile.latitude), lon: parseFloat(profile.longitude)};
+      }
+
+      if (profile.emirate) {
+        const map = {
+          'Abu Dhabi': 'abudhabi', 'Dubai': 'dubai', 'Sharjah': 'sharjah',
+          'Ajman': 'ajman', 'Ras Al Khaimah': 'rak', 'Fujairah': 'fujairah',
+          'Umm Al Quwain': 'uaq'
+        };
+        if (map[profile.emirate]) {
+          currentCity = map[profile.emirate];
+          const select = document.getElementById('city-select');
+          if (select) select.value = currentCity;
+        }
+      }
+    }
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return (R * c).toFixed(1);
+    }
+
+    function filterAndSort() {
+      let places = allPlaces[currentCity] || [];
+      
+      // Filter by food type if selected
+      if (currentFoodType) {
+        places = places.filter(p => p.types && p.types.includes(currentFoodType));
+      }
+      
+      filteredPlaces = places.map(p => ({
+        ...p,
+        distance: calculateDistance(userLocation.lat, userLocation.lon, p.lat, p.lon)
+      }));
+
+      if (currentSort === 'nearest') filteredPlaces.sort((a,b) => parseFloat(a.distance) - parseFloat(b.distance));
+      else if (currentSort === 'rating') filteredPlaces.sort((a,b) => b.rating - a.rating);
+      else if (currentSort === 'price') filteredPlaces.sort((a,b) => {
+        const pa = a.price === 'متفاوت' || a.price === '0' ? 999 : parseInt(a.price);
+        const pb = b.price === 'متفاوت' || b.price === '0' ? 999 : parseInt(b.price);
+        return pa - pb;
+      });
+
+      renderPlaces(filteredPlaces.slice(0, 4));
+    }
+
+    function checkIfPlaceUnsuitableForUser(place) {
+      const profile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      const userPhobias = profile.phobias || [];
+      const userAllergies = profile.allergies || [];
+      const placeAllergens = place.allergens || [];
+      
+      // Check for phobia restrictions
+      const phobiaRestrictions = {
+        '🧗 فوبيا المرتفعات': ['At.mosphere', 'برج خليفة'],
+        '🌊 فوبيا الماء': ['Ossiano', 'Underwater', 'Beach', 'بحري', 'بحرية'],
+        '📦 فوبيا الأماكن المغلقة': ['Underground', 'Basement', 'مغلق'],
+        '🏙️ فوبيا الأماكن المفتوحة/المزدحمة': ['Beach Club', 'Open Air', 'مفتوح'],
+        '🎤 فوبيا التحدث أمام الجمهور': ['Music', 'Live Performance', 'موسيقى', 'حفلة'],
+      };
+      
+      for (const [phobia, triggers] of Object.entries(phobiaRestrictions)) {
+        if (userPhobias.includes(phobia)) {
+          for (const trigger of triggers) {
+            if (place.name.includes(trigger) || place.desc.includes(trigger)) {
+              return true; // Place is unsuitable
+            }
+          }
+        }
+      }
+      
+      // Check for allergen conflicts
+      for (const allergen of userAllergies) {
+        if (placeAllergens.includes(allergen)) {
+          return true; // Place contains allergen the user is allergic to
+        }
+      }
+      
+      return false;
+    }
+
+    function renderPlaces(places) {
+      const list = document.getElementById('places-list');
+      list.innerHTML = '';
+      places.forEach(p => {
+        const isUnsuitable = checkIfPlaceUnsuitableForUser(p);
+        const item = document.createElement('article');
+        item.className = 'item';
+        
+        item.style.opacity = isUnsuitable ? '0.5' : '1';
+        item.style.cursor = isUnsuitable ? 'not-allowed' : 'pointer';
+        
+        const name = currentLanguage === 'ar' ? (p.nameAr || p.name) : p.name;
+        const distanceText = currentLanguage === 'ar' ? `${p.distance} كم` : `${p.distance} km`;
+        const ratingText = `⭐ ${p.rating}`;
+        
+        item.onclick = () => {
+          if (!isUnsuitable) {
+            showPlace(p);
+          }
+        };
+        
+        const unsuitableIndicator = isUnsuitable ? '<span style="color: red; font-weight: bold; margin-left: 8px;">❌</span>' : '';
+        
+        item.innerHTML = `
+          <div class="pin">📍</div>
+          <img class="thumb" src="https://placehold.co/80x48?text=${encodeURIComponent(name.substring(0, 10))}" alt="${name}">
+          <div class="label">
+            <span>${name} ${unsuitableIndicator}</span>
+            <span class="distance-badge">${distanceText}</span>
+            <span class="rating-badge">${ratingText}</span>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function sortPlaces(type) {
+      currentSort = type;
+      document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      filterAndSort();
+    }
+
+    function changeCity(city) {
+      currentCity = city;
+      currentFoodType = '';
+      initializeFoodTypeFilter();
+      filterAndSort();
+    }
+
+    function showPlace(p) {
+      const panel = document.getElementById('info-panel');
+      
+      // Toggle: if same place is clicked twice, hide the panel
+      if (panel.dataset.currentPlace === p.name && panel.classList.contains('active')) {
+        panel.classList.remove('active');
+        panel.dataset.currentPlace = '';
+        return;
+      }
+      
+      panel.dataset.currentPlace = p.name;
+      const bbox = `${p.lon-0.008},${p.lat-0.008},${p.lon+0.008},${p.lat+0.008}`;
+      document.querySelector('.map iframe').src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik`;
+      
+      const name = currentLanguage === 'ar' ? (p.nameAr || p.name) : p.name;
+      const desc = currentLanguage === 'ar' ? p.descAr : p.desc;
+      const price = p.price === '0' ? (currentLanguage === 'ar' ? 'مجاني' : 'Free') : p.price;
+      const time = p.time;
+      const distanceText = currentLanguage === 'ar' ? `${p.distance} كم` : `${p.distance} km`;
+      const ratingText = `${p.rating}/5`;
+      
+      document.getElementById('p-title').innerText = name;
+      document.getElementById('p-rating').innerText = ratingText;
+      document.getElementById('p-distance').innerText = distanceText;
+      document.getElementById('p-time').innerText = time;
+      document.getElementById('p-price').innerText = price;
+      document.getElementById('p-desc').innerText = desc;
+      
+      // Check and show allergy warning
+      checkAndShowAllergyWarning(p.allergens || []);
+      
+      panel.classList.add('active');
+
+      const item = { title: name, lat: p.lat, lon: p.lon, date: new Date().toISOString() };
+      let history = JSON.parse(localStorage.getItem('hayyak_history') || '[]');
+      history = history.filter(i => i.title !== name);
+      history.unshift(item);
+      if (history.length > 20) history.pop();
+      localStorage.setItem('hayyak_history', JSON.stringify(history));
+    }
+
+    function checkAndShowAllergyWarning(restaurantAllergens) {
+      const warningDiv = document.getElementById('allergy-warning');
+      const itemsDiv = document.getElementById('allergy-items');
+      warningDiv.classList.remove('show');
+      
+      // Get user allergies from profile
+      const profile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      const userAllergies = profile.allergies || [];
+      
+      if (!userAllergies || userAllergies.length === 0) {
+        return; // No allergies set in profile
+      }
+      
+      // Find matching allergens
+      const matchingAllergens = restaurantAllergens.filter(allergen => 
+        userAllergies.includes(allergen)
+      );
+      
+      if (matchingAllergens.length > 0) {
+        const allergenText = currentLanguage === 'ar' ? 'المواد: ' : 'Ingredients: ';
+        itemsDiv.innerText = allergenText + matchingAllergens.join(', ');
+        warningDiv.classList.add('show');
+      }
+    }
+
+    let toastTimeout;
+    function showError(message) {
+      const toast = document.getElementById('error-toast');
+      if (!toast) {
+        const newToast = document.createElement('div');
+        newToast.id = 'error-toast';
+        newToast.className = 'error-toast';
+        document.body.appendChild(newToast);
+      }
+      const toast2 = document.getElementById('error-toast');
+      toast2.innerText = message;
+      toast2.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast2.classList.remove('show');
+      }, 3500);
+    }
+
+    const searchInput = document.getElementById('search-input');
+    const autocompleteList = document.getElementById('autocomplete-list');
+    
+    searchInput.addEventListener('input', function (e) {
+      const query = this.value.trim();
+      if (query.length >= 2) {
+        showAutocomplete(query);
+      } else {
+        autocompleteList.classList.remove('active');
+      }
+    });
+
+    searchInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        const query = this.value.trim();
+        if (query.length >= 2) {
+          performSearch(query);
+          autocompleteList.classList.remove('active');
+        }
+      }
+    });
+
+    function showAutocomplete(query) {
+      const queryLower = query.toLowerCase().trim();
+      const results = Object.values(allPlaces).flat().filter(p => {
+        const name = currentLanguage === 'ar' ? (p.nameAr || p.name) : p.name;
+        const desc = currentLanguage === 'ar' ? p.descAr : p.desc;
+        return name.toLowerCase().includes(queryLower) || desc.toLowerCase().includes(queryLower);
+      }).slice(0, 5);
+
+      if (results.length === 0) {
+        autocompleteList.classList.remove('active');
+        return;
+      }
+
+      autocompleteList.innerHTML = results.map(place => {
+        const name = currentLanguage === 'ar' ? (place.nameAr || place.name) : place.name;
+        const desc = currentLanguage === 'ar' ? place.descAr : place.desc;
+        return `
+          <div class="autocomplete-item" onclick="selectPlace('${place.city}', '${place.name}')">
+            <div class="autocomplete-item-name">${name}</div>
+            <div class="autocomplete-item-desc">${desc.substring(0, 50)}...</div>
+          </div>
+        `;
+      }).join('');
+      
+      autocompleteList.classList.add('active');
+    }
+
+    function selectPlace(city, placeName) {
+      const place = allPlaces[city].find(p => p.name === placeName);
+      if (!place) return;
+      
+      const name = currentLanguage === 'ar' ? (place.nameAr || place.name) : place.name;
+      searchInput.value = name;
+      autocompleteList.classList.remove('active');
+      currentCity = city;
+      document.getElementById('city-select').value = city;
+      filterAndSort();
+      const distance = calculateDistance(userLocation.lat, userLocation.lon, place.lat, place.lon);
+      showPlace({...place, distance});
+    }
+
+    function performSearch(query) {
+      if (!query || query.trim().length < 2) {
+        return;
+      }
+
+      const queryLower = query.toLowerCase().trim();
+      const found = Object.values(allPlaces).flat().find(p => {
+        const name = currentLanguage === 'ar' ? (p.nameAr || p.name) : p.name;
+        const desc = currentLanguage === 'ar' ? p.descAr : p.desc;
+        return name.toLowerCase().includes(queryLower) || desc.toLowerCase().includes(queryLower);
+      });
+
+      if (found) {
+        currentCity = found.city;
+        document.getElementById('city-select').value = currentCity;
+        filterAndSort();
+        const distance = calculateDistance(userLocation.lat, userLocation.lon, found.lat, found.lon);
+        showPlace({...found, distance});
+      }
+    }
+
+    function changeFoodType(type) {
+      currentFoodType = type;
+      filterAndSort();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add click event to translate button
+      document.getElementById('translateBtn').addEventListener('click', toggleLanguage);
+      
+      const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      if (userProfile.language && userProfile.language !== currentLanguage) {
+        currentLanguage = userProfile.language;
+        document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = currentLanguage;
+        const btn = document.getElementById('translateBtn');
+        if (btn) {
+          const langText = btn.querySelector('span:last-child');
+          if (langText) langText.textContent = currentLanguage === 'ar' ? 'English' : 'العربية';
+        }
+        translateAllContent();
+      }
+      
+      enrichRestaurantData();
+      getUserLocation();
+      initializeFoodTypeFilter();
+      filterAndSort();
+    });
+
+    function initializeFoodTypeFilter() {
+      // Get food types from current city
+      const places = allPlaces[currentCity] || [];
+      const foodTypes = [...new Set(places.flatMap(p => p.types || []))];
+      
+      const foodTypeSelect = document.getElementById('food-type-select');
+      foodTypeSelect.innerHTML = '<option value="" data-ar="جميع الأنواع" data-en="All Types">جميع الأنواع</option>';
+      foodTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        foodTypeSelect.appendChild(option);
+      });
+
+      // Set default food type from profile if available
+      const profile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
+      if (profile.foodPreference && foodTypes.includes(profile.foodPreference)) {
+        currentFoodType = profile.foodPreference;
+        foodTypeSelect.value = currentFoodType;
+      }
+    }
+  </script>
+</body>
+</html>

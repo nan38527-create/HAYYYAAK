@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حياك | Hayyak | Welcome</title>
+  <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+  <meta name="description" content="تطبيق حياك - دليلك الشامل لاستكشاف الإمارات العربية المتحدة. اكتشف المتاجر، المطاعم، السياحة، الشواطئ، والفنادق مع أفضل العروض اليومية." />
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Afeesh family (local) */
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Aadi.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Aadi.woff') format('woff'),
+           url('./afeesh/Afeesh-Aadi.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-Mekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-Mekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-Mekalbaz.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('./afeesh/Afeesh-NosMekalbaz.woff2') format('woff2'),
+           url('./afeesh/Afeesh-NosMekalbaz.woff') format('woff'),
+           url('./afeesh/Afeesh-NosMekalbaz.ttf') format('truetype');
+      font-weight: 600; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Afeesh';
+      src: url('afeesh/Afeesh-NosMesalwa.woff2') format('woff2'),
+           url('afeesh/Afeesh-NosMesalwa.woff') format('woff'),
+           url('afeesh/Afeesh-NosMesalwa.ttf') format('truetype');
+      font-weight: 300; font-style: normal; font-display: swap;
+    }
+
+    :root {
+      --bg: #f5f5f7; --card: #ffffff; --ink: #0f0f10; --muted: #6b7280; --line: #0f0f10; --radius: 14px;
+      --primary: #16243d; --accent: #d4af37;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; background:var(--bg)}
+    body{margin:0; font-family:'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); display: flex; flex-direction: column;}
+
+    .shell{width:100%; max-width:480px; margin:0 auto; padding:16px; flex: 1;}
+    .card{background:var(--card); border:2px solid var(--line); border-radius:var(--radius); box-shadow:0 2px 0 #0f0f10}
+
+    header.brand{text-align:center; background:#16243d; color:#ffffff; padding:20px; position:relative}
+   
+    .logo-text {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #d4af37;
+    }
+    .logo-sub {
+      font-family: 'Afeesh', sans-serif;
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 20px;
+      margin-top: 2px;
+      letter-spacing: 3px;
+    }
+
+    footer {
+      background: #16243d;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    /* Form Styles */
+    .form-section { margin-bottom: 24px; }
+    .form-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 16px; color: var(--primary); }
+    .form-input { 
+      width: 100%; padding: 12px 16px; border: 2px solid var(--line); 
+      border-radius: 12px; font-family: inherit; font-size: 14px; 
+      background: var(--card); outline: none; transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: var(--accent); }
+    
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .tag {
+      background: var(--primary); color: #fff; padding: 6px 12px; 
+      border-radius: 20px; font-size: 13px; display: flex; 
+      align-items: center; gap: 8px; animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .tag span { cursor: pointer; color: var(--accent); font-weight: bold; font-size: 16px; line-height: 1; }
+    
+    .checkbox-wrapper { display: flex; gap: 16px; margin-top: 12px; }
+    .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; font-size: 14px; }
+    .checkbox-input { width: 20px; height: 20px; accent-color: var(--primary); }
+
+    .submit-btn {
+      width: 100%; background: var(--primary); color: var(--accent); 
+      padding: 16px; border: none; border-radius: 12px; 
+      font-size: 18px; font-weight: 700; cursor: pointer; 
+      margin-top: 10px; box-shadow: 0 4px 0 #0f0f10;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .submit-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #0f0f10; }
+    .submit-btn.secondary {
+      background: transparent;
+      color: var(--muted);
+      box-shadow: none;
+      margin-top: 0;
+    }
+
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* Scrollable List & Search Styles */
+    .scrollable-list {
+      max-height: 250px;
+      overflow-y: auto;
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 4px;
+    }
+    .list-item {
+      padding: 12px 16px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      cursor: pointer;
+      background: var(--card);
+      transition: all 0.2s;
+      text-align: right;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .list-item.selected {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .list-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f5f5f7;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 16px;
+      margin-bottom: 8px;
+    }
+    .search-input {
+      border: none;
+      background: transparent;
+      width: 100%;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+    
+    /* Step Styles */
+    .step { display: none; animation: fadeIn 0.4s ease-out; }
+    .step.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Creative Card for last questions */
+    .creative-card {
+      background: #ffffff;
+      border: 2px solid var(--accent);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+    .creative-card .form-label { font-size: 20px; margin-bottom: 12px; color: var(--primary); }
+    .creative-card .form-input { text-align: center; font-size: 16px; border-radius: 30px; }
+
+    /* Info Panel Styles */
+    .info-panel{display:none; margin-top:16px; padding:14px; background:var(--bg); border-radius:12px; animation:fade 0.4s; border: 1px solid var(--line);}
+    .info-panel.active{display:block;}
+    .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    .info-box{background:var(--card); padding:12px; border-radius:12px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px; border: 1px solid #eee;}
+    .ib-icon{font-size:24px; margin-bottom:4px;}
+    .ib-label{font-size:12px; color:var(--muted); font-weight:600;}
+    .ib-val{font-size:14px; font-weight:700; color:var(--ink);}
+    @keyframes fade{from{opacity:0; transform:translateY(-10px)}to{opacity:1; transform:translateY(0)}}
+
+    /* Scrollbar */
+    .scrollable-list::-webkit-scrollbar { width: 6px; }
+    .scrollable-list::-webkit-scrollbar-track { background: #f1f1f1; }
+    .scrollable-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+    .location-btn {
+      margin-top: 10px;
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      width: 100%;
+      transition: all 0.2s;
+    }
+    .location-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .location-status {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    /* Language Selection Styles */
+    .language-options {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 30px;
+    }
+    .language-option {
+      padding: 20px;
+      border: 3px solid var(--line);
+      border-radius: 20px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--card);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .language-option:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.15);
+    }
+    .language-option.selected {
+      background: var(--primary);
+      border-color: var(--accent);
+      color: white;
+    }
+    .lang-emoji {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    .lang-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .lang-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .language-option.selected .lang-subtitle {
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+  <header class="brand">
+    <div class="logo-text">حــــــيــــاك</div>
+    <div class="logo-sub">HAYYAK</div>
+  </header>
+  
+  <main class="shell">
+    <div class="card" style="padding: 24px; min-height: 450px; display: flex; flex-direction: column; justify-content: center;">
+      
+      <!-- Step 0: Language Selection -->
+      <div id="step-0" class="step active">
+        <h1 style="text-align: center; margin-bottom: 10px; color: var(--primary);">أهلاً وسهلاً! 🌍<br><span style="font-size: 16px; color: var(--muted); font-weight: 400;">اختر لغتك المفضلة</span></h1>
+        <p style="text-align: center; color: var(--muted); font-size: 14px; margin-bottom: 30px;">Choose your preferred language</p>
+        
+        <div class="language-options">
+          <div class="language-option" onclick="selectLanguage('ar')">
+            <div class="lang-emoji">🇸🇦</div>
+            <div class="lang-title">العربية</div>
+            <div class="lang-subtitle">اللغة العربية</div>
+          </div>
+          
+          <div class="language-option" onclick="selectLanguage('en')">
+            <div class="lang-emoji">🇬🇧</div>
+            <div class="lang-title">English</div>
+            <div class="lang-subtitle">English Language</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 1: Name -->
+      <div id="step-1" class="step">
+        <h1 id="name-title" style="text-align: center; margin-bottom: 24px; color: var(--primary);">مرحباً بك! 👋<br><span id="name-subtitle" style="font-size: 16px; color: var(--muted); font-weight: 400;">لنتعرف عليك أكثر</span></h1>
+        
+        <div class="creative-card">
+          <div style="font-size: 48px; margin-bottom: 10px;">👤</div>
+          <label id="name-label" class="form-label">ما اسمك؟</label>
+          <p id="name-description" style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">اكتب اسمك كما تفضله</p>
+          <input type="text" id="name" class="form-input" placeholder="اكتب اسمك هنا">
+        </div>
+
+        <button id="next-btn-1" class="submit-btn" onclick="nextStep(1)">التالي ⬅️</button>
+      </div>
+
+      <!-- Step 2: Emirate -->
+      <div id="step-2" class="step">
+        <h1 id="location-title" style="text-align: center; margin-bottom: 24px; color: var(--primary);">من وين؟ 🇦🇪</h1>
+        <div class="form-section">
+          <label id="location-label" class="form-label">اختر الإمارة</label>
+          <select id="emirate" class="form-input">
+            <option value="" disabled selected>اختر الإمارة</option>
+            <option value="Abu Dhabi">أبوظبي</option>
+            <option value="Dubai">دبي</option>
+            <option value="Sharjah">الشارقة</option>
+            <option value="Ajman">عجمان</option>
+            <option value="Umm Al Quwain">أم القيوين</option>
+            <option value="Ras Al Khaimah">رأس الخيمة</option>
+            <option value="Fujairah">الفجيرة</option>
+          </select>
+          <button type="button" class="location-btn" onclick="detectLocation()">
+            <span id="location-btn-text">📍 تحديد موقعي تلقائياً</span>
+          </button>
+          <div id="location-status" class="location-status"></div>
+        </div>
+        <button id="next-btn-2" class="submit-btn" onclick="nextStep(2)">التالي ⬅️</button>
+        <button class="submit-btn secondary" onclick="prevStep(2)">↻ رجوع</button>
+      </div>
+
+      <!-- Step 3: Allergies -->
+      <div id="step-3" class="step">
+        <div class="creative-card">
+          <div style="font-size: 48px; margin-bottom: 10px;">🥜</div>
+          <label id="allergy-title" class="form-label">عندك حساسية من أكل معين؟</label>
+          <p id="allergy-description" style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">صحتك تهمنا!</p>
+
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" class="search-input" placeholder="ابحث عن الحساسية..." oninput="filterList('allergy', this.value)">
+          </div>
+          <div id="allergy-list-container" class="scrollable-list"></div>
+        </div>
+        <button id="next-btn-3" class="submit-btn" onclick="nextStep(3)">التالي ⬅️</button>
+        <button class="submit-btn secondary" onclick="prevStep(3)">↻ رجوع</button>
+      </div>
+
+      <!-- Step 4: Food -->
+      <div id="step-4" class="step">
+        <div class="creative-card">
+          <div style="font-size: 48px; margin-bottom: 10px;">🍔</div>
+          <label id="food-title" class="form-label">وش تحب تاكل؟</label>
+          <p id="food-description" style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">اختر أنواع الطعام المفضلة لديك</p>
+          
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" class="search-input" placeholder="ابحث عن الأكل..." oninput="filterList('food', this.value)">
+          </div>
+          <div id="food-list-container" class="scrollable-list"></div>
+          
+          <div id="food-info-panel" class="info-panel">
+            <h3 id="f-title" style="margin:0 0 12px; text-align:center; font-size: 18px;"></h3>
+            <div class="info-grid">
+              <div class="info-box">
+                <div class="ib-icon">🥩</div>
+                <div class="ib-label">حلال؟</div>
+                <div class="ib-val" id="f-halal"></div>
+              </div>
+              <div class="info-box">
+                <div class="ib-icon">🥗</div>
+                <div class="ib-label">صحي؟</div>
+                <div class="ib-val" id="f-healthy"></div>
+              </div>
+              <div class="info-box" style="grid-column: span 2;">
+                <div class="ib-icon">⚠️</div>
+                <div class="ib-label">مسببات الحساسية</div>
+                <div class="ib-val" id="f-allergies"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="checkbox-wrapper" style="justify-content: center; margin-top: 20px;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="halal" class="checkbox-input" checked>
+              <span id="halal-label">حلال ✅</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="healthy" class="checkbox-input">
+              <span id="healthy-label">صحي / دايت 🥗</span>
+            </label>
+          </div>
+        </div>
+        <button id="next-btn-4" class="submit-btn" onclick="nextStep(4)">التالي ⬅️</button>
+        <button class="submit-btn secondary" onclick="prevStep(4)">↻ رجوع</button>
+      </div>
+
+      <!-- Step 5: Phobias -->
+      <div id="step-5" class="step">
+        <div class="creative-card">
+          <div style="font-size: 48px; margin-bottom: 10px;">😨</div>
+          <label id="phobia-title" class="form-label">هل عندك أي مخاوف (فوبيا)؟</label>
+          <p id="phobia-description" style="font-size: 13px; color: var(--muted); margin-bottom: 20px;">عشان نتجنب الأماكن اللي ما تريحك</p>
+          
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" class="search-input" placeholder="ابحث عن الفوبيا..." oninput="filterList('phobia', this.value)">
+          </div>
+          <div id="phobia-list-container" class="scrollable-list"></div>
+        </div>
+        <button id="save-btn" class="submit-btn" onclick="saveProfile()">حفظ وانطلاق 🚀</button>
+        <button class="submit-btn secondary" onclick="prevStep(5)">↻ رجوع</button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer id="footer">© عبدالله بن ناصر - حياك</footer>
+
+  <script>
+    // Language data
+    const translations = {
+      ar: {
+        // Step 0
+        "step0_title": "أهلاً وسهلاً! 🌍",
+        "step0_subtitle": "اختر لغتك المفضلة",
+        "arabic": "العربية",
+        "arabic_sub": "اللغة العربية",
+        "english": "English",
+        "english_sub": "English Language",
+        
+        // Step 1
+        "step1_title": "مرحباً بك! 👋",
+        "step1_subtitle": "لنتعرف عليك أكثر",
+        "name_label": "ما اسمك؟",
+        "name_desc": "اكتب اسمك كما تفضله",
+        "name_placeholder": "اكتب اسمك هنا",
+        "next": "التالي ⬅️",
+        "back": "↻ رجوع",
+        
+        // Step 2
+        "step2_title": "من وين؟ 🇦🇪",
+        "location_label": "اختر الإمارة",
+        "emirate_placeholder": "اختر الإمارة",
+        "detect_location": "📍 تحديد موقعي تلقائياً",
+        "detecting": "جاري تحديد الموقع...",
+        "location_found": "تم تحديد الموقع: ",
+        "location_manual": "تم تحديد الإحداثيات. الرجاء اختيار الإمارة يدوياً.",
+        "location_error": "تعذر تحديد الموقع. تأكد من تفعيل الـ GPS.",
+        "no_location": "المتصفح لا يدعم تحديد الموقع.",
+        
+        // Step 3
+        "allergy_title": "عندك حساسية من أكل معين؟",
+        "allergy_desc": "صحتك تهمنا!",
+        "allergy_search": "ابحث عن الحساسية...",
+        
+        // Step 4
+        "food_title": "وش تحب تاكل؟",
+        "food_desc": "اختر أنواع الطعام المفضلة لديك",
+        "food_search": "ابحث عن الأكل...",
+        "halal_label": "حلال ✅",
+        "healthy_label": "صحي / دايت 🥗",
+        "halal_yes": "نعم ✅",
+        "halal_no": "لا ❌",
+        "healthy_yes": "نعم 🥗",
+        "healthy_no": "لا 🍔",
+        "healthy_medium": "متوسط ⚖️",
+        "allergy_none": "لا يوجد",
+        "allergy_nuts": "مكسرات 🥜",
+        "allergy_seafood": "مأكولات بحرية 🐟",
+        "allergy_dairy": "منتجات الألبان 🥛",
+        "allergy_egg": "بيض 🥚",
+        "allergy_gluten": "غلوتين 🍞",
+        
+        // Step 5
+        "phobia_title": "هل عندك أي مخاوف (فوبيا)؟",
+        "phobia_desc": "عشان نتجنب الأماكن اللي ما تريحك",
+        "phobia_search": "ابحث عن الفوبيا...",
+        
+        // Footer & Save
+        "save": "حفظ وانطلاق 🚀",
+        "footer": "© عبدالله بن ناصر - حياك",
+        
+        // Emirate options (Arabic)
+        "emirate_options": [
+          {value: "Abu Dhabi", text: "أبوظبي"},
+          {value: "Dubai", text: "دبي"},
+          {value: "Sharjah", text: "الشارقة"},
+          {value: "Ajman", text: "عجمان"},
+          {value: "Umm Al Quwain", text: "أم القيوين"},
+          {value: "Ras Al Khaimah", text: "رأس الخيمة"},
+          {value: "Fujairah", text: "الفجيرة"}
+        ]
+      },
+      en: {
+        // Step 0
+        "step0_title": "Welcome! 🌍",
+        "step0_subtitle": "Choose your preferred language",
+        "arabic": "العربية",
+        "arabic_sub": "Arabic Language",
+        "english": "English",
+        "english_sub": "English Language",
+        
+        // Step 1
+        "step1_title": "Welcome! 👋",
+        "step1_subtitle": "Let's get to know you better",
+        "name_label": "What's your name?",
+        "name_desc": "Write your name as you prefer",
+        "name_placeholder": "Type your name here",
+        "next": "Next ➡️",
+        "back": "↺ Back",
+        
+        // Step 2
+        "step2_title": "Where from? 🇦🇪",
+        "location_label": "Select Emirate",
+        "emirate_placeholder": "Select Emirate",
+        "detect_location": "📍 Detect my location automatically",
+        "detecting": "Detecting location...",
+        "location_found": "Location detected: ",
+        "location_manual": "Coordinates detected. Please select emirate manually.",
+        "location_error": "Failed to detect location. Make sure GPS is enabled.",
+        "no_location": "Browser doesn't support location detection.",
+        
+        // Step 3
+        "allergy_title": "Do you have any food allergies?",
+        "allergy_desc": "Your health matters!",
+        "allergy_search": "Search for allergies...",
+        
+        // Step 4
+        "food_title": "What do you like to eat?",
+        "food_desc": "Choose your favorite food types",
+        "food_search": "Search for food...",
+        "halal_label": "Halal ✅",
+        "healthy_label": "Healthy / Diet 🥗",
+        "halal_yes": "Yes ✅",
+        "halal_no": "No ❌",
+        "healthy_yes": "Yes 🥗",
+        "healthy_no": "No 🍔",
+        "healthy_medium": "Medium ⚖️",
+        "allergy_none": "None",
+        "allergy_nuts": "Nuts 🥜",
+        "allergy_seafood": "Seafood 🐟",
+        "allergy_dairy": "Dairy 🥛",
+        "allergy_egg": "Egg 🥚",
+        "allergy_gluten": "Gluten 🍞",
+        
+        // Step 5
+        "phobia_title": "Do you have any phobias?",
+        "phobia_desc": "So we can avoid places that make you uncomfortable",
+        "phobia_search": "Search for phobias...",
+        
+        // Footer & Save
+        "save": "Save & Start 🚀",
+        "footer": "© Abdullah bin Nasser - Hayyak",
+        
+        // Emirate options (English)
+        "emirate_options": [
+          {value: "Abu Dhabi", text: "Abu Dhabi"},
+          {value: "Dubai", text: "Dubai"},
+          {value: "Sharjah", text: "Sharjah"},
+          {value: "Ajman", text: "Ajman"},
+          {value: "Umm Al Quwain", text: "Umm Al Quwain"},
+          {value: "Ras Al Khaimah", text: "Ras Al Khaimah"},
+          {value: "Fujairah", text: "Fujairah"}
+        ]
+      }
+    };
+
+    // Data Arrays (keep emojis regardless of language)
+    const phobiasData = {
+      ar: [
+        "💪 لا يوجد", "🕷️ فوبيا العناكب", "🧗 فوبيا المرتفعات", "📦 فوبيا الأماكن المغلقة", "🏙️ فوبيا الأماكن المفتوحة/المزدحمة", 
+        "🌑 فوبيا الظلام", "🐍 فوبيا الثعابين", "🐕 فوبيا الكلاب", "✈️ فوبيا الطيران", "🌊 فوبيا الماء", "⚡ فوبيا الرعد/البرق", 
+        "🕳️ فوبيا الثقوب", "🩸 فوبيا الدم", "🦠 فوبيا الجراثيم", "💀 فوبيا الموت", "🧼 فوبيا القذارة", "🔥 فوبيا النار", 
+        "🦷 فوبيا أطباء الأسنان", "🎤 فوبيا التحدث أمام الجمهور", "👥 الفوبيا الاجتماعية", "⏳ فوبيا الزمن"
+      ],
+      en: [
+        "💪 None", "🕷️ Arachnophobia", "🧗 Acrophobia", "📦 Claustrophobia", "🏙️ Agoraphobia", 
+        "🌑 Nyctophobia", "🐍 Ophidiophobia", "🐕 Cynophobia", "✈️ Aviophobia", "🌊 Aquaphobia", "⚡ Astraphobia", 
+        "🕳️ Trypophobia", "🩸 Hemophobia", "🦠 Mysophobia", "💀 Thanatophobia", "🧼 Contamination phobia", "🔥 Pyrophobia", 
+        "🦷 Dentophobia", "🎤 Glossophobia", "👥 Social phobia", "⏳ Chronophobia"
+      ]
+    };
+
+    const allergiesData = {
+      ar: [
+        "💪 لا يوجد", "🥜 فول سوداني", "🌰 لوز", "🌰 كاجو", "🌰 جوز", "🌰 فستق", "🌰 بندق", 
+        "🥛 حليب", "🐄 حليب بقر", "🥚 بيض", "🌾 قمح", "🫘 صويا", "🐟 سمك", "🍤 روبيان", 
+        "🌰 مكسرات", "🍓 فراولة", "🍅 طماطم", "🍫 شوكولاتة", "☕ قهوة", "🍯 عسل"
+      ],
+      en: [
+        "💪 None", "🥜 Peanuts", "🌰 Almonds", "🌰 Cashews", "🌰 Walnuts", "🌰 Pistachios", "🌰 Hazelnuts", 
+        "🥛 Milk", "🐄 Cow milk", "🥚 Eggs", "🌾 Wheat", "🫘 Soy", "🐟 Fish", "🍤 Shrimp", 
+        "🌰 Tree nuts", "🍓 Strawberries", "🍅 Tomatoes", "🍫 Chocolate", "☕ Coffee", "🍯 Honey"
+      ]
+    };
+
+    const foodTypesData = {
+      ar: [
+        "🌶️ حار", "🍬 حلو", "🧂 مالح", "🍋 حامض", "🥩 أومامي", "🔥 مشوي", "🍟 مقلي", 
+        "🥗 نباتي", "🌿 نباتي صرف", "🍗 دجاج", "🥩 لحم بقر", "🦞 مأكولات بحرية", 
+        "🇸🇦 أكل عربي", "🇮🇹 أكل إيطالي", "🇨🇳 أكل صيني", "🍔 وجبات سريعة", "🥗 أكل صحي", 
+        "💪 عالي البروتين", "🍏 عضوي", "🌾 خالي من الغلوتين"
+      ],
+      en: [
+        "🌶️ Spicy", "🍬 Sweet", "🧂 Salty", "🍋 Sour", "🥩 Umami", "🔥 Grilled", "🍟 Fried", 
+        "🥗 Vegetarian", "🌿 Vegan", "🍗 Chicken", "🥩 Beef", "🦞 Seafood", 
+        "🇸🇦 Arabic", "🇮🇹 Italian", "🇨🇳 Chinese", "🍔 Fast food", "🥗 Healthy", 
+        "💪 High protein", "🍏 Organic", "🌾 Gluten-free"
+      ]
+    };
+
+    // State
+    let selectedLanguage = 'ar';
+    let selectedPhobias = new Set();
+    let selectedAllergies = new Set();
+    let selectedFoodTypes = new Set();
+    let detectedLat = null;
+    let detectedLon = null;
+
+    // Language selection
+    function selectLanguage(lang) {
+      selectedLanguage = lang;
+      
+      // Set HTML direction
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+      
+      // Update all text content
+      updateLanguage();
+      
+      // Hide language selection, show name step
+      setTimeout(() => {
+        showStep(1);
+      }, 300);
+    }
+
+    function updateLanguage() {
+      const t = translations[selectedLanguage];
+      
+      // Update all text elements
+      document.getElementById('name-title').innerHTML = t.step1_title + '<br><span id="name-subtitle" style="font-size: 16px; color: var(--muted); font-weight: 400;">' + t.step1_subtitle + '</span>';
+      document.getElementById('name-subtitle').textContent = t.step1_subtitle;
+      document.getElementById('name-label').textContent = t.name_label;
+      document.getElementById('name-description').textContent = t.name_desc;
+      document.getElementById('name').placeholder = t.name_placeholder;
+      document.getElementById('next-btn-1').innerHTML = t.next;
+      
+      // Step 2
+      document.getElementById('location-title').textContent = t.step2_title;
+      document.getElementById('location-label').textContent = t.location_label;
+      document.getElementById('emirate').innerHTML = `<option value="" disabled selected>${t.emirate_placeholder}</option>` + 
+        t.emirate_options.map(opt => `<option value="${opt.value}">${opt.text}</option>`).join('');
+      document.getElementById('location-btn-text').textContent = t.detect_location;
+      document.getElementById('next-btn-2').innerHTML = t.next;
+      
+      // Step 3
+      document.getElementById('allergy-title').textContent = t.allergy_title;
+      document.getElementById('allergy-description').textContent = t.allergy_desc;
+      document.querySelector('#step-3 .search-input').placeholder = t.allergy_search;
+      document.getElementById('next-btn-3').innerHTML = t.next;
+      
+      // Step 4
+      document.getElementById('food-title').textContent = t.food_title;
+      document.getElementById('food-description').textContent = t.food_desc;
+      document.querySelector('#step-4 .search-input').placeholder = t.food_search;
+      document.getElementById('halal-label').innerHTML = t.halal_label;
+      document.getElementById('healthy-label').innerHTML = t.healthy_label;
+      document.getElementById('next-btn-4').innerHTML = t.next;
+      
+      // Step 5
+      document.getElementById('phobia-title').textContent = t.phobia_title;
+      document.getElementById('phobia-description').textContent = t.phobia_desc;
+      document.querySelector('#step-5 .search-input').placeholder = t.phobia_search;
+      document.getElementById('save-btn').innerHTML = t.save;
+      
+      // Update back buttons
+      document.querySelectorAll('.submit-btn.secondary').forEach(btn => {
+        btn.innerHTML = t.back;
+      });
+      
+      // Footer
+      document.getElementById('footer').textContent = t.footer;
+      
+      // Re-render lists with selected language
+      renderList('phobia', phobiasData[selectedLanguage], selectedPhobias);
+      renderList('allergy', allergiesData[selectedLanguage], selectedAllergies);
+      renderList('food', foodTypesData[selectedLanguage], selectedFoodTypes);
+    }
+
+    // Render Lists
+    function renderList(type, data, selectedSet, filterText = '') {
+      const container = document.getElementById(`${type}-list-container`);
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      const filteredData = data.filter(item => {
+        const itemText = item.replace(/[^\w\s\u0600-\u06FF]/gi, '').toLowerCase();
+        const searchText = filterText.replace(/[^\w\s\u0600-\u06FF]/gi, '').toLowerCase();
+        return itemText.includes(searchText);
+      });
+      
+      filteredData.forEach(item => {
+        const div = document.createElement('div');
+        div.className = `list-item ${selectedSet.has(item) ? 'selected' : ''}`;
+        
+        // Keep emojis and text
+        const emojiMatch = item.match(/^([^\w\s\u0600-\u06FF]+)\s*(.*)/);
+        if (emojiMatch) {
+          div.innerHTML = `<span style="font-size: 18px; margin-left: 8px;">${emojiMatch[1]}</span>${emojiMatch[2]}`;
+        } else {
+          div.textContent = item;
+        }
+        
+        if (selectedSet.has(item)) {
+          div.innerHTML += ' <span style="color: var(--accent); font-weight: bold; font-size: 18px;">✓</span>';
+        }
+        
+        div.onclick = () => {
+          toggleSelection(type, item, selectedSet);
+          if (type === 'food') {
+            showFoodInfo(item);
+          }
+        };
+        container.appendChild(div);
+      });
+    }
+
+    function toggleSelection(type, item, set) {
+      if (set.has(item)) {
+        set.delete(item);
+      } else {
+        set.add(item);
+      }
+      
+      const searchInput = document.querySelector(`#step-${getStepNumber(type)} .search-input`);
+      const filterText = searchInput ? searchInput.value : '';
+      
+      if (type === 'phobia') renderList('phobia', phobiasData[selectedLanguage], selectedPhobias, filterText);
+      if (type === 'allergy') renderList('allergy', allergiesData[selectedLanguage], selectedAllergies, filterText);
+      if (type === 'food') renderList('food', foodTypesData[selectedLanguage], selectedFoodTypes, filterText);
+    }
+
+    function getStepNumber(type) {
+      switch(type) {
+        case 'phobia': return 5;
+        case 'allergy': return 3;
+        case 'food': return 4;
+        default: return 0;
+      }
+    }
+
+    function filterList(type, text) {
+      if (type === 'phobia') renderList('phobia', phobiasData[selectedLanguage], selectedPhobias, text);
+      if (type === 'allergy') renderList('allergy', allergiesData[selectedLanguage], selectedAllergies, text);
+      if (type === 'food') renderList('food', foodTypesData[selectedLanguage], selectedFoodTypes, text);
+    }
+
+    function showFoodInfo(item) {
+      const panel = document.getElementById('food-info-panel');
+      const title = document.getElementById('f-title');
+      const halal = document.getElementById('f-halal');
+      const healthy = document.getElementById('f-healthy');
+      const allergies = document.getElementById('f-allergies');
+
+      const t = translations[selectedLanguage];
+      
+      // Get text without emoji for checking
+      const textOnly = item.replace(/^([^\w\s\u0600-\u06FF]+)\s*/, '');
+      
+      // Determine properties based on item
+      let isHalal = t.halal_yes;
+      let isHealthy = t.healthy_medium;
+      let allergyList = t.allergy_none;
+
+      const lowerItem = textOnly.toLowerCase();
+      const lowerEn = textOnly.toLowerCase();
+
+      if (lowerItem.includes("خنزير") || lowerEn.includes("pork") || lowerEn.includes("alcohol")) {
+        isHalal = t.halal_no;
+      }
+      
+      if (lowerItem.includes("صحي") || lowerEn.includes("healthy") || lowerItem.includes("سلطة") || lowerEn.includes("salad") || 
+          lowerItem.includes("نباتي") || lowerEn.includes("vegetarian") || lowerItem.includes("عضوي") || lowerEn.includes("organic")) {
+        isHealthy = t.healthy_yes;
+      } else if (lowerItem.includes("مقلي") || lowerEn.includes("fried") || lowerItem.includes("وجبات سريعة") || 
+                 lowerEn.includes("fast food") || lowerItem.includes("حلو") || lowerEn.includes("sweet")) {
+        isHealthy = t.healthy_no;
+      }
+
+      if (lowerItem.includes("مكسرات") || lowerEn.includes("nut") || lowerItem.includes("فول سوداني") || lowerEn.includes("peanut")) {
+        allergyList = t.allergy_nuts;
+      } else if (lowerItem.includes("بحري") || lowerEn.includes("seafood") || lowerItem.includes("سمك") || lowerEn.includes("fish") || 
+                 lowerItem.includes("روبيان") || lowerEn.includes("shrimp")) {
+        allergyList = t.allergy_seafood;
+      } else if (lowerItem.includes("حليب") || lowerEn.includes("milk") || lowerItem.includes("ألبان") || lowerEn.includes("dairy")) {
+        allergyList = t.allergy_dairy;
+      } else if (lowerItem.includes("بيض") || lowerEn.includes("egg")) {
+        allergyList = t.allergy_egg;
+      } else if (lowerItem.includes("غلوتين") || lowerEn.includes("gluten") || lowerItem.includes("قمح") || lowerEn.includes("wheat")) {
+        allergyList = t.allergy_gluten;
+      }
+
+      title.textContent = item;
+      halal.textContent = isHalal;
+      healthy.textContent = isHealthy;
+      allergies.textContent = allergyList;
+
+      panel.classList.add('active');
+    }
+
+    // Navigation
+    function showStep(step) {
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      document.getElementById(`step-${step}`).classList.add('active');
+    }
+
+    function nextStep(currentStep) {
+      if (currentStep === 1) {
+        const name = document.getElementById('name').value.trim();
+        if (!name) {
+          alert(selectedLanguage === 'ar' ? 'الرجاء إدخال الاسم' : 'Please enter your name');
+          return;
+        }
+      }
+      if (currentStep === 2) {
+        const emirate = document.getElementById('emirate').value;
+        if (!emirate) {
+          alert(selectedLanguage === 'ar' ? 'الرجاء اختيار الإمارة' : 'Please select an emirate');
+          return;
+        }
+      }
+      showStep(currentStep + 1);
+    }
+
+    function prevStep(currentStep) {
+      showStep(currentStep - 1);
+    }
+
+    // Location detection
+    function detectLocation() {
+      const status = document.getElementById('location-status');
+      const t = translations[selectedLanguage];
+      status.textContent = t.detecting;
+      
+      if (!navigator.geolocation) {
+        status.textContent = t.no_location;
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        detectedLat = position.coords.latitude;
+        detectedLon = position.coords.longitude;
+        
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${detectedLat}&lon=${detectedLon}&accept-language=${selectedLanguage}`);
+          const data = await response.json();
+          const address = data.address;
+          
+          let emirate = address.state || address.city || '';
+          const select = document.getElementById('emirate');
+          const options = Array.from(select.options).map(o => o.value);
+          
+          // Try to match emirate name
+          let match = options.find(opt => {
+            const optText = opt.toLowerCase();
+            const emirateText = emirate.toLowerCase();
+            return emirateText.includes(optText) || optText.includes(emirateText);
+          });
+          
+          if (match) {
+            select.value = match;
+            status.textContent = t.location_found + match;
+          } else {
+            status.textContent = t.location_manual;
+          }
+        } catch (e) {
+          status.textContent = t.location_manual;
+        }
+      }, (error) => {
+        status.textContent = t.location_error;
+      });
+    }
+
+    // Save Profile
+    function saveProfile() {
+      const name = document.getElementById('name').value.trim();
+      const emirate = document.getElementById('emirate').value;
+      const halal = document.getElementById('halal').checked;
+      const healthy = document.getElementById('healthy').checked;
+
+      const profile = {
+        language: selectedLanguage,
+        name: name,
+        emirate: emirate,
+        phobias: Array.from(selectedPhobias),
+        allergies: Array.from(selectedAllergies),
+        foodPreferences: Array.from(selectedFoodTypes),
+        isHalal: halal,
+        isHealthy: healthy,
+        createdAt: new Date().toISOString(),
+        latitude: detectedLat,
+        longitude: detectedLon
+      };
+
+      localStorage.setItem('hayyak_user_profile', JSON.stringify(profile));
+      
+      // Redirect to home page
+      window.location.href = 'home.html';
+    }
+
+    // Initialize lists with Arabic (default)
+    setTimeout(() => {
+      renderList('phobia', phobiasData['ar'], selectedPhobias);
+      renderList('allergy', allergiesData['ar'], selectedAllergies);
+      renderList('food', foodTypesData['ar'], selectedFoodTypes);
+    }, 100);
+  </script>
+</body>
+</html>
