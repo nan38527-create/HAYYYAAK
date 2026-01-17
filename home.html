@@ -12,6 +12,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+  <script>
+    // Check for user profile - Run immediately
+    if (!localStorage.getItem('hayyak_user_profile')) {
+      window.location.href = 'index.html';
+    }
+  </script>
+
   <!-- Afeesh local fonts (single family name, multiple weights) -->
   <style>
     /* Map several available Afeesh font files to one family name for easy usage */
@@ -321,6 +328,110 @@
       to { transform: translateX(100%); opacity: 0; }
     }
 
+    /* Chat Widget */
+    .chat-widget {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .chat-button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #d4af37;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      transition: transform 0.3s;
+    }
+    .chat-button:hover { transform: scale(1.1); }
+    .chat-window {
+      width: 300px;
+      height: 400px;
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 20px;
+      margin-bottom: 16px;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .chat-window.active { display: flex; }
+    .chat-header {
+      background: var(--primary);
+      color: #d4af37;
+      padding: 16px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--bg);
+    }
+    .message {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .message.bot {
+      background: var(--card);
+      border: 1px solid var(--line);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+    .message.user {
+      background: var(--primary);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+    .chat-input-area {
+      padding: 10px;
+      background: var(--card);
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 8px;
+    }
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      outline: none;
+      font-family: inherit;
+      background: transparent;
+      color: var(--ink);
+    }
+    .send-btn {
+      background: var(--primary);
+      color: #d4af37;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
     /* Larger screens: breathe a bit more */
     @media (min-width: 768px) {
       .shell { padding: 24px; }
@@ -343,8 +454,8 @@
         <iframe id="user-map" src="https://www.openstreetmap.org/export/embed.html?bbox=51.50,22.50,56.50,26.20&amp;layer=mapnik" title="Map"></iframe>
       </div>
 
-      <h1 class="question" data-ar-prefix="اهلين" data-en-prefix="Hello" data-ar-suffix="، وين حاب تروح اليوم؟" data-en-suffix=", where would you like to go today?">
-        اهلين، وين حاب تروح اليوم؟
+      <h1 class="question" data-ar-prefix="حياك" data-en-prefix="Hello" data-ar-suffix="، وين حاب تروح اليوم؟" data-en-suffix=", where would you like to go today?">
+        حياك, وين حاب تروح اليوم؟
       </h1>
 
       <section class="cats">
@@ -435,6 +546,22 @@
         <button onclick="toggleHistory()" style="background:none; border:none; font-size:20px; cursor:pointer">✕</button>
       </div>
       <div id="history-list" class="history-list"></div>
+    </div>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+      <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+          <span data-ar="مساعد حياك الذكي" data-en="Hayyak AI Assistant">مساعد حياك الذكي</span>
+          <button onclick="toggleChat()" style="background:none; border:none; color:#d4af37; cursor:pointer; font-size: 18px;">✕</button>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-area">
+          <input type="text" class="chat-input" id="chat-input" placeholder="اكتب رسالتك..." data-ar-placeholder="اكتب رسالتك..." data-en-placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+          <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+      </div>
+      <button class="chat-button" onclick="toggleChat()" aria-label="Chat">🤖</button>
     </div>
 
     <footer id="site-footer" data-ar="© عبدالله بن ناصر - حياك" data-en="© Abdullah bin Nasser - Hayyak">
@@ -587,7 +714,7 @@
     // Check for user profile
     const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile'));
     if (!userProfile) {
-      window.location.href = 'indexQ.html';
+      window.location.href = 'index.html';
     } else {
       updateWelcomeMessage();
     }
@@ -631,6 +758,69 @@
         `تم تحديد الموقع: ${lat.toFixed(4)}, ${lon.toFixed(4)}` :
         `Location set to: ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
       showNotification(message);
+    }
+
+    // Chat functionality
+    function toggleChat() {
+      const window = document.getElementById('chat-window');
+      window.classList.toggle('active');
+      if (window.classList.contains('active')) {
+        document.getElementById('chat-input').focus();
+        // Add welcome message if empty
+        const container = document.getElementById('chat-messages');
+        if (container.children.length === 0) {
+          const welcomeMsg = currentLanguage === 'ar' ? 'مرحباً! كيف يمكنني مساعدتك اليوم؟' : 'Hello! How can I help you today?';
+          addMessage(welcomeMsg, 'bot');
+        }
+      }
+    }
+
+    function handleChatKeyPress(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, 'user');
+      input.value = '';
+
+      // Simulate AI response
+      setTimeout(() => {
+        const response = getAIResponse(text);
+        addMessage(response, 'bot');
+      }, 500);
+    }
+
+    function addMessage(text, sender) {
+      const container = document.getElementById('chat-messages');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${sender}`;
+      msgDiv.textContent = text;
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function getAIResponse(input) {
+      const lowerInput = input.toLowerCase();
+      const isAr = currentLanguage === 'ar';
+      
+      if (lowerInput.includes('مطعم') || lowerInput.includes('restaurant') || lowerInput.includes('food') || lowerInput.includes('أكل')) {
+        return isAr ? 'يمكنك العثور على أفضل المطاعم في قسم "مطاعم".' : 'You can find the best restaurants in the "Restaurants" section.';
+      }
+      if (lowerInput.includes('فندق') || lowerInput.includes('hotel') || lowerInput.includes('stay') || lowerInput.includes('سكن')) {
+        return isAr ? 'لدينا قائمة رائعة من الفنادق في قسم "فنادق".' : 'We have a great list of hotels in the "Hotels" section.';
+      }
+      if (lowerInput.includes('سياحة') || lowerInput.includes('tourism') || lowerInput.includes('visit') || lowerInput.includes('زيارة')) {
+        return isAr ? 'استكشف أجمل الأماكن السياحية في الإمارات عبر قسم "سياحة".' : 'Explore the most beautiful tourist places in the UAE via the "Tourism" section.';
+      }
+      if (lowerInput.includes('مرحبا') || lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('هلا')) {
+        return isAr ? 'أهلاً بك في حياك! أنا هنا لمساعدتك في استكشاف الإمارات.' : 'Welcome to Hayyak! I am here to help you explore the UAE.';
+      }
+      
+      return isAr ? 'عذراً، لم أفهم تماماً. يمكنك سؤالي عن المطاعم، الفنادق، أو الأماكن السياحية.' : 'Sorry, I didn\'t quite get that. You can ask me about restaurants, hotels, or tourist places.';
     }
 
     // Search functionality

@@ -11,6 +11,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+  <script>
+    // Check for user profile - Run immediately
+    if (!localStorage.getItem('hayyak_user_profile')) {
+      window.location.href = 'index.html';
+    }
+  </script>
+
   <style>
     /* Afeesh family (local) */
     @font-face {
@@ -704,11 +711,6 @@
 
         const profile = JSON.parse(localStorage.getItem('hayyak_user_profile'));
         
-        if (!profile) {
-            window.location.href = 'indexQ.html';
-            return;
-        }
-
         document.getElementById('p-name').innerText = profile.name || (profile.nameAr || profile.nameEn || 'ضيف');
         document.getElementById('p-emirate').innerText = profile.emirate || 'غير محدد';
 
@@ -950,7 +952,7 @@
     function clearProfile() {
         if(confirm('هل أنت متأكد من مسح بياناتك؟')) {
             localStorage.removeItem('hayyak_user_profile');
-            window.location.href = 'indexQ.html';
+            window.location.href = 'index.html';
         }
     }
 
@@ -1043,11 +1045,6 @@
     document.addEventListener('DOMContentLoaded', function() {
       // Check if user profile exists
       const userProfile = JSON.parse(localStorage.getItem('hayyak_user_profile') || '{}');
-      if (!userProfile || !userProfile.name) {
-        // Redirect to questionnaire if no profile exists
-        window.location.href = 'indexQ.html';
-        return;
-      }
       
       // Add click event to translate button
       document.getElementById('translateBtn').addEventListener('click', toggleLanguage);
