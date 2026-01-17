@@ -407,6 +407,14 @@
         color: #0369a1;
         border: 1px solid #bae6fd;
     }
+
+    .delete-btn-style {
+        background: #fee2e2;
+        color: #ef4444;
+        border: 2px solid #ef4444;
+        box-shadow: none;
+        margin-top: 16px;
+    }
   </style>
 </head>
 <body>
@@ -498,6 +506,10 @@
       <span data-ar="تعديل الملف الشخصي ✏️" data-en="Edit Profile ✏️">تعديل الملف الشخصي ✏️</span>
     </button>
 
+    <button class="action-btn delete-btn-style" onclick="openDeleteModal()">
+      <span data-ar="حذف الحساب 🗑️" data-en="Delete Account 🗑️">حذف الحساب 🗑️</span>
+    </button>
+
   </main>
 
   <footer id="site-footer" data-ar="© عبدالله بن ناصر-حياك" data-en="© Abdullah bin Nasser - Hayyak">© عبدالله بن ناصر-حياك</footer>
@@ -563,6 +575,26 @@
         <button class="action-btn edit-btn" onclick="saveEdit()">
           <span data-ar="حفظ التغييرات" data-en="Save Changes">حفظ التغييرات</span>
         </button>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-modal" class="modal">
+    <div class="modal-content" style="text-align: center;">
+        <div class="modal-header" style="justify-content: center; margin-bottom: 10px;">
+            <div class="modal-title" style="color: #ef4444;" data-ar="حذف الحساب" data-en="Delete Account">حذف الحساب</div>
+        </div>
+        <p style="margin-bottom: 24px; color: var(--muted); line-height: 1.5;" data-ar="هل أنت متأكد أنك تريد حذف حسابك؟ سيتم مسح جميع بياناتك ولا يمكن التراجع عن هذا الإجراء." data-en="Are you sure you want to delete your account? All your data will be erased and this action cannot be undone.">
+            هل أنت متأكد أنك تريد حذف حسابك؟ سيتم مسح جميع بياناتك ولا يمكن التراجع عن هذا الإجراء.
+        </p>
+        <div style="display: flex; gap: 12px;">
+            <button class="action-btn" style="background: #ef4444; color: white; margin-top: 0; box-shadow: none;" onclick="confirmDelete()">
+                <span data-ar="نعم، احذف" data-en="Yes, Delete">نعم، احذف</span>
+            </button>
+            <button class="action-btn" style="background: var(--bg); color: var(--ink); border: 2px solid var(--line); margin-top: 0; box-shadow: none;" onclick="closeDeleteModal()">
+                <span data-ar="إلغاء" data-en="Cancel">إلغاء</span>
+            </button>
+        </div>
     </div>
   </div>
 
@@ -949,11 +981,17 @@
         });
     }
 
-    function clearProfile() {
-        if(confirm('هل أنت متأكد من مسح بياناتك؟')) {
-            localStorage.removeItem('hayyak_user_profile');
-            window.location.href = 'index.html';
-        }
+    function openDeleteModal() {
+        document.getElementById('delete-modal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('delete-modal').classList.remove('active');
+    }
+
+    function confirmDelete() {
+        localStorage.clear();
+        window.location.href = 'index.html';
     }
 
     function saveEdit() {
